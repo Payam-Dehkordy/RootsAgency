@@ -40,6 +40,8 @@ if (!is_readable($bodyPath)) {
 
   <link rel="preload" href="<?= h(asset('/dist/scripts.min.js?v=' . $assetVersion)) ?>" as="script">
   <link rel="preload" href="<?= h(asset('/dist/style.min.css?v=' . $assetVersion)) ?>" as="style">
+  <link rel="preload" href="<?= h(asset('/fonts/WorkhorseScriptTest-Display.woff2')) ?>" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="<?= h(asset('/fonts/aeonik-regular.woff2')) ?>" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/dist/style.min.css?v=' . $assetVersion)) ?>">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">

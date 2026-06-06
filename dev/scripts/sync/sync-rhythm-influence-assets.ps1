@@ -8,7 +8,7 @@ $src = Join-Path $root 'dev\template-source'
 $public = Join-Path $root 'public'
 $staging = Join-Path $root 'dev\template-assets'
 
-New-Item -ItemType Directory -Force -Path $src, "$public\dist", "$public\ui", $staging | Out-Null
+New-Item -ItemType Directory -Force -Path $src, "$public\dist", "$public\ui", "$public\fonts", $staging | Out-Null
 
 $assetVersion = '7c85f98c63f5e1f89737e800920875f74ad6abf9'
 $baseUrl = 'https://www.rhythminfluence.com'
@@ -26,6 +26,17 @@ Copy-Item (Join-Path $src 'rhythm-influence.scripts.min.js') (Join-Path $public 
 Write-Host "Fetching UI SVGs..."
 foreach ($ui in @('button_arrow.svg', 'footer_bg_light.svg')) {
     curl.exe -sL "$baseUrl/ui/$ui" -o (Join-Path $public "ui\$ui")
+}
+
+Write-Host "Fetching template fonts (Workhorse + Aeonik)..."
+foreach ($font in @(
+    'WorkhorseScriptTest-Display.woff2',
+    'aeonik-regular.woff2',
+    'aeonik-bold.woff2',
+    'aeonik-medium.woff2',
+    'aeonik-light.woff2'
+)) {
+    curl.exe -sL "$baseUrl/fonts/$font" -o (Join-Path $public "fonts\$font")
 }
 
 $raw = Get-Content (Join-Path $src 'rhythm-influence-home.raw.html') -Raw

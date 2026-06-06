@@ -14,6 +14,15 @@ CSS variables (in `public/features/roots-brand.css` and `roots-theme.css`):
 
 Template accent colors (Rhythm Influence — unchanged in phase 1): `#bb70ad`, `#8ec6b5`, `#d6d6d6` menu overlay, etc.
 
+## Typography
+
+| File | Family | Use |
+|------|--------|-----|
+| `public/fonts/WorkhorseScriptTest-Display.woff2` | Workhorse | Stylized first letters — `<i>M</i>atch`, `<i>m</i>arketing` inside `.h0` |
+| `public/fonts/aeonik-*.woff2` | Aeonik | Body + headline sans (template default) |
+
+Display caps use `<i>` inside `.h0` headings (not semantic emphasis). `roots-brand.css` sets `font-style: normal` so Workhorse is not browser-italicized.
+
 ## Slogan & hero copy
 
 | Key | Text | Use |

@@ -16,6 +16,8 @@ Display: two-line hero heading with template animation (`data-spanner="w"`).
 
 **We are a leading marketing & PR agency committed to driving business growth through innovative strategies.**
 
+Stylized first letters (Workhorse, 3 — on image lines 1, 3, 5): *m*arketing, *d*riving, *s*trategies.
+
 Inline images: `public/media/images/home/roots-agency-media-sentence-01.webp` … `05.webp` (+ `@2x` variants).
 
 ## Media sentence supporting copy

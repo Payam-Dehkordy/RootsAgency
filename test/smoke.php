@@ -8,6 +8,8 @@ foreach ([
     'public/index.php',
     'public/dist/style.min.css',
     'public/dist/scripts.min.js',
+    'public/fonts/WorkhorseScriptTest-Display.woff2',
+    'public/fonts/aeonik-regular.woff2',
     'public/ui/button_arrow.svg',
     'public/media/images/brand/roots-agency-logo.svg',
     'public/media/images/brand/roots-agency-favicon.svg',

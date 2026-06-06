@@ -4,6 +4,11 @@
     --roots-brand-navy-rgb: 1, 31, 57;
 }
 
+/* Template display caps — Workhorse via <i> inside .h0 (not browser italic) */
+.h0 i {
+    font-style: normal;
+}
+
 /* Equal top/bottom space in nav — centered in .nav__bar (8.8rem desktop, 7.5rem mobile) */
 
 .nav__logo {
@@ -53,29 +58,29 @@
     font-size: 12rem;
 }
 
-/* Hero layout — headline centered, description pinned to bottom */
+/* Hero layout — headline + subcopy stay grouped (template spacing, not pinned to viewport bottom) */
 .homeHeader__content {
     position: absolute;
-    inset: 0;
-    top: 0;
+    top: 32%;
+    left: 0;
+    right: 0;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
     text-align: center;
     z-index: 3;
-    padding: 9rem 2rem max(3rem, env(safe-area-inset-bottom, 0px));
+    padding: 0 2rem;
     box-sizing: border-box;
     pointer-events: none;
 }
 
 .homeHeader__heading {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     margin: 0;
-    min-height: 0;
     width: 100%;
 }
 
@@ -83,7 +88,7 @@
     flex: 0 0 auto;
     width: min(46.4rem, 100%);
     max-width: 100%;
-    margin: 0 auto;
+    margin: 18rem auto 0;
 }
 
 @media screen and (min-width: 800px) {
@@ -127,12 +132,15 @@
     }
 
     .homeHeader__content {
-        padding-top: 7.5rem;
-        padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 0px));
+        top: 21%;
+        padding: 0 2rem;
     }
 
     .homeHeader__content .body {
         width: min(24.2rem, 92vw);
+        margin-top: 12rem;
+        -webkit-transform: translateY(-3rem);
+        transform: translateY(-3rem);
         font-size: 1.75rem;
         line-height: 1.25;
     }
@@ -140,11 +148,19 @@
 
 @media screen and (max-height: 700px) and (min-width: 800px) {
     .homeHeader__content {
-        padding-top: 7rem;
-        padding-bottom: max(2rem, env(safe-area-inset-bottom, 0px));
+        top: 26%;
     }
 
     .homeHeader__content .body {
+        margin-top: 12rem;
         font-size: 1.75rem;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .homeHeader__content .body {
+        margin-top: 7rem;
+        -webkit-transform: none;
+        transform: none;
     }
 }
