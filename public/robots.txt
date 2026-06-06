@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Preview scaffold — set robots_allow_crawl true in site-config when launching.
+Sitemap: https://roots-agency.payam-dehkordy.com/sitemap.xml

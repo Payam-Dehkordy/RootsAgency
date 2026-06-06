@@ -18,8 +18,11 @@ if ($path !== '/' && is_file($filesystemPath)) {
     return false;
 }
 
-if ($path === '/') {
-    require $public . $sep . 'index.php';
+require_once dirname(__DIR__) . '/app/Support/page-routes.php';
+$routes = roots_router_paths();
+
+if (isset($routes[$path])) {
+    require $public . $sep . $routes[$path];
     return;
 }
 

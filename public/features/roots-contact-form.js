@@ -6,6 +6,10 @@
         return;
     }
 
+    var postUrl = form.getAttribute('action') || '/';
+    var errorMessage =
+        form.getAttribute('data-error-message') || 'Something went wrong, please try again.';
+
     form.addEventListener(
         'submit',
         function (event) {
@@ -21,7 +25,7 @@
             form.classList.add('loading');
             form.classList.remove('success');
 
-            fetch('/', {
+            fetch(postUrl, {
                 method: 'POST',
                 body: data,
                 headers: { Accept: 'application/json' },
@@ -35,7 +39,7 @@
                     });
                 })
                 .catch(function () {
-                    window.alert('Something went wrong, please try again.');
+                    window.alert(errorMessage);
                 })
                 .finally(function () {
                     form.classList.remove('loading');

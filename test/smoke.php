@@ -2,66 +2,425 @@
 declare(strict_types=1);
 
 $root = dirname(__DIR__);
-$errors = [];
+$php = PHP_BINARY;
+$failures = [];
+
+require_once $root . '/app/Support/web-helpers.php';
+require_once $root . '/app/Support/locale-key-parity.php';
+require_once $root . '/app/Support/page-routes.php';
+require_once $root . '/app/Support/locale.php';
+
+$siteCfg = require $root . '/app/Config/site-config.php';
+
+$locCfg = locale_config();
+$defaultLocaleCode = (string) ($locCfg['default'] ?? 'en');
+$defaultLangRaw = @file_get_contents($root . '/app/Lang/' . $defaultLocaleCode . '.json');
+$defaultLangDecoded = is_string($defaultLangRaw) ? json_decode($defaultLangRaw, true) : null;
+/** @var array<string, mixed>|null */
+$defaultLangArr = is_array($defaultLangDecoded) ? $defaultLangDecoded : null;
+$defaultHtmlLang = (string) ($locCfg['html_lang'][$defaultLocaleCode] ?? $defaultLocaleCode);
+$defaultTextDir = (string) ($locCfg['text_direction'][$defaultLocaleCode] ?? 'ltr');
+
+$parityReport = roots_locale_key_parity_scan($root);
+$parityOk = !isset($parityReport['_error']);
+foreach ($parityReport as $locale => $parityRow) {
+    if ($locale === '_error') {
+        continue;
+    }
+    $parityOk = $parityOk && (($parityRow['missing'] ?? []) === []);
+}
+assert_true($parityOk, 'locale JSON has no missing keys vs default (en.json)', $failures);
 
 foreach ([
     'public/index.php',
+    'public/router.php',
+    'public/sitemap.php',
+    'public/robots.txt',
+    'app/Support/app-init.php',
+    'app/Support/site-request-base.php',
+    'app/Support/seo-social-meta.php',
+    'app/Support/seo-jsonld.php',
+    'app/Support/locale-key-parity.php',
+    'app/Views/partials/head.php',
     'public/dist/style.min.css',
     'public/dist/scripts.min.js',
-    'public/fonts/WorkhorseScriptTest-Display.woff2',
-    'public/fonts/aeonik-regular.woff2',
-    'public/ui/button_arrow.svg',
-    'public/media/images/brand/roots-agency-logo.svg',
-    'public/media/images/brand/roots-agency-favicon.svg',
-    'public/media/video/hero/roots-agency-hero-01.mp4',
-    'public/media/video/hero/roots-agency-hero-02.mp4',
-    'public/media/video/hero/roots-agency-hero-03.mp4',
-    'public/media/video/hero/roots-agency-hero-04.mp4',
-    'public/media/video/work/roots-agency-work-01.mp4',
-    'public/media/video/work/roots-agency-work-10.mp4',
-    'public/media/images/work/roots-agency-work-01.webp',
-    'public/media/images/work/roots-agency-work-10.webp',
-    'public/media/images/services/roots-agency-services-team.webp',
-    'public/media/images/services/roots-agency-services-team@2x.webp',
-    'public/media/images/team/roots-agency-team-anahit-voskanyan.webp',
-    'public/media/images/team/roots-agency-team-janna-taroyan.webp',
-    'public/media/images/contact/roots-agency-contact-hero.webp',
-    'public/media/images/contact/roots-agency-contact-hero@2x.webp',
-    'public/media/images/footer/roots-agency-footer-instagram.webp',
-    'public/ui/time_icon.svg',
-    'app/Handlers/contact-form.php',
-    'dev/sync-contact-assets.py',
-    'dev/build-team-section.py',
-    'public/media/images/home/roots-agency-media-sentence-01@2x.webp',
-    'public/media/images/home/roots-agency-media-sentence-05.webp',
-    'public/media/images/home/roots-agency-media-sentence-05@2x.webp',
-    'public/features/roots-brand.css',
-    'public/features/roots-theme.css',
-    'public/features/roots-hero-video.js',
-    'public/features/roots-scroll-top.js',
-    'public/features/roots-nav-scroll.js',
-    'public/features/roots-work-slider.js',
-    'public/features/roots-contact-form.js',
-    'public/features/roots-contact-header.js',
-    'app/Views/pages/home/rhythm-influence-body.html',
-    'dev/template-source/rhythm-influence-home.raw.html',
+    'app/Lang/en.json',
+    'app/Lang/hy.json',
+    'app/Lang/ru.json',
+    'app/Views/pages/home/rhythm-influence-body.php',
+    'public/features/roots-locale-fonts.css',
+    'public/features/roots-site-chrome.js',
 ] as $rel) {
-    if (!is_file($root . '/' . $rel)) {
-        $errors[] = 'Missing file: ' . $rel;
-    }
+    assert_true(is_file($root . '/' . $rel), 'file exists: ' . $rel, $failures);
 }
 
 $cssSize = @filesize($root . '/public/dist/style.min.css') ?: 0;
 $jsSize = @filesize($root . '/public/dist/scripts.min.js') ?: 0;
-if ($cssSize < 50000) {
-    $errors[] = 'style.min.css looks too small — re-run template capture';
-}
-if ($jsSize < 50000) {
-    $errors[] = 'scripts.min.js looks too small — re-run template capture';
+assert_true($cssSize >= 50000, 'style.min.css looks large enough', $failures);
+assert_true($jsSize >= 50000, 'scripts.min.js looks large enough', $failures);
+
+/**
+ * @return array{exit:int,stdout:string,stderr:string}
+ */
+function run_php(string $php, string $code, string $cwd): array
+{
+    $tmp = tempnam(sys_get_temp_dir(), 'roots-smoke-');
+    if ($tmp === false) {
+        return ['exit' => 1, 'stdout' => '', 'stderr' => 'failed to create temp file'];
+    }
+    file_put_contents($tmp, "<?php\n" . $code . "\n");
+    $cmd = escapeshellarg($php) . ' -d display_errors=1 ' . escapeshellarg($tmp);
+    $desc = [
+        0 => ['pipe', 'r'],
+        1 => ['pipe', 'w'],
+        2 => ['pipe', 'w'],
+    ];
+    $proc = proc_open($cmd, $desc, $pipes, $cwd);
+    if (!is_resource($proc)) {
+        return ['exit' => 1, 'stdout' => '', 'stderr' => 'failed to start process'];
+    }
+    fclose($pipes[0]);
+    $stdout = stream_get_contents($pipes[1]) ?: '';
+    fclose($pipes[1]);
+    $stderr = stream_get_contents($pipes[2]) ?: '';
+    fclose($pipes[2]);
+    $exit = proc_close($proc);
+    @unlink($tmp);
+
+    return ['exit' => $exit, 'stdout' => $stdout, 'stderr' => $stderr];
 }
 
-if ($errors !== []) {
-    fwrite(STDERR, implode(PHP_EOL, $errors) . PHP_EOL);
+function assert_true(bool $ok, string $message, array &$failures): void
+{
+    if ($ok) {
+        echo "[OK] {$message}\n";
+        return;
+    }
+    echo "[FAIL] {$message}\n";
+    $failures[] = $message;
+}
+
+/** @return list<string> */
+function roots_smoke_ld_type_list(mixed $typeField): array
+{
+    if (is_string($typeField)) {
+        return [$typeField];
+    }
+    if (!is_array($typeField)) {
+        return [];
+    }
+    $out = [];
+    foreach ($typeField as $t) {
+        if (is_string($t) && $t !== '') {
+            $out[] = $t;
+        }
+    }
+
+    return $out;
+}
+
+/** @return array<int, mixed>|null */
+function roots_smoke_first_json_ld_graph(string $html): ?array
+{
+    if (preg_match(
+        '/<script\b[^>]*type="application\/ld\+json"[^>]*>(.*?)<\/script>/is',
+        $html,
+        $m,
+    ) !== 1) {
+        return null;
+    }
+    try {
+        /** @var mixed $decoded */
+        $decoded = json_decode(trim($m[1]), true, 512, JSON_THROW_ON_ERROR);
+    } catch (JsonException) {
+        return null;
+    }
+    if (!is_array($decoded) || ($decoded['@context'] ?? '') !== 'https://schema.org') {
+        return null;
+    }
+    $graph = $decoded['@graph'] ?? null;
+
+    return is_array($graph) ? $graph : null;
+}
+
+/** @param array<string, mixed> $siteCfg */
+function roots_smoke_json_ld_document_ok(string $html, array $siteCfg): bool
+{
+    $base = rtrim((string) ($siteCfg['base_url'] ?? ''), '/');
+    if ($base === '') {
+        return false;
+    }
+    $graph = roots_smoke_first_json_ld_graph($html);
+    if ($graph === null) {
+        return false;
+    }
+
+    $hasOrg = false;
+    $hasWebsite = false;
+    foreach ($graph as $node) {
+        if (!is_array($node)) {
+            continue;
+        }
+        $types = roots_smoke_ld_type_list($node['@type'] ?? null);
+        $id = (string) ($node['@id'] ?? '');
+        if (
+            in_array('Organization', $types, true)
+            && in_array('MarketingAgency', $types, true)
+            && $id === $base . '#organization'
+        ) {
+            $hasOrg = true;
+        }
+        if (!in_array('WebSite', $types, true) || $id !== $base . '#website') {
+            continue;
+        }
+        $publisher = $node['publisher'] ?? null;
+        if (!is_array($publisher) || (($publisher['@id'] ?? '') !== $base . '#organization')) {
+            return false;
+        }
+        $langs = $node['inLanguage'] ?? null;
+        if (!is_array($langs)) {
+            return false;
+        }
+        $nonEmptyLang = false;
+        foreach ($langs as $lang) {
+            if (is_string($lang) && $lang !== '') {
+                $nonEmptyLang = true;
+                break;
+            }
+        }
+        if (!$nonEmptyLang) {
+            return false;
+        }
+        $hasWebsite = true;
+    }
+
+    return $hasOrg && $hasWebsite;
+}
+
+/** @param array<string, mixed> $siteCfg */
+function roots_smoke_og_bundle_ok(string $html, array $siteCfg): bool
+{
+    $ogDefaultImage = (string) ($siteCfg['og_default_image'] ?? '');
+    $brand = (string) ($siteCfg['brand'] ?? '');
+    if ($ogDefaultImage === '' || $brand === '') {
+        return false;
+    }
+    $brandEsc = WebHelpers::escape($brand);
+
+    return str_contains($html, 'property="og:type" content="website"')
+        && str_contains($html, 'property="og:site_name" content="' . $brandEsc . '"')
+        && str_contains($html, 'property="og:title"')
+        && str_contains($html, 'property="og:url"')
+        && str_contains($html, 'property="og:description"')
+        && str_contains($html, 'property="og:locale"')
+        && str_contains($html, 'property="og:locale:alternate"')
+        && str_contains($html, 'property="og:image"')
+        && str_contains($html, 'property="og:image:alt"')
+        && str_contains($html, WebHelpers::escape($ogDefaultImage))
+        && str_contains($html, 'name="twitter:card" content="summary_large_image"')
+        && str_contains($html, 'name="twitter:title"')
+        && str_contains($html, 'name="twitter:description"')
+        && str_contains($html, 'name="twitter:image"');
+}
+
+function roots_smoke_canonical_and_og_url_ok(string $html, string $expectedAbsoluteUrl): bool
+{
+    if ($expectedAbsoluteUrl === '') {
+        return false;
+    }
+    $e = WebHelpers::escape($expectedAbsoluteUrl);
+
+    return str_contains($html, '<link rel="canonical" href="' . $e . '">')
+        && str_contains($html, 'property="og:url" content="' . $e . '"');
+}
+
+/** @param array<string, mixed>|null $dict */
+function roots_smoke_home_document_shell_ok(
+    string $out,
+    ?array $dict,
+    string $htmlLangAttr,
+    string $textDirectionAttr,
+    string $hreflangSelfLocale,
+): bool {
+    $pageTitle = is_array($dict) && isset($dict['pages.home.title']) ? (string) $dict['pages.home.title'] : '';
+    $h1Count = preg_match_all('/<h1\b/i', $out);
+    $titleNeedle = '<title>' . WebHelpers::escape($pageTitle) . '</title>';
+
+    return $pageTitle !== ''
+        && str_contains($out, $titleNeedle)
+        && $h1Count === 1
+        && str_contains($out, '/features/roots-locale-fonts.css')
+        && str_contains($out, 'data-roots-locale-home-prefixes="')
+        && str_contains($out, 'lang="' . WebHelpers::escape($htmlLangAttr) . '"')
+        && str_contains($out, 'dir="' . WebHelpers::escape($textDirectionAttr) . '"')
+        && str_contains($out, 'hreflang="' . WebHelpers::escape($hreflangSelfLocale) . '"');
+}
+
+/** @param array<string, mixed> $siteCfg */
+function roots_smoke_robots_txt_matches_site(string $projectRoot, array $siteCfg): bool
+{
+    $path = $projectRoot . '/public/robots.txt';
+    $raw = @file_get_contents($path);
+    if (!is_string($raw) || $raw === '') {
+        return false;
+    }
+    $base = rtrim((string) ($siteCfg['base_url'] ?? ''), '/');
+    if ($base === '') {
+        return false;
+    }
+    $needle = 'Sitemap: ' . $base . '/sitemap.xml';
+    if (!str_contains($raw, 'User-agent:') || !str_contains($raw, $needle)) {
+        return false;
+    }
+    $allowCrawl = !empty($siteCfg['robots_allow_crawl']);
+
+    return $allowCrawl
+        ? str_contains($raw, 'Allow:')
+        : str_contains($raw, 'Disallow:');
+}
+
+$routerNotFound = run_php(
+    $php,
+    '$_SERVER["REQUEST_URI"]="/no-such-page"; require "public/router.php";',
+    $root
+);
+assert_true(
+    $routerNotFound['exit'] === 0 && str_contains($routerNotFound['stdout'], '404 Not Found'),
+    'router returns 404 body for unknown path',
+    $failures
+);
+
+$routerStackedLocales = run_php(
+    $php,
+    '$_SERVER["REQUEST_URI"]="/hy/ru/"; require "public/router.php";',
+    $root
+);
+assert_true(
+    $routerStackedLocales['exit'] === 0
+        && str_contains($routerStackedLocales['stdout'], '404 Not Found'),
+    'router returns 404 for stacked locale prefixes',
+    $failures
+);
+
+$routerSitemap = run_php(
+    $php,
+    '$_SERVER["REQUEST_URI"]="/sitemap.xml"; require "public/router.php";',
+    $root
+);
+$sitemapXml = $routerSitemap['stdout'];
+$sitemapOk = $routerSitemap['exit'] === 0
+    && str_contains($sitemapXml, 'http://www.sitemaps.org/schemas/sitemap/0.9');
+if ($sitemapOk) {
+    $paths = roots_sitemap_paths();
+    $localeCodes = roots_public_locale_codes();
+    $base = rtrim((string) ($siteCfg['base_url'] ?? ''), '/');
+    $expectedUrlCount = count($paths) * count($localeCodes);
+    $lastmodCount = preg_match_all('/<lastmod>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z<\/lastmod>/', $sitemapXml);
+    $sitemapOk = $lastmodCount === $expectedUrlCount;
+    foreach ($localeCodes as $locale) {
+        foreach ($paths as $p) {
+            $path = localized_canonical_path($p, $locale);
+            $full = $base . $path;
+            $locTag = '<loc>' . htmlspecialchars($full, ENT_QUOTES, 'UTF-8') . '</loc>';
+            $sitemapOk = $sitemapOk && str_contains($sitemapXml, $locTag);
+        }
+    }
+}
+assert_true(
+    $sitemapOk,
+    'router serves /sitemap.xml with every locale × path loc and matching lastmod count',
+    $failures
+);
+
+assert_true(
+    roots_smoke_robots_txt_matches_site($root, $siteCfg),
+    'public/robots.txt blocks crawl (preview) and Sitemap URL matches site-config base_url',
+    $failures
+);
+
+$routerHome = run_php(
+    $php,
+    '$_SERVER["REQUEST_URI"]="/"; require "public/router.php";',
+    $root
+);
+$homeHtml = $routerHome['stdout'];
+$homeExitOk = $routerHome['exit'] === 0;
+
+assert_true(
+    $homeExitOk
+        && roots_smoke_home_document_shell_ok(
+            $homeHtml,
+            $defaultLangArr,
+            $defaultHtmlLang,
+            $defaultTextDir,
+            $defaultLocaleCode
+        ),
+    'router serves / with default-locale home title, single h1, locale fonts CSS, html lang, dir, and hreflang',
+    $failures
+);
+
+$expectedHomeUrl = public_page_url($siteCfg, 'home', $defaultLocaleCode);
+assert_true(
+    $homeExitOk
+        && roots_smoke_og_bundle_ok($homeHtml, $siteCfg)
+        && roots_smoke_json_ld_document_ok($homeHtml, $siteCfg)
+        && roots_smoke_canonical_and_og_url_ok($homeHtml, $expectedHomeUrl),
+    'router serves / with OG/Twitter bundle, JSON-LD @graph, canonical matching og:url',
+    $failures
+);
+
+$homeLangSwitchOk = $homeExitOk
+    && !str_contains($homeHtml, 'roots-lang-link flipLink')
+    && !str_contains($homeHtml, 'roots-lang-link is-current')
+    && str_contains($homeHtml, 'class="roots-lang-link" hreflang="hy" lang="hy"')
+    && str_contains($homeHtml, 'data-no-swup')
+    && str_contains($homeHtml, '>Հայերեն</a>')
+    && str_contains($homeHtml, '>Русский</a>')
+    && !preg_match('/>English<\/a>/', $homeHtml)
+    && str_contains($homeHtml, 'href="/hy"')
+    && str_contains($homeHtml, 'href="/ru"');
+assert_true(
+    $homeLangSwitchOk,
+    'router serves / with native lang switcher labels, relative hrefs, no flipLink, active locale hidden',
+    $failures
+);
+
+foreach (['hy', 'ru'] as $localeCode) {
+    $segment = (string) (($locCfg['prefix'][$localeCode] ?? $localeCode));
+    $langPath = $root . '/app/Lang/' . $localeCode . '.json';
+    $langRaw = @file_get_contents($langPath);
+    $langDict = is_string($langRaw) ? json_decode($langRaw, true) : null;
+    $langDict = is_array($langDict) ? $langDict : null;
+    $htmlLang = (string) ($locCfg['html_lang'][$localeCode] ?? $localeCode);
+    $textDir = (string) ($locCfg['text_direction'][$localeCode] ?? 'ltr');
+
+    $routerPrefixed = run_php(
+        $php,
+        '$_SERVER["REQUEST_URI"]=' . var_export('/' . $segment, true) . '; require "public/router.php";',
+        $root
+    );
+    $prefixedHtml = $routerPrefixed['stdout'];
+    $expectedUrl = public_page_url($siteCfg, 'home', $localeCode);
+    $prefixedOk = $routerPrefixed['exit'] === 0
+        && roots_smoke_home_document_shell_ok(
+            $prefixedHtml,
+            $langDict,
+            $htmlLang,
+            $textDir,
+            $localeCode
+        )
+        && roots_smoke_og_bundle_ok($prefixedHtml, $siteCfg)
+        && roots_smoke_json_ld_document_ok($prefixedHtml, $siteCfg)
+        && roots_smoke_canonical_and_og_url_ok($prefixedHtml, $expectedUrl);
+    assert_true(
+        $prefixedOk,
+        'router serves /' . $segment . ' with localized home shell and SEO head',
+        $failures
+    );
+}
+
+if ($failures !== []) {
+    fwrite(STDERR, count($failures) . " failure(s)\n");
     exit(1);
 }
 

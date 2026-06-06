@@ -1,0 +1,63 @@
+/*
+ * Locale typography tokens + stacks.
+ * Font families: define once on :root; lang switcher uses --roots-font-lang-* via a:lang().
+ * Lang link size: --roots-text-lang-link in roots-brand.css (pinned px, not locale-scaled).
+ */
+
+:root {
+    --roots-font-body-default: "Archivo", sans-serif;
+    --roots-font-body-hy: "Archivo", "Noto Sans Armenian", "Noto Sans", sans-serif;
+    --roots-font-body-ru: "Archivo", "Noto Sans", sans-serif;
+    --roots-font-lang-en: Aeonik, "Archivo", sans-serif;
+    --roots-font-lang-hy: "Noto Sans Armenian", "Archivo", sans-serif;
+    --roots-font-lang-ru: "Archivo", "Noto Sans", sans-serif;
+}
+
+html[lang="hy"] {
+    --roots-font-body: var(--roots-font-body-hy);
+}
+
+html[lang="ru"] {
+    --roots-font-body: var(--roots-font-body-ru);
+}
+
+/*
+ * Armenian: `text-transform` corrupts glyphs — turn off site-wide; casing comes from `tr()`.
+ */
+html[lang="hy"] *,
+html[lang="hy"] *::before,
+html[lang="hy"] *::after {
+    text-transform: none !important;
+}
+
+html[lang="hy"] body,
+html[lang="ru"] body {
+    font-family: var(--roots-font-body, var(--roots-font-body-default));
+}
+
+html[lang="hy"] .h0,
+html[lang="hy"] h1,
+html[lang="hy"] h2,
+html[lang="hy"] h3,
+html[lang="ru"] .h0,
+html[lang="ru"] h1,
+html[lang="ru"] h2,
+html[lang="ru"] h3 {
+    font-family: var(--roots-font-body, var(--roots-font-body-default));
+}
+
+/*
+ * Language links carry lang="" per destination; typography follows that tag, not html[lang].
+ */
+.roots-nav-lang a.roots-lang-link:lang(en) {
+    font-family: var(--roots-font-lang-en);
+}
+
+.roots-nav-lang a.roots-lang-link:lang(hy) {
+    font-family: var(--roots-font-lang-hy);
+    text-transform: none !important;
+}
+
+.roots-nav-lang a.roots-lang-link:lang(ru) {
+    font-family: var(--roots-font-lang-ru);
+}

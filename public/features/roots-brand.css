@@ -7,6 +7,9 @@
     --roots-footer-pad-y: 1rem;
     --roots-page-end-height: calc(100dvh - var(--roots-nav-height));
     --roots-footer-col-pad-y: clamp(1.75rem, 4.5dvh, 2.75rem);
+    /* Language switcher size — pinned px so locale body scaling does not shrink nav labels */
+    --roots-text-lang-link: max(11px, 12.48px);
+    --roots-text-lang-link-menu: clamp(0.95rem, 2.4dvh, 1.35rem);
 }
 
 /* Template display caps — Workhorse via <i> inside .h0 (not browser italic) */
@@ -113,6 +116,62 @@
 
     :root {
         --roots-nav-height: 7.5rem;
+    }
+}
+
+/* Language switcher — replaces Get in Touch CTA (Byuregh-style compact links) */
+.nav__cta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 0;
+}
+
+.roots-nav-lang {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: clamp(0.35rem, 1.2vw, 0.85rem);
+    flex-wrap: nowrap;
+}
+
+.roots-nav-lang a.roots-lang-link {
+    display: inline-block;
+    font-size: var(--roots-text-lang-link);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    text-decoration: none;
+    line-height: 1.2;
+    white-space: nowrap;
+    color: inherit;
+    opacity: 0.82;
+    border-bottom: 1px solid transparent;
+    transition:
+        opacity 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.roots-nav-lang a.roots-lang-link:hover,
+.roots-nav-lang a.roots-lang-link:focus-visible {
+    opacity: 1;
+    text-decoration: none;
+    border-bottom-color: currentColor;
+}
+
+.roots-nav-lang--menu {
+    margin-top: clamp(1.5rem, 4dvh, 2.5rem);
+    gap: clamp(0.75rem, 2dvh, 1.25rem);
+}
+
+.roots-nav-lang--menu a.roots-lang-link {
+    font-size: var(--roots-text-lang-link-menu);
+}
+
+@media screen and (max-width: 799px) {
+    .nav__cta .roots-nav-lang {
+        display: none;
     }
 }
 
