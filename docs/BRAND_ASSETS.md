@@ -39,6 +39,17 @@ Canonical doc: `content/COPY.md`. Config keys: `tagline_slogan`, `tagline_detail
 
 Source: client Facebook exports (originals kept outside repo until needed for phase 2).
 
+### Media sentence images (WebP)
+
+| File | Use |
+|------|-----|
+| `public/media/images/home/roots-agency-media-sentence-01.webp` … `05.webp` | Inline scroll sentence (1×) |
+| `public/media/images/home/roots-agency-media-sentence-01@2x.webp` … `05@2x.webp` | Retina (2×) |
+
+Source: client JPG exports → ImageMagick (`124×88` / `248×176`, quality 86).
+
+Logo source: client-provided `Clients/logo.svg` (light `#F5F5F5` paths on transparent — suited to dark nav chrome).
+
 ## Nav sizing
 
 Vertically centered in the nav bar with **equal top/bottom gap** — `6rem` logo in `8.8rem` bar (desktop), `4rem` in `7.5rem` bar (mobile). Overrides template `margin-top: -0.5rem` which optically shifted the single-line Rhythm logo up.
@@ -49,4 +60,4 @@ Black → navy mapping lives in `public/features/roots-theme.css` (loaded after 
 
 ## Still template (phase 1)
 
-Hero headline, subcopy, and hero videos are **Roots Agency**. Case studies, media sentence, services blocks, and footer legal line remain **Rhythm Influence** template content until phase 2.
+Hero headline, subcopy, hero videos, and **media sentence** are **Roots Agency**. Case studies, services blocks, and footer legal line remain **Rhythm Influence** template content until phase 2.
