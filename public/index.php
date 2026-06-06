@@ -52,6 +52,12 @@ if (!is_readable($bodyPath)) {
   <meta name="theme-color" content="<?= h((string) ($site['brand_color_primary'] ?? '#011F39')) ?>">
 
   <link rel="icon" href="<?= h(asset((string) ($site['favicon_relative'] ?? '/media/images/brand/roots-agency-favicon.svg'))) ?>" type="image/svg+xml">
+  <script>
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  </script>
 <?php if ($isLocalPreview): ?>
   <script>
     (() => {
@@ -77,6 +83,10 @@ if (!is_readable($bodyPath)) {
           const next = (await res.text()).trim();
           if (!next) return;
           if (lastValue && next !== lastValue) {
+            if ('scrollRestoration' in history) {
+              history.scrollRestoration = 'manual';
+            }
+            window.scrollTo(0, 0);
             window.location.reload();
             return;
           }

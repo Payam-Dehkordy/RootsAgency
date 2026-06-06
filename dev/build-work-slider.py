@@ -17,61 +17,61 @@ WORK_ITEMS: list[dict[str, str]] = [
     {
         "slug": "j-space",
         "source_glob": "Among our numerous creative partnerships is J Space*",
-        "heading": '<p><i>J</i> Space — catchy video content partnership</p>',
+        "heading": '<p>J Space — catchy video content partnership</p>',
         "hashtag": "#creative",
     },
     {
         "slug": "pitara",
         "source_glob": "Another Indian restaurant has opened its doors in Yerevan- Pitara*",
-        "heading": '<p><i>P</i>itara — traditional Indian cuisine in Yerevan</p>',
+        "heading": '<p>Pitara — traditional Indian cuisine in Yerevan</p>',
         "hashtag": "#horeca",
     },
     {
         "slug": "sia-resort-spa",
         "source_glob": "From branding to social media, Roots has been with Sia Resort*",
-        "heading": '<p><i>S</i>ia Resort and Spa — branding to social since opening</p>',
+        "heading": '<p>Sia Resort and Spa — branding to social since opening</p>',
         "hashtag": "#horeca",
     },
     {
         "slug": "mos-cafe",
         "source_glob": "In the heart of apricot season, we produced a conceptual shoot for Mos Cafe*",
-        "heading": '<p><i>M</i>os Cafe — conceptual apricot season shoot</p>',
+        "heading": '<p>Mos Cafe — conceptual apricot season shoot</p>',
         "hashtag": "#creative",
     },
     {
         "slug": "maura",
         "source_glob": "Maura continues to be one of our strongest partners*",
-        "heading": '<p><i>M</i>aura — premium sushi partner in food</p>',
+        "heading": '<p>Maura — premium sushi partner in food</p>',
         "hashtag": "#foodandbev",
     },
     {
         "slug": "persona",
         "source_glob": "Partnership at a Higher Level- Roots x Persona*",
-        "heading": '<p><i>P</i>ersona — Roots x top Yerevan restaurant</p>',
+        "heading": '<p>Persona — Roots x top Yerevan restaurant</p>',
         "hashtag": "#horeca",
     },
     {
         "slug": "extra-virgin",
         "source_glob": "Partnership for Excellence- Roots and Extra Virgin*",
-        "heading": '<p><i>E</i>xtra Virgin — restaurant partnership for excellence</p>',
+        "heading": '<p>Extra Virgin — restaurant partnership for excellence</p>',
         "hashtag": "#horeca",
     },
     {
         "slug": "beyond-horeca",
         "source_glob": "Roots Marketing Agency has expanded beyond the HoReCa sector*",
-        "heading": '<p><i>R</i>oots — expanding beyond HoReCa into product</p>',
+        "heading": '<p>Roots — expanding beyond HoReCa into product</p>',
         "hashtag": "#branding",
     },
     {
         "slug": "kids-city",
         "source_glob": "Roots x Kids City- A Partnership from Day One*",
-        "heading": '<p><i>K</i>ids City — brand brought to life from day one</p>',
+        "heading": '<p>Kids City — brand brought to life from day one</p>',
         "hashtag": "#branding",
     },
     {
         "slug": "vici-cigar-lounge",
         "source_glob": "Vici Cigar Lounge is one of the finest concepts*",
-        "heading": '<p><i>V</i>ici Cigar Lounge — curated concept at Trio Yerevan</p>',
+        "heading": '<p>Vici Cigar Lounge — curated concept at Trio Yerevan</p>',
         "hashtag": "#lifestyle",
     },
 ]
@@ -111,7 +111,7 @@ def card_html(index: int, item: dict[str, str], video_url: str, poster_url: str)
     <div class="workCard__media" data-vid="{video_url}" data-poster="{poster_url}">
             </div>
     <div class="workCard__content">
-        <p class="subheading">We partnered with</p>
+        <p class="subheading"><i>W</i>e partnered with</p>
         <h3 class="workCard__heading h0">{item["heading"]}</h3>
         <p class="workCard__hashtag">{item["hashtag"]}</p>
     </div>

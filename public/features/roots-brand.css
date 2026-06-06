@@ -9,6 +9,16 @@
     font-style: normal;
 }
 
+/* Previous work — Workhorse lead letter on “We partnered with” */
+.workCard__content .subheading i {
+    font-family: Workhorse, cursive;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    padding-left: 0.1em;
+    line-height: 0.8;
+}
+
 /* Prevent browser scroll anchoring when cards are inserted into the sticky slider */
 .workSlider {
     overflow-anchor: none;
