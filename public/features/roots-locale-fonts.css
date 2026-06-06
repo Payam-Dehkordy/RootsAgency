@@ -1,10 +1,15 @@
 /*
  * Locale typography tokens + stacks.
- * Font families: define once on :root; lang switcher uses --roots-font-lang-* via a:lang().
- * Lang link size: --roots-text-lang-link in roots-brand.css (pinned px, not locale-scaled).
+ * Scale vs EN (NeoGym/BSC parity): hy ~35% smaller (0.65), ru ~40% smaller (0.6).
+ * Typography-only: --roots-type-scale applies to #main text via roots-locale-type-scale.css.
+ * Hero: roots-hero.css (locale-isolated layout; loads last).
+ * Lang switcher: pinned px via --roots-text-lang-link in roots-brand.css (not scaled).
  */
 
 :root {
+    --roots-type-scale: 1;
+    --text-locale-html-font-size: 100%;
+
     --roots-font-body-default: "Archivo", sans-serif;
     --roots-font-body-hy: "Archivo", "Noto Sans Armenian", "Noto Sans", sans-serif;
     --roots-font-body-ru: "Archivo", "Noto Sans", sans-serif;
@@ -14,10 +19,14 @@
 }
 
 html[lang="hy"] {
+    --roots-type-scale: 0.65;
+    --text-locale-html-font-size: 65%;
     --roots-font-body: var(--roots-font-body-hy);
 }
 
 html[lang="ru"] {
+    --roots-type-scale: 0.6;
+    --text-locale-html-font-size: 60%;
     --roots-font-body: var(--roots-font-body-ru);
 }
 
@@ -48,7 +57,16 @@ html[lang="ru"] h3 {
 
 /*
  * Language links carry lang="" per destination; typography follows that tag, not html[lang].
+ * Pin size in px so locale scaling does not shrink switcher labels (desktop + mobile menu).
  */
+.roots-nav-lang a.roots-lang-link {
+    font-size: var(--roots-text-lang-link) !important;
+}
+
+.roots-nav-lang--menu a.roots-lang-link {
+    font-size: var(--roots-text-lang-link-menu) !important;
+}
+
 .roots-nav-lang a.roots-lang-link:lang(en) {
     font-family: var(--roots-font-lang-en);
 }
@@ -60,4 +78,72 @@ html[lang="ru"] h3 {
 
 .roots-nav-lang a.roots-lang-link:lang(ru) {
     font-family: var(--roots-font-lang-ru);
+}
+
+/*
+ * Page-end band (roots-brand.css): scale rem tracks only — dvh tracks stay EN for layout rhythm.
+ */
+html[lang="hy"] .roots-page-end section.officeList > .subheading,
+html[lang="ru"] .roots-page-end section.officeList > .subheading {
+    font-size: clamp(
+        calc(0.85rem * var(--roots-type-scale)),
+        1.4dvh,
+        calc(1.4rem * var(--roots-type-scale))
+    );
+}
+
+html[lang="hy"] .roots-page-end section.officeList .officeList__name,
+html[lang="ru"] .roots-page-end section.officeList .officeList__name {
+    font-size: clamp(
+        calc(2rem * var(--roots-type-scale)),
+        5.5dvh,
+        calc(5rem * var(--roots-type-scale))
+    );
+}
+
+html[lang="hy"] .roots-page-end section.officeList .officeList__address,
+html[lang="ru"] .roots-page-end section.officeList .officeList__address {
+    font-size: clamp(
+        calc(0.95rem * var(--roots-type-scale)),
+        1.5dvh,
+        calc(1.35rem * var(--roots-type-scale))
+    );
+}
+
+html[lang="hy"] .roots-page-end footer.roots-footer .footer__mainLink,
+html[lang="ru"] .roots-page-end footer.roots-footer .footer__mainLink {
+    font-size: clamp(
+        calc(1.35rem * var(--roots-type-scale)),
+        3.2dvh,
+        calc(3.2rem * var(--roots-type-scale))
+    );
+}
+
+html[lang="hy"] .roots-page-end footer.roots-footer .footer__bottom,
+html[lang="ru"] .roots-page-end footer.roots-footer .footer__bottom {
+    font-size: clamp(
+        calc(0.75rem * var(--roots-type-scale)),
+        1.2dvh,
+        calc(1rem * var(--roots-type-scale))
+    );
+}
+
+@media screen and (max-width: 799px) {
+    html[lang="hy"] .roots-page-end section.officeList .officeList__name,
+    html[lang="ru"] .roots-page-end section.officeList .officeList__name {
+        font-size: clamp(
+            calc(1.6rem * var(--roots-type-scale)),
+            4.5dvh,
+            calc(2.8rem * var(--roots-type-scale))
+        );
+    }
+
+    html[lang="hy"] .roots-page-end footer.roots-footer .footer__mainLink,
+    html[lang="ru"] .roots-page-end footer.roots-footer .footer__mainLink {
+        font-size: clamp(
+            calc(1.1rem * var(--roots-type-scale)),
+            2.6dvh,
+            calc(1.6rem * var(--roots-type-scale))
+        );
+    }
 }

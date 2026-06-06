@@ -4,7 +4,8 @@
     const HEADER = '#home-header';
     const CARD = '.homeHeader__mediaCard';
     const VIDEO = 'video.media.vid';
-    const PRIME_TIMEOUT_MS = 10000;
+    const PRIME_TIMEOUT_MS = 12000;
+    const HAVE_CURRENT_DATA = 2;
 
     function markReady(video) {
         const card = video.closest(CARD);
@@ -14,6 +15,14 @@
         }
     }
 
+    function hasDecodedFrame(video) {
+        return video.readyState >= HAVE_CURRENT_DATA && video.videoWidth > 0;
+    }
+
+    /**
+     * Prime the first visible frame without play() — avoids AbortError races with
+     * template homeHeader play/pause and duplicate inline onplaying handlers.
+     */
     function primeVideo(video) {
         return new Promise(function (resolve) {
             if (video.classList.contains('init')) {
@@ -28,43 +37,56 @@
                     return;
                 }
                 settled = true;
-                try {
-                    video.pause();
-                } catch (_) {}
                 markReady(video);
                 resolve();
             };
 
-            video.preload = 'auto';
-
-            video.addEventListener(
-                'playing',
-                function () {
+            const trySeekPrime = function () {
+                if (hasDecodedFrame(video)) {
                     finish();
-                },
-                { once: true }
-            );
+                    return;
+                }
 
-            video.addEventListener(
-                'loadeddata',
-                function () {
-                    if (video.readyState < 2) {
-                        return;
+                const onSeeked = function () {
+                    finish();
+                };
+
+                video.addEventListener('seeked', onSeeked, { once: true });
+
+                try {
+                    if (video.currentTime < 0.0001) {
+                        video.currentTime = 0.001;
+                    } else {
+                        video.currentTime = 0;
                     }
-                    video.play().catch(function () {
-                        video.addEventListener('canplay', finish, { once: true });
-                    });
-                },
-                { once: true }
-            );
+                } catch (_) {
+                    video.removeEventListener('seeked', onSeeked);
+                    finish();
+                }
+            };
 
-            if (video.readyState >= 2) {
-                video.play().catch(finish);
-            } else {
+            const onData = function () {
+                if (hasDecodedFrame(video)) {
+                    finish();
+                    return;
+                }
+                trySeekPrime();
+            };
+
+            video.preload = 'auto';
+            video.muted = true;
+
+            video.addEventListener('error', finish, { once: true });
+            video.addEventListener('loadeddata', onData, { once: true });
+            window.setTimeout(finish, PRIME_TIMEOUT_MS);
+
+            if (hasDecodedFrame(video)) {
+                finish();
+            } else if (video.readyState >= HAVE_CURRENT_DATA) {
+                onData();
+            } else if (video.readyState === 0) {
                 video.load();
             }
-
-            window.setTimeout(finish, PRIME_TIMEOUT_MS);
         });
     }
 
@@ -78,25 +100,6 @@
         if (!videos.length) {
             return;
         }
-
-        videos.forEach(function (video) {
-            video.setAttribute('preload', 'auto');
-            video.addEventListener('play', function () {
-                if (video.classList.contains('init')) {
-                    return;
-                }
-                video.addEventListener(
-                    'playing',
-                    function () {
-                        try {
-                            video.pause();
-                        } catch (_) {}
-                        markReady(video);
-                    },
-                    { once: true }
-                );
-            });
-        });
 
         Promise.all(Array.prototype.map.call(videos, primeVideo)).then(function () {
             header.classList.add('roots-hero-videos-ready');

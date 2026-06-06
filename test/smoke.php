@@ -49,7 +49,11 @@ foreach ([
     'app/Lang/ru.json',
     'app/Views/pages/home/rhythm-influence-body.php',
     'public/features/roots-locale-fonts.css',
+    'public/features/roots-locale-type-scale.css',
+    'dev/scripts/generate-locale-type-scale-css.py',
     'public/features/roots-site-chrome.js',
+    'public/features/roots-hero-video.js',
+    'public/features/roots-hero.css',
 ] as $rel) {
     assert_true(is_file($root . '/' . $rel), 'file exists: ' . $rel, $failures);
 }
@@ -250,6 +254,8 @@ function roots_smoke_home_document_shell_ok(
         && str_contains($out, $titleNeedle)
         && $h1Count === 1
         && str_contains($out, '/features/roots-locale-fonts.css')
+        && str_contains($out, '/features/roots-locale-type-scale.css')
+        && str_contains($out, '/features/roots-hero.css')
         && str_contains($out, 'data-roots-locale-home-prefixes="')
         && str_contains($out, 'lang="' . WebHelpers::escape($htmlLangAttr) . '"')
         && str_contains($out, 'dir="' . WebHelpers::escape($textDirectionAttr) . '"')
@@ -382,6 +388,67 @@ $homeLangSwitchOk = $homeExitOk
 assert_true(
     $homeLangSwitchOk,
     'router serves / with native lang switcher labels, relative hrefs, no flipLink, active locale hidden',
+    $failures
+);
+
+$localeScaleOk = is_file($root . '/public/features/roots-locale-fonts.css')
+    && is_file($root . '/public/features/roots-locale-type-scale.css')
+    && str_contains((string) file_get_contents($root . '/public/features/roots-locale-fonts.css'), '--roots-type-scale: 0.65')
+    && str_contains((string) file_get_contents($root . '/public/features/roots-locale-fonts.css'), '--roots-type-scale: 0.6')
+    && !str_contains((string) file_get_contents($root . '/public/features/roots-locale-fonts.css'), '--roots-html-vw-desktop')
+    && str_contains((string) file_get_contents($root . '/public/features/roots-locale-type-scale.css'), 'html[lang="hy"] #main .body')
+    && str_contains((string) file_get_contents($root . '/public/features/roots-locale-type-scale.css'), 'calc(2rem * var(--roots-type-scale))')
+    && !str_contains((string) file_get_contents($root . '/public/features/roots-locale-type-scale.css'), 'homeHeader');
+assert_true(
+    $localeScaleOk,
+    'locale type scale is typography-only (#main), html vw unchanged vs EN',
+    $failures
+);
+
+$headPhp = (string) file_get_contents($root . '/app/Views/partials/head.php');
+$heroCss = (string) file_get_contents($root . '/public/features/roots-hero.css');
+$brandCss = (string) file_get_contents($root . '/public/features/roots-brand.css');
+$localeFontsCss = (string) file_get_contents($root . '/public/features/roots-locale-fonts.css');
+$heroBody = (string) file_get_contents($root . '/app/Views/pages/home/rhythm-influence-body.php');
+$heroSpacingOk = str_contains($heroCss, '--roots-hero-subcopy-margin-top: 18rem')
+    && str_contains($heroCss, '#home-header.roots-hero .roots-hero__subcopy')
+    && str_contains($heroCss, 'margin: var(--roots-hero-subcopy-margin-top) auto 0')
+    && !str_contains($brandCss, '--roots-hero-subcopy-margin-top')
+    && !str_contains($localeFontsCss, '#home-header')
+    && str_contains($heroBody, 'class="homeHeader roots-hero')
+    && str_contains($heroBody, 'roots-hero__subcopy')
+    && !preg_match('/homeHeader__content[^>]*>\s*<p class="body/', $heroBody)
+    && strpos($headPhp, 'roots-locale-fonts.css') < strpos($headPhp, 'roots-hero.css');
+assert_true(
+    $heroSpacingOk,
+    'hero uses roots-hero.css only (locale-isolated layout, roots-hero__subcopy not generic .body)',
+    $failures
+);
+
+$heroVideoJs = (string) file_get_contents($root . '/public/features/roots-hero-video.js');
+$heroVideoOk = substr_count($heroBody, 'homeHeader__mediaCard') >= 4
+    && !str_contains($heroBody, 'onplaying=')
+    && !str_contains($heroBody, 'autoplay muted loop playsinline')
+    && str_contains($heroBody, 'muted loop playsinline preload="auto" class="media vid"')
+    && str_contains($heroVideoJs, 'currentTime = 0.001')
+    && !preg_match('/\.play\s*\(/', $heroVideoJs);
+assert_true(
+    $heroVideoOk,
+    'hero videos use single seek-based primer (no inline onplaying/autoplay play races)',
+    $failures
+);
+
+$routerHyScale = run_php(
+    $php,
+    '$_SERVER["REQUEST_URI"]="/hy/"; require "public/router.php";',
+    $root
+);
+assert_true(
+    $routerHyScale['exit'] === 0
+        && str_contains($routerHyScale['stdout'], 'lang="hy"')
+        && str_contains($routerHyScale['stdout'], 'roots-locale-fonts.css')
+        && str_contains($routerHyScale['stdout'], 'roots-locale-type-scale.css'),
+    'router serves /hy/ with html lang=hy and locale font stylesheets',
     $failures
 );
 

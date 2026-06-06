@@ -19,7 +19,7 @@
     "nav.instagram": "Instagram",
     "nav.facebook": "Facebook",
     "nav.linkedin": "LinkedIn",
-    "home.hero.heading_html": "<p>Ваш  <span class='split'> </span>  бизнес</p><p>на <span class='split'> </span> <i>н</i>овый уровень</p>",
+    "home.hero.heading_html": "<p>Ваш  <span class='split'> </span>  бизнес на</p><p><i>н</i>овый <span class='split'> </span> уровень</p>",
     "home.hero.subcopy": "Наше агентство с гордостью помогает вывести ваш бизнес на новый уровень.",
     "home.media.desktop_html": "<p>Мы —</p><p>ведущее {{img1}} <i>м</i>arketing</p><p>и {{img2}} PR агентство,</p><p>которое {{img3}} <i>с</i>тремится</p><p>к росту {{img4}} бизнеса через</p><p>инновационные {{img5}} <i>с</i>тратегии.</p>",
     "home.media.mobile_html": "<p>Мы</p><p>ведущее {{img1}} <i>м</i>arketing</p><p>и {{img2}} PR</p><p>агентство,</p><p>которое <i>с</i>тремится {{img3}} к росту</p><p>бизнеса {{img4}} через</p><p>инновационные {{img5}} <i>с</i>тратегии.</p>",

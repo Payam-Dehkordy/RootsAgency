@@ -16,7 +16,7 @@
         
             
 
-<section class="homeHeader scroll anima" id="home-header" data-anima-delay="4">
+<section class="homeHeader roots-hero scroll anima" id="home-header" data-anima-delay="4">
     
     <div class="homeHeader__mediaCards">
                                                                                                                                                             <div class="homeHeader__mediaCard">
@@ -24,7 +24,7 @@
   
           
 
-  <video autoplay muted loop playsinline preload="auto" class="media vid" onplaying="if(!this.classList.contains('init')){ this.pause(); this.classList.add('init'); var c=this.closest('.homeHeader__mediaCard'); if(c){ c.classList.add('is-ready'); }}">
+  <video muted loop playsinline preload="auto" class="media vid">
     <source src="/media/video/hero/roots-agency-hero-01.mp4" type="video/mp4" />
   </video>
 
@@ -36,7 +36,7 @@
   
           
 
-  <video autoplay muted loop playsinline preload="auto" class="media vid" onplaying="if(!this.classList.contains('init')){ this.pause(); this.classList.add('init'); var c=this.closest('.homeHeader__mediaCard'); if(c){ c.classList.add('is-ready'); }}">
+  <video muted loop playsinline preload="auto" class="media vid">
     <source src="/media/video/hero/roots-agency-hero-02.mp4" type="video/mp4" />
   </video>
 
@@ -48,7 +48,7 @@
   
           
 
-  <video autoplay muted loop playsinline preload="auto" class="media vid" onplaying="if(!this.classList.contains('init')){ this.pause(); this.classList.add('init'); var c=this.closest('.homeHeader__mediaCard'); if(c){ c.classList.add('is-ready'); }}">
+  <video muted loop playsinline preload="auto" class="media vid">
     <source src="/media/video/hero/roots-agency-hero-03.mp4" type="video/mp4" />
   </video>
 
@@ -60,7 +60,7 @@
   
           
 
-  <video autoplay muted loop playsinline preload="auto" class="media vid" onplaying="if(!this.classList.contains('init')){ this.pause(); this.classList.add('init'); var c=this.closest('.homeHeader__mediaCard'); if(c){ c.classList.add('is-ready'); }}">
+  <video muted loop playsinline preload="auto" class="media vid">
     <source src="/media/video/hero/roots-agency-hero-04.mp4" type="video/mp4" />
   </video>
 
@@ -73,7 +73,7 @@
         
               <h1 class="h0 homeHeader__heading zero h-anim anima" data-spanner="w" data-anima-delay=3><?= tr_html('home.hero.heading_html', '<p>Your  <span class=\'split\'> </span>  Business</p><p><i>N</i>ext <span class=\'split\'> </span> Level</p>') ?></h1>
   
-        <p class="body anima fade" data-anima-delay="18"><?= h(tr('home.hero.subcopy', 'Our agency prides itself on helping you take your business to the next level.')) ?></p>
+        <p class="roots-hero__subcopy anima fade" data-anima-delay="18"><?= h(tr('home.hero.subcopy', 'Our agency prides itself on helping you take your business to the next level.')) ?></p>
         
     </div>
     
