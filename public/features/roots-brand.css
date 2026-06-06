@@ -44,6 +44,19 @@
     text-align: inherit;
 }
 
+/* See More card — white CTA circle, navy text (readable on dark + white hover fill) */
+.workCard--cta.workCard--seeMore .workCard__media::after,
+.workCard--cta.workCard--seeMore .arrowButton__arrow {
+    background-color: #fff !important;
+}
+
+.workCard--cta.workCard--seeMore .arrowButton__label,
+.workCard--cta.workCard--seeMore .arrowButton__label span,
+.workCard--cta.workCard--seeMore .arrowButton__label::before,
+.workCard--cta.workCard--seeMore .arrowButton__label::after {
+    color: var(--roots-brand-navy) !important;
+}
+
 /* Equal top/bottom space in nav — centered in .nav__bar (8.8rem desktop, 7.5rem mobile) */
 
 .nav__logo {

@@ -3,6 +3,27 @@
 :root {
     --roots-brand-navy: #011F39;
     --roots-brand-navy-rgb: 1, 31, 57;
+    --roots-brand-accent: #f5f5f5;
+}
+
+/* Replace Rhythm Influence pink (#bb70ad) with Roots light accent */
+.h0 strong,
+.longform a,
+.nav__link.active,
+.nav__menuLink.active,
+.nameCta__names,
+.campaignList__heading,
+.campaignList__row::before,
+.officeList__office:hover .officeList__name {
+    color: var(--roots-brand-accent) !important;
+}
+
+.arrowButton__arrow,
+.button,
+.officeList__time,
+.submitButton,
+.workCard--cta .workCard__media::after {
+    background-color: var(--roots-brand-accent) !important;
 }
 
 html,
