@@ -1,0 +1,34 @@
+/* Roots Agency brand tokens (see docs/BRAND_ASSETS.md) */
+:root {
+    --roots-brand-navy: #011F39;
+    --roots-brand-navy-rgb: 1, 31, 57;
+}
+
+/* Equal top/bottom space in nav — centered in .nav__bar (8.8rem desktop, 7.5rem mobile) */
+
+.nav__logo {
+    height: 6rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    align-self: center;
+}
+
+.nav__logo .media.img {
+    width: auto;
+    height: 100%;
+    max-width: none;
+    border-radius: 0;
+    object-fit: contain;
+    object-position: center center;
+}
+
+@media screen and (max-width: 799px) {
+    .nav__bar {
+        align-items: center;
+    }
+
+    .nav__logo {
+        height: 4rem;
+        margin: 0;
+    }
+}

@@ -1,0 +1,7 @@
+/dev/template-assets/
+/dev/scratch/
+/config/config.php
+/storage/*
+!/storage/.gitkeep
+/public/__reload.txt
+/docs/RELEASE_LOCAL_NOTES.md

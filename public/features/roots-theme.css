@@ -1,0 +1,57 @@
+/* Roots Agency — replace template black (#000 / #202020) backgrounds with brand navy */
+
+:root {
+    --roots-brand-navy: #011F39;
+    --roots-brand-navy-rgb: 1, 31, 57;
+}
+
+html,
+body {
+    background: var(--roots-brand-navy) !important;
+    background-color: var(--roots-brand-navy) !important;
+}
+
+.transition-fade {
+    background-color: var(--roots-brand-navy) !important;
+}
+
+.footer {
+    background: var(--roots-brand-navy) !important;
+}
+
+.clientLogos__logo {
+    background-color: var(--roots-brand-navy) !important;
+}
+
+.companyData::after {
+    background-color: var(--roots-brand-navy) !important;
+}
+
+.workCard__media,
+.homeHeader__mediaCard {
+    background-color: var(--roots-brand-navy) !important;
+}
+
+.cookieBox {
+    background: var(--roots-brand-navy) !important;
+}
+
+.mediaHeader__bgOverlay {
+    background: linear-gradient(
+        rgba(var(--roots-brand-navy-rgb), 0.66) 50%,
+        var(--roots-brand-navy) 100%
+    ) !important;
+}
+
+.aboutHeader__bgOverlay {
+    background: linear-gradient(
+        rgba(var(--roots-brand-navy-rgb), 0.8) 50%,
+        var(--roots-brand-navy) 100%
+    ) !important;
+}
+
+@media screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px) {
+    section {
+        background: var(--roots-brand-navy) !important;
+    }
+}
