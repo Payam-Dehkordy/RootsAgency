@@ -68,6 +68,23 @@ Logo source: client-provided `Clients/logo.svg` (light `#F5F5F5` paths on transp
 
 Source: client Facebook exports → `dev/build-work-slider.py` (copy + ffmpeg poster frame).
 
+### Services section (local)
+
+| File | Use |
+|------|-----|
+| `public/media/images/services/roots-agency-services-team.webp` | Services sticky background (1440×1000) |
+| `public/media/images/services/roots-agency-services-team@2x.webp` | Retina variant |
+
+Source: client team photo → ImageMagick crop/resize to WebP.
+
+### Our team section (local)
+
+| File | Use |
+|------|-----|
+| `public/media/images/team/roots-agency-team-*.webp` | Team member portraits (11 members) |
+
+Source: [rootsagency.am](https://rootsagency.am/) team slider → `dev/build-team-section.py` (download + patch `#team` section).
+
 ## Nav sizing
 
 Vertically centered in the nav bar with **equal top/bottom gap** — `6rem` logo in `8.8rem` bar (desktop), `4rem` in `7.5rem` bar (mobile). Overrides template `margin-top: -0.5rem` which optically shifted the single-line Rhythm logo up.
@@ -78,4 +95,4 @@ Black → navy mapping lives in `public/features/roots-theme.css` (loaded after 
 
 ## Still template (phase 1)
 
-Hero headline, subcopy, hero videos, **media sentence**, and **previous work slider** are **Roots Agency**. Services blocks and footer legal line remain **Rhythm Influence** template content until phase 2.
+Hero headline, subcopy, hero videos, **media sentence**, **previous work slider**, **services**, and **our team** are **Roots Agency**. Footer legal line remains **Rhythm Influence** template content until phase 2.
