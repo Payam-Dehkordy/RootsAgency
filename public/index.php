@@ -3,6 +3,11 @@ declare(strict_types=1);
 
 require __DIR__ . '/../app/Support/bootstrap.php';
 
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && (($_POST['action'] ?? '') === 'contact-form/send')) {
+    require __DIR__ . '/../app/Handlers/contact-form.php';
+    exit;
+}
+
 $host = $_SERVER['HTTP_HOST'] ?? '';
 $isLocalPreview = str_contains($host, '127.0.0.1') || str_contains($host, 'localhost');
 if ($isLocalPreview) {

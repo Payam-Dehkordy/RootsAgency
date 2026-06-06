@@ -85,6 +85,16 @@ Source: client team photo → ImageMagick crop/resize to WebP.
 
 Source: [rootsagency.am](https://rootsagency.am/) team slider → `dev/build-team-section.py` (download + patch `#team` section).
 
+### Contact section (local)
+
+| File | Use |
+|------|-----|
+| `public/media/images/contact/roots-agency-contact-hero.webp` | Contact heading inline image (1×) |
+| `public/media/images/contact/roots-agency-contact-hero@2x.webp` | Retina (2×) |
+| `public/ui/time_icon.svg` | Yerevan studio local time badge |
+
+Source: [Rhythm Influence contact page](https://www.rhythminfluence.com/contact) → `dev/sync-contact-assets.py`. Form posts to `/` (`app/Handlers/contact-form.php`).
+
 ## Nav sizing
 
 Vertically centered in the nav bar with **equal top/bottom gap** — `6rem` logo in `8.8rem` bar (desktop), `4rem` in `7.5rem` bar (mobile). Overrides template `margin-top: -0.5rem` which optically shifted the single-line Rhythm logo up.
@@ -95,4 +105,4 @@ Black → navy mapping lives in `public/features/roots-theme.css` (loaded after 
 
 ## Still template (phase 1)
 
-Hero headline, subcopy, hero videos, **media sentence**, **previous work slider**, **services**, and **our team** are **Roots Agency**. Footer legal line remains **Rhythm Influence** template content until phase 2.
+Hero headline, subcopy, hero videos, **media sentence**, **previous work slider**, **services**, **our team**, and **contact** are **Roots Agency**. Footer legal line remains **Rhythm Influence** template content until phase 2.
