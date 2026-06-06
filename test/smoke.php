@@ -398,30 +398,28 @@ $localeScaleOk = is_file($root . '/public/features/roots-locale-fonts.css')
     && !str_contains((string) file_get_contents($root . '/public/features/roots-locale-fonts.css'), '--roots-html-vw-desktop')
     && str_contains((string) file_get_contents($root . '/public/features/roots-locale-type-scale.css'), 'html[lang="hy"] #main .body')
     && str_contains((string) file_get_contents($root . '/public/features/roots-locale-type-scale.css'), 'calc(2rem * var(--roots-type-scale))')
-    && !str_contains((string) file_get_contents($root . '/public/features/roots-locale-type-scale.css'), 'homeHeader');
+    && str_contains((string) file_get_contents($root . '/public/features/roots-locale-type-scale.css'), 'homeHeader');
 assert_true(
     $localeScaleOk,
-    'locale type scale is typography-only (#main), html vw unchanged vs EN',
+    'locale type scale applies uniformly to #main including hero (no design exceptions yet)',
     $failures
 );
 
 $headPhp = (string) file_get_contents($root . '/app/Views/partials/head.php');
 $heroCss = (string) file_get_contents($root . '/public/features/roots-hero.css');
-$brandCss = (string) file_get_contents($root . '/public/features/roots-brand.css');
 $localeFontsCss = (string) file_get_contents($root . '/public/features/roots-locale-fonts.css');
 $heroBody = (string) file_get_contents($root . '/app/Views/pages/home/rhythm-influence-body.php');
-$heroSpacingOk = str_contains($heroCss, '--roots-hero-subcopy-margin-top: 18rem')
-    && str_contains($heroCss, '#home-header.roots-hero .roots-hero__subcopy')
-    && str_contains($heroCss, 'margin: var(--roots-hero-subcopy-margin-top) auto 0')
-    && !str_contains($brandCss, '--roots-hero-subcopy-margin-top')
+$heroLayoutOk = str_contains($heroCss, '--roots-hero-subcopy-margin-top: 18rem')
+    && str_contains($heroCss, '#home-header.roots-hero .homeHeader__content .body')
+    && !str_contains($heroCss, 'html[lang="hy"]')
+    && !str_contains($localeFontsCss, 'roots-page-end')
     && !str_contains($localeFontsCss, '#home-header')
     && str_contains($heroBody, 'class="homeHeader roots-hero')
-    && str_contains($heroBody, 'roots-hero__subcopy')
-    && !preg_match('/homeHeader__content[^>]*>\s*<p class="body/', $heroBody)
+    && str_contains($heroBody, '<p class="body anima fade" data-anima-delay="18">')
     && strpos($headPhp, 'roots-locale-fonts.css') < strpos($headPhp, 'roots-hero.css');
 assert_true(
-    $heroSpacingOk,
-    'hero uses roots-hero.css only (locale-isolated layout, roots-hero__subcopy not generic .body)',
+    $heroLayoutOk,
+    'hero layout-only in roots-hero.css; no locale font exceptions in locale-fonts.css',
     $failures
 );
 

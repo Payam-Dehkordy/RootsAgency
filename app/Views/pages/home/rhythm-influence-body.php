@@ -73,7 +73,7 @@
         
               <h1 class="h0 homeHeader__heading zero h-anim anima" data-spanner="w" data-anima-delay=3><?= tr_html('home.hero.heading_html', '<p>Your  <span class=\'split\'> </span>  Business</p><p><i>N</i>ext <span class=\'split\'> </span> Level</p>') ?></h1>
   
-        <p class="roots-hero__subcopy anima fade" data-anima-delay="18"><?= h(tr('home.hero.subcopy', 'Our agency prides itself on helping you take your business to the next level.')) ?></p>
+        <p class="body anima fade" data-anima-delay="18"><?= h(tr('home.hero.subcopy', 'Our agency prides itself on helping you take your business to the next level.')) ?></p>
         
     </div>
     

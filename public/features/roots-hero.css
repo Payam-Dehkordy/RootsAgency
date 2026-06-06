@@ -1,15 +1,10 @@
 /*
- * Hero (#home-header) — single source of truth.
- * Locale-isolated: layout + headline stay EN-sized on all langs so spacing matches /.
- * Subcopy text may scale on hy/ru; margins/splits/transforms never do.
- * Loads last (after locale type-scale) so template + generated rules cannot override.
+ * Hero (#home-header) — layout only (spacing, splits, video priming visibility).
+ * Font sizes: global locale scale via roots-locale-type-scale.css (no per-section exceptions here).
+ * Loads last so layout tokens beat template defaults.
  */
 
 #home-header.roots-hero {
-    --roots-hero-heading-size: 12rem;
-    --roots-hero-heading-size-mobile: 7rem;
-    --roots-hero-subcopy-size: 2rem;
-    --roots-hero-subcopy-size-compact: 1.75rem;
     --roots-hero-subcopy-margin-top: 18rem;
     --roots-hero-subcopy-margin-top-mobile: 12rem;
     --roots-hero-subcopy-margin-top-short: 7rem;
@@ -25,7 +20,6 @@
     --roots-hero-subcopy-width-mobile: min(24.2rem, 92vw);
 }
 
-/* Video cards — hide until first frame is primed (roots-hero-video.js) */
 #home-header.roots-hero .homeHeader__mediaCard:not(.is-ready) {
     opacity: 0;
     visibility: hidden;
@@ -63,15 +57,13 @@
     justify-content: flex-start;
     margin: 0;
     width: 100%;
-    font-size: var(--roots-hero-heading-size);
 }
 
-#home-header.roots-hero .roots-hero__subcopy {
+#home-header.roots-hero .homeHeader__content .body {
     flex: 0 0 auto;
     width: var(--roots-hero-subcopy-width);
     max-width: 100%;
     margin: var(--roots-hero-subcopy-margin-top) auto 0;
-    font-size: var(--roots-hero-subcopy-size);
     line-height: inherit;
 }
 
@@ -98,10 +90,6 @@
 
 @media screen and (orientation: portrait) and (max-width: 800px),
     screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px) {
-    #home-header.roots-hero .homeHeader__heading {
-        font-size: var(--roots-hero-heading-size-mobile);
-    }
-
     #home-header.roots-hero .homeHeader__heading p:nth-child(2) {
         margin-top: var(--roots-hero-line2-margin-top-mobile);
         -webkit-transform: translateY(var(--roots-hero-line2-nudge-y-mobile));
@@ -119,12 +107,11 @@
         padding: 0 2rem;
     }
 
-    #home-header.roots-hero .roots-hero__subcopy {
+    #home-header.roots-hero .homeHeader__content .body {
         width: var(--roots-hero-subcopy-width-mobile);
         margin-top: var(--roots-hero-subcopy-margin-top-mobile);
         -webkit-transform: translateY(var(--roots-hero-subcopy-nudge-y-mobile));
         transform: translateY(var(--roots-hero-subcopy-nudge-y-mobile));
-        font-size: var(--roots-hero-subcopy-size-compact);
         line-height: 1.25;
     }
 }
@@ -134,40 +121,15 @@
         top: var(--roots-hero-content-top-short);
     }
 
-    #home-header.roots-hero .roots-hero__subcopy {
+    #home-header.roots-hero .homeHeader__content .body {
         margin-top: var(--roots-hero-subcopy-margin-top-mobile);
-        font-size: var(--roots-hero-subcopy-size-compact);
     }
 }
 
 @media screen and (max-height: 600px) {
-    #home-header.roots-hero .roots-hero__subcopy {
+    #home-header.roots-hero .homeHeader__content .body {
         margin-top: var(--roots-hero-subcopy-margin-top-short);
         -webkit-transform: none;
         transform: none;
-    }
-}
-
-/* hy/ru: smaller subcopy text only — layout tokens above stay EN */
-html[lang="hy"] #home-header.roots-hero .roots-hero__subcopy {
-    font-size: calc(var(--roots-hero-subcopy-size) * var(--roots-type-scale, 1));
-}
-
-html[lang="ru"] #home-header.roots-hero .roots-hero__subcopy {
-    font-size: calc(var(--roots-hero-subcopy-size) * var(--roots-type-scale, 1));
-}
-
-@media screen and (orientation: portrait) and (max-width: 800px),
-    screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px) {
-    html[lang="hy"] #home-header.roots-hero .roots-hero__subcopy,
-    html[lang="ru"] #home-header.roots-hero .roots-hero__subcopy {
-        font-size: calc(var(--roots-hero-subcopy-size-compact) * var(--roots-type-scale, 1));
-    }
-}
-
-@media screen and (max-height: 700px) and (min-width: 800px) {
-    html[lang="hy"] #home-header.roots-hero .roots-hero__subcopy,
-    html[lang="ru"] #home-header.roots-hero .roots-hero__subcopy {
-        font-size: calc(var(--roots-hero-subcopy-size-compact) * var(--roots-type-scale, 1));
     }
 }
