@@ -29,6 +29,7 @@ foreach ([
     'public/features/roots-theme.css',
     'public/features/roots-hero-video.js',
     'public/features/roots-scroll-top.js',
+    'public/features/roots-nav-scroll.js',
     'public/features/roots-work-slider.js',
     'app/Views/pages/home/rhythm-influence-body.html',
     'dev/template-source/rhythm-influence-home.raw.html',
