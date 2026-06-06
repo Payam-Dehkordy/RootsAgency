@@ -24,4 +24,5 @@ return [
         'maps_url' => 'https://www.google.com/maps/search/Vazgen+Sargsyan+26%2F3+Yerevan',
         'timezone' => 4,
     ],
+    'footer_credit_html' => 'Web design &amp; development by <a href="https://www.payam-dehkordy.com/" target="_blank" rel="noopener noreferrer">Payam&nbsp;Dehkordy</a>',
 ];

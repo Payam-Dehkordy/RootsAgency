@@ -382,15 +382,41 @@
 }
 
 .roots-page-end .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: relative;
     flex: 0 0 auto;
     margin-top: auto !important;
-    padding: clamp(2rem, 4vh, 5rem) 5rem clamp(2.5rem, 5vh, 6rem) !important;
+    padding: clamp(2rem, 4vh, 4rem) 5rem clamp(2rem, 3vh, 3rem) !important;
     min-height: 0 !important;
     overflow: visible;
 }
 
+.roots-page-end .footer__mainLinks {
+    flex: 0 0 auto;
+    margin-bottom: clamp(2rem, 3.5vh, 4rem);
+    overflow: hidden;
+}
+
+.roots-page-end .footer__mainLinks::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
 .roots-page-end .footer__mainLink {
     font-size: clamp(2.2rem, 3.8vh, 3.6rem) !important;
+}
+
+.roots-page-end .footer__socialLinks {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    flex: 0 0 auto;
+    align-self: flex-end;
+    margin-top: 0 !important;
+    margin-bottom: clamp(2rem, 3.5vh, 4rem);
 }
 
 .roots-page-end .footer__socialLink {
@@ -398,7 +424,28 @@
 }
 
 .roots-page-end .footer__bottom {
+    position: static !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    flex: 0 0 auto;
+    margin-top: auto;
+    padding: clamp(1.2rem, 2vh, 2rem) 0 0 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
     font-size: clamp(1rem, 1.4vh, 1.2rem);
+    justify-content: flex-start;
+}
+
+.roots-page-end .footer__bottom .roots-footer-credit a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s linear;
+}
+
+@media (hover: hover) {
+    .roots-page-end .footer__bottom .roots-footer-credit a:hover {
+        color: var(--roots-brand-accent);
+    }
 }
 
 @media screen and (orientation: portrait) and (max-width: 800px),
@@ -418,7 +465,24 @@
     }
 
     .roots-page-end .footer {
-        padding: clamp(1.6rem, 3vh, 3rem) 1.6rem clamp(2rem, 4vh, 4rem) !important;
+        padding: clamp(1.6rem, 3vh, 3rem) 1.6rem clamp(1.6rem, 2.5vh, 2.5rem) !important;
+    }
+
+    .roots-page-end .footer__mainLinks {
+        margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+    }
+
+    .roots-page-end .footer__socialLinks {
+        align-self: flex-start;
+        margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+    }
+
+    .roots-page-end .footer__bottom {
+        flex-direction: row;
+    }
+
+    .roots-page-end .footer__bottom > :first-child {
+        display: block !important;
     }
 
     .roots-page-end .footer__mainLink {

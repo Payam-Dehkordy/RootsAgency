@@ -75,7 +75,7 @@ Source: client Facebook exports → `dev/build-work-slider.py` (copy + ffmpeg po
 | `public/media/images/services/roots-agency-services-team.webp` | Services sticky background (1440×1000) |
 | `public/media/images/services/roots-agency-services-team@2x.webp` | Retina variant |
 
-Source: client team photo → ImageMagick crop/resize to WebP.
+Source: client photo `468983779_17938728398929883_8264349144762751281_n.jpg` → ImageMagick crop/resize to WebP (1440×1000 / 2880×2000).
 
 ### Our team section (local)
 
@@ -93,7 +93,7 @@ Source: [rootsagency.am](https://rootsagency.am/) team slider → `dev/build-tea
 | `public/media/images/contact/roots-agency-contact-hero@2x.webp` | Retina (2×) |
 | `public/ui/time_icon.svg` | Yerevan studio local time badge |
 
-Source: [Rhythm Influence contact page](https://www.rhythminfluence.com/contact) → `dev/sync-contact-assets.py`. Form posts to `/` (`app/Handlers/contact-form.php`).
+Source: client photo `484569245_617237684628380_6964635661658969114_n.jpg` → WebP 380×280 / 760×560 (template contact window size). Template reference: [Rhythm Influence contact page](https://www.rhythminfluence.com/contact). Form posts to `/` (`app/Handlers/contact-form.php`).
 
 ## Nav sizing
 
