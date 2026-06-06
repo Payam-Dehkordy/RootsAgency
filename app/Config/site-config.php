@@ -8,6 +8,7 @@ return [
     'base_url' => 'https://roots-agency.payam-dehkordy.com',
     'template_reference' => 'https://www.rhythminfluence.com/',
     'logo_relative' => '/media/images/brand/roots-agency-logo.svg',
+    'favicon_relative' => '/media/images/brand/roots-agency-favicon.svg',
     'brand_color_primary' => '#011F39',
     'brand_color_primary_rgb' => '1, 31, 57',
     'template_asset_version' => '7c85f98c63f5e1f89737e800920875f74ad6abf9',

@@ -48,6 +48,8 @@ if (!is_readable($bodyPath)) {
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-brand.css')) ?>">
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-theme.css')) ?>">
   <meta name="theme-color" content="<?= h((string) ($site['brand_color_primary'] ?? '#011F39')) ?>">
+
+  <link rel="icon" href="<?= h(asset((string) ($site['favicon_relative'] ?? '/media/images/brand/roots-agency-favicon.svg'))) ?>" type="image/svg+xml">
 <?php if ($isLocalPreview): ?>
   <script>
     (() => {

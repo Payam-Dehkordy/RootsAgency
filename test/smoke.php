@@ -10,6 +10,7 @@ foreach ([
     'public/dist/scripts.min.js',
     'public/ui/button_arrow.svg',
     'public/media/images/brand/roots-agency-logo.svg',
+    'public/media/images/brand/roots-agency-favicon.svg',
     'public/features/roots-brand.css',
     'public/features/roots-theme.css',
     'app/Views/pages/home/rhythm-influence-body.html',

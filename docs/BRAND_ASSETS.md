@@ -18,8 +18,8 @@ Template accent colors (Rhythm Influence — unchanged in phase 1): `#bb70ad`, `
 
 | File | Use |
 |------|-----|
-| `public/media/images/brand/roots-agency-logo.svg` | Full lockup (wordmark + tagline) — used in nav |
-| `public/media/images/brand/roots-agency-logo-nav.svg` | Optional wordmark-only crop (not used by default) |
+| `public/media/images/brand/roots-agency-logo.svg` | Full lockup (wordmark + tagline) — nav |
+| `public/media/images/brand/roots-agency-favicon.svg` | O-root mark — transparent, `#F5F5F5` fill |
 
 Source: client-provided `Clients/logo.svg` (light `#F5F5F5` paths on transparent — suited to dark nav chrome).
 
