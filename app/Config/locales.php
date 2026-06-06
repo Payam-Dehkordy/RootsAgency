@@ -8,7 +8,8 @@ declare(strict_types=1);
  *   default: string,
  *   prefix: array<string, string>,
  *   html_lang: array<string, string>,
- *   text_direction: array<string, string>
+ *   text_direction: array<string, string>,
+ *   og_locale: array<string, string>
  * }
  */
 return [
@@ -26,5 +27,10 @@ return [
         'en' => 'ltr',
         'hy' => 'ltr',
         'ru' => 'ltr',
+    ],
+    'og_locale' => [
+        'en' => 'en_US',
+        'hy' => 'hy_AM',
+        'ru' => 'ru_RU',
     ],
 ];

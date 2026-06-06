@@ -4,10 +4,10 @@ declare(strict_types=1);
 /** @var array $site */
 $pageKey = (string) ($GLOBALS['page_key'] ?? 'home');
 $langSwitch = language_switcher_entries($site, $pageKey);
-$langNavAria = h(tr('common.language_nav', 'Languages'));
+$langNavAria = h(tr('common.language_nav'));
 $home = h(localized_path('/'));
-$brandAlt = h(tr('common.brand_alt', 'Roots Agency logo'));
-$logoAria = h(tr('common.logo_home_aria', 'Roots Agency home'));
+$brandAlt = h(tr('common.brand_alt'));
+$logoAria = h(tr('common.logo_home_aria'));
 
 $renderLangSwitchLink = static function (array $entry): void {
     $label = h((string) $entry['label']);
@@ -15,17 +15,17 @@ $renderLangSwitchLink = static function (array $entry): void {
 };
 
 $navLinks = [
-    ['href' => '#company', 'key' => 'nav.company', 'default' => 'Company'],
-    ['href' => '#slider-cards', 'key' => 'nav.our_work', 'default' => 'Our Work'],
-    ['href' => '#services', 'key' => 'nav.services', 'default' => 'Services'],
-    ['href' => '#team', 'key' => 'nav.our_team', 'default' => 'Our Team'],
-    ['href' => '#contact', 'key' => 'nav.contact', 'default' => 'Contact'],
+    ['href' => '#company', 'key' => 'nav.company'],
+    ['href' => '#slider-cards', 'key' => 'nav.our_work'],
+    ['href' => '#services', 'key' => 'nav.services'],
+    ['href' => '#team', 'key' => 'nav.our_team'],
+    ['href' => '#contact', 'key' => 'nav.contact'],
 ];
 
 $socialLinks = [
-    ['href' => (string) ($site['social']['instagram'] ?? ''), 'key' => 'nav.instagram', 'default' => 'Instagram'],
-    ['href' => (string) ($site['social']['facebook'] ?? ''), 'key' => 'nav.facebook', 'default' => 'Facebook'],
-    ['href' => (string) ($site['social']['linkedin'] ?? ''), 'key' => 'nav.linkedin', 'default' => 'LinkedIn'],
+    ['href' => (string) ($site['social']['instagram'] ?? ''), 'key' => 'nav.instagram'],
+    ['href' => (string) ($site['social']['facebook'] ?? ''), 'key' => 'nav.facebook'],
+    ['href' => (string) ($site['social']['linkedin'] ?? ''), 'key' => 'nav.linkedin'],
 ];
 ?>
 <nav class="nav" id="nav">
@@ -39,9 +39,9 @@ $socialLinks = [
           />
         </a>
 
-        <div class="nav__links" aria-label="<?= h(tr('common.primary_nav', 'Primary')) ?>">
+        <div class="nav__links" aria-label="<?= h(tr('common.primary_nav')) ?>">
 <?php foreach ($navLinks as $item): ?>
-          <?php roots_render_flip_link((string) $item['href'], (string) $item['key'], (string) $item['default'], 'link nav__link flipLink'); ?>
+          <?php roots_render_flip_link((string) $item['href'], (string) $item['key'], 'link nav__link flipLink'); ?>
 
 <?php endforeach; ?>
         </div>
@@ -57,7 +57,7 @@ $socialLinks = [
         </div>
 
         <div class="nav__toggle" id="nav-toggle">
-            <span><span><?= h(tr('common.menu', 'Menu')) ?></span></span>
+            <span><span><?= h(tr('common.menu')) ?></span></span>
         </div>
     </div>
 
@@ -69,14 +69,14 @@ $socialLinks = [
 
             <div class="nav__menuLinks">
 <?php foreach ($navLinks as $item): ?>
-          <?php roots_render_flip_link((string) $item['href'], (string) $item['key'], (string) $item['default'], 'link nav__menuLink'); ?>
+          <?php roots_render_flip_link((string) $item['href'], (string) $item['key'], 'link nav__menuLink'); ?>
 
 <?php endforeach; ?>
             </div>
 
             <div class="nav__menuSocial">
 <?php foreach ($socialLinks as $item): ?>
-          <?php roots_render_flip_link((string) $item['href'], (string) $item['key'], (string) $item['default'], 'link nav__socialLink', true); ?>
+          <?php roots_render_flip_link((string) $item['href'], (string) $item['key'], 'link nav__socialLink', true); ?>
 
 <?php endforeach; ?>
             </div>

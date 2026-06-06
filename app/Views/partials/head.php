@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 $page_key = $GLOBALS['page_key'] ?? ($page_key ?? 'home');
 $include_hreflang = $GLOBALS['include_hreflang'] ?? false;
-$assetVersion = (string) ($site['template_asset_version'] ?? '7c85f98c63f5e1f89737e800920875f74ad6abf9');
-$host = (string) ($_SERVER['HTTP_HOST'] ?? '');
-$isLocalPreview = str_contains($host, '127.0.0.1') || str_contains($host, 'localhost');
 ?>
 <!doctype html>
 <html class="roots-locale-<?= h(current_locale()) ?>  is-animating" lang="<?= h(locale_html_lang()) ?>" dir="<?= h(locale_text_direction()) ?>" data-roots-locale-home-prefixes="<?= h(roots_locale_path_prefixes_csv()) ?>">
@@ -21,7 +18,7 @@ $isLocalPreview = str_contains($host, '127.0.0.1') || str_contains($host, 'local
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="<?= h(roots_google_fonts_css_url()) ?>" rel="stylesheet">
 
-  <title><?= h($page_title ?? 'Roots Agency') ?></title>
+  <title><?= h($page_title ?? tr('pages.home.title')) ?></title>
   <meta name="description" content="<?= h($meta_description ?? '') ?>">
   <link rel="canonical" href="<?= h($canonical_url ?? '') ?>">
 <?php if (isset($site)): ?>
@@ -34,11 +31,11 @@ $isLocalPreview = str_contains($host, '127.0.0.1') || str_contains($host, 'local
 <?php endforeach; ?>
 <?php endif; ?>
 
-  <link rel="preload" href="<?= h(asset('/dist/scripts.min.js?v=' . $assetVersion)) ?>" as="script">
-  <link rel="preload" href="<?= h(asset('/dist/style.min.css?v=' . $assetVersion)) ?>" as="style">
+  <link rel="preload" href="<?= h(template_asset('/dist/scripts.min.js')) ?>" as="script">
+  <link rel="preload" href="<?= h(template_asset('/dist/style.min.css')) ?>" as="style">
   <link rel="preload" href="<?= h(asset('/fonts/WorkhorseScriptTest-Display.woff2')) ?>" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="<?= h(asset('/fonts/aeonik-regular.woff2')) ?>" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" type="text/css" href="<?= h(asset('/dist/style.min.css?v=' . $assetVersion)) ?>">
+  <link rel="stylesheet" type="text/css" href="<?= h(template_asset('/dist/style.min.css')) ?>">
 
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-brand.css')) ?>">
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-theme.css')) ?>">
@@ -57,7 +54,7 @@ $isLocalPreview = str_contains($host, '127.0.0.1') || str_contains($host, 'local
     }
   </script>
   <?= $extra_head ?? '' ?>
-<?php if ($isLocalPreview): ?>
+<?php if (roots_is_local_preview()): ?>
   <script>
     (() => {
       try {

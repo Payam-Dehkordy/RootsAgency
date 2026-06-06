@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-require __DIR__ . '/../app/Support/bootstrap.php';
+require __DIR__ . '/../app/Support/app-init.php';
 
 bootstrap_public_page($site, 'home');
 
@@ -10,9 +10,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && (($_POST['action'] ?? '') =
     exit;
 }
 
-$host = $_SERVER['HTTP_HOST'] ?? '';
-$isLocalPreview = str_contains($host, '127.0.0.1') || str_contains($host, 'localhost');
-if ($isLocalPreview) {
+if (roots_is_local_preview()) {
     header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
     header('Pragma: no-cache');
 }

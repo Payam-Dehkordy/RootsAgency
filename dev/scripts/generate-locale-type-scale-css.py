@@ -15,6 +15,7 @@ SKIP_SUBSTRINGS = (
     "cookie",
     "preloader",
     "loader",
+    "homeheader",
 )
 
 

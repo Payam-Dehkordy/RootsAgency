@@ -20,6 +20,23 @@ if (!function_exists('asset')) {
 $site = require __DIR__ . '/../Config/site-config.php';
 require_once __DIR__ . '/site-request-base.php';
 $site = site_config_with_request_base($site);
+$GLOBALS['site'] = $site;
+
+if (!function_exists('roots_is_local_preview')) {
+    function roots_is_local_preview(): bool
+    {
+        return WebHelpers::isLocalPreview();
+    }
+}
+
+if (!function_exists('template_asset')) {
+    function template_asset(string $path): string
+    {
+        $version = (string) (($GLOBALS['site']['template_asset_version'] ?? '') ?: '');
+
+        return asset($version !== '' ? $path . '?v=' . $version : $path);
+    }
+}
 
 require_once __DIR__ . '/page-routes.php';
 require_once __DIR__ . '/locale.php';

@@ -33,8 +33,7 @@ function Get-LatestSourceTicks {
 
   $sourceDirs = @(
     (Join-Path $projectRoot "app"),
-    (Join-Path $projectRoot "public"),
-    (Join-Path $projectRoot "config")
+    (Join-Path $projectRoot "public")
   )
   $maxTicks = 0L
   foreach ($dir in $sourceDirs) {

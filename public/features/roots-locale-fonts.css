@@ -2,13 +2,12 @@
  * Locale typography tokens + stacks.
  * Scale vs EN (NeoGym/BSC parity): hy ~35% smaller (0.65), ru ~40% smaller (0.6).
  * Typography-only: --roots-type-scale on #main via roots-locale-type-scale.css.
- * Design exceptions (hero bands, footer, etc.): add here when specified — none yet.
+ * Hero band: typography + spacing in roots-hero.css (excluded from type-scale generator).
  * Lang switcher: pinned px via --roots-text-lang-link in roots-brand.css.
  */
 
 :root {
     --roots-type-scale: 1;
-    --text-locale-html-font-size: 100%;
 
     --roots-font-body-default: "Archivo", sans-serif;
     --roots-font-body-hy: "Archivo", "Noto Sans Armenian", "Noto Sans", sans-serif;
@@ -20,13 +19,11 @@
 
 html[lang="hy"] {
     --roots-type-scale: 0.65;
-    --text-locale-html-font-size: 65%;
     --roots-font-body: var(--roots-font-body-hy);
 }
 
 html[lang="ru"] {
     --roots-type-scale: 0.6;
-    --text-locale-html-font-size: 60%;
     --roots-font-body: var(--roots-font-body-ru);
 }
 

@@ -9,7 +9,7 @@ if (!function_exists('current_locale')) {
 }
 
 if (!function_exists('locale_config')) {
-    /** @return array{default: string, prefix: array<string, string>, html_lang: array<string, string>, text_direction: array<string, string>} */
+    /** @return array{default: string, prefix: array<string, string>, html_lang: array<string, string>, text_direction: array<string, string>, og_locale: array<string, string>} */
     function locale_config(): array
     {
         static $c;
@@ -145,15 +145,13 @@ if (!function_exists('public_page_url')) {
     }
 }
 
-if (!function_exists('roots_locale_default_label')) {
-    function roots_locale_default_label(string $code): string
+if (!function_exists('roots_og_locale_content')) {
+    function roots_og_locale_content(string $localeCode): string
     {
-        return match ($code) {
-            'en' => 'English',
-            'hy' => 'Հայերեն',
-            'ru' => 'Русский',
-            default => $code,
-        };
+        $cfg = locale_config();
+        $og = (array) ($cfg['og_locale'] ?? []);
+
+        return $og[$localeCode] ?? $og[$cfg['default']] ?? 'en_US';
     }
 }
 
@@ -171,7 +169,7 @@ if (!function_exists('language_switcher_entries')) {
             }
             $out[] = [
                 'href' => public_page_path($pageKey, $code),
-                'label' => tr('lang_switch.' . $code, roots_locale_default_label($code)),
+                'label' => tr('lang_switch.' . $code),
                 'lang' => $cfg['html_lang'][$code] ?? $code,
                 'hreflang' => $code,
             ];

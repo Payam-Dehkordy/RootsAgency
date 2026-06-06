@@ -1,8 +1,6 @@
 /* Roots Agency — replace template black (#000 / #202020) backgrounds with brand navy */
 
 :root {
-    --roots-brand-navy: #011F39;
-    --roots-brand-navy-rgb: 1, 31, 57;
     --roots-brand-accent: #f5f5f5;
 }
 

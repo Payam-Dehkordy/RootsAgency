@@ -47,8 +47,8 @@ if (!function_exists('tr')) {
 
 if (!function_exists('tr_html')) {
     /** Trusted HTML from locale JSON only — never use with user input. */
-    function tr_html(string $key, string $default = ''): string
+    function tr_html(string $key): string
     {
-        return tr($key, $default);
+        return tr($key);
     }
 }

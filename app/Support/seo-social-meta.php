@@ -5,18 +5,6 @@ declare(strict_types=1);
  * Open Graph + Twitter Card tags for HTML pages.
  * Reads {@see bootstrap_public_page} globals: page_title, meta_description, canonical_url, page_key.
  */
-if (!function_exists('roots_og_locale_content')) {
-    function roots_og_locale_content(string $localeCode): string
-    {
-        return match ($localeCode) {
-            'en' => 'en_US',
-            'hy' => 'hy_AM',
-            'ru' => 'ru_RU',
-            default => 'en_US',
-        };
-    }
-}
-
 if (!function_exists('roots_social_meta_html')) {
     function roots_social_meta_html(array $site): string
     {

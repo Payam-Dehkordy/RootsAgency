@@ -8,7 +8,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "public/media/images/team"
-BODY = ROOT / "app/Views/pages/home/rhythm-influence-body.html"
+BODY = ROOT / "app/Views/pages/home/rhythm-influence-body.php"
+# Keep TEAM in sync with app/Data/team-members.php (runtime source of truth).
 BASE_URL = "https://rootsagency.am/storage/team"
 
 TEAM: list[dict[str, str]] = [

@@ -164,7 +164,8 @@ def main() -> None:
     out.write_text(block + "\n", encoding="utf-8")
     print(f"Wrote {out} ({len(WORK_ITEMS)} cards, {INITIAL_VISIBLE} visible)")
 
-    body_path = ROOT / "app/Views/pages/home/rhythm-influence-body.html"
+    body_path = ROOT / "app/Views/pages/home/rhythm-influence-body.php"
+    # Keep WORK_ITEMS in sync with app/Data/work-cards.php (runtime source of truth).
     body = body_path.read_text(encoding="utf-8")
     body = re.sub(r"workSlider__height--\d+", "workSlider__height--6", body, count=1)
     pattern = re.compile(

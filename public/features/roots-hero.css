@@ -1,10 +1,17 @@
 /*
- * Hero (#home-header) — layout only (spacing, splits, video priming visibility).
- * Font sizes: global locale scale via roots-locale-type-scale.css (no per-section exceptions here).
- * Loads last so layout tokens beat template defaults.
+ * Hero (#home-header) — typography + layout as one unit (excluded from roots-locale-type-scale.css).
+ *
+ * Typography scales with --roots-type-scale. Layout tokens that depend on font metrics scale
+ * with the same factor so headline→subcopy spacing matches EN (NeoGym/BSC parity).
+ * Subcopy gap: calc(token / var(--roots-type-scale)) on desktop + mobile margin;
+ * mobile line-2 stack scales with --roots-type-scale (font-coupled transforms).
  */
 
 #home-header.roots-hero {
+    --roots-hero-heading-size: 14rem;
+    --roots-hero-heading-line-height: 0.84;
+    --roots-hero-body-size: 2rem;
+    --roots-hero-body-line-height: 1.2;
     --roots-hero-subcopy-margin-top: 18rem;
     --roots-hero-subcopy-margin-top-mobile: 12rem;
     --roots-hero-subcopy-margin-top-short: 7rem;
@@ -32,6 +39,15 @@
 
 #home-header.roots-hero .homeHeader__mediaCard video.media.vid:not(.init) {
     opacity: 0;
+}
+
+#home-header.roots-hero .homeHeader__heading {
+    font-size: calc(var(--roots-hero-heading-size) * var(--roots-type-scale, 1));
+    line-height: var(--roots-hero-heading-line-height);
+}
+
+#home-header.roots-hero .homeHeader__decoText {
+    font-size: calc(1.1rem * var(--roots-type-scale, 1));
 }
 
 #home-header.roots-hero .homeHeader__content {
@@ -63,8 +79,9 @@
     flex: 0 0 auto;
     width: var(--roots-hero-subcopy-width);
     max-width: 100%;
-    margin: var(--roots-hero-subcopy-margin-top) auto 0;
-    line-height: inherit;
+    font-size: calc(var(--roots-hero-body-size) * var(--roots-type-scale, 1));
+    line-height: var(--roots-hero-body-line-height);
+    margin: calc(var(--roots-hero-subcopy-margin-top) / var(--roots-type-scale, 1)) auto 0;
 }
 
 @media screen and (min-width: 800px) {
@@ -90,10 +107,18 @@
 
 @media screen and (orientation: portrait) and (max-width: 800px),
     screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px) {
+    #home-header.roots-hero .homeHeader__heading {
+        font-size: calc(8rem * var(--roots-type-scale, 1));
+    }
+
+    #home-header.roots-hero .homeHeader__decoText {
+        font-size: calc(1.2rem * var(--roots-type-scale, 1));
+    }
+
     #home-header.roots-hero .homeHeader__heading p:nth-child(2) {
-        margin-top: var(--roots-hero-line2-margin-top-mobile);
-        -webkit-transform: translateY(var(--roots-hero-line2-nudge-y-mobile));
-        transform: translateY(var(--roots-hero-line2-nudge-y-mobile));
+        margin-top: calc(var(--roots-hero-line2-margin-top-mobile) * var(--roots-type-scale, 1));
+        -webkit-transform: translateY(calc(var(--roots-hero-line2-nudge-y-mobile) * var(--roots-type-scale, 1)));
+        transform: translateY(calc(var(--roots-hero-line2-nudge-y-mobile) * var(--roots-type-scale, 1)));
     }
 
     #home-header.roots-hero .homeHeader__mediaCards {
@@ -109,9 +134,9 @@
 
     #home-header.roots-hero .homeHeader__content .body {
         width: var(--roots-hero-subcopy-width-mobile);
-        margin-top: var(--roots-hero-subcopy-margin-top-mobile);
-        -webkit-transform: translateY(var(--roots-hero-subcopy-nudge-y-mobile));
-        transform: translateY(var(--roots-hero-subcopy-nudge-y-mobile));
+        margin-top: calc(var(--roots-hero-subcopy-margin-top-mobile) / var(--roots-type-scale, 1));
+        -webkit-transform: translateY(calc(var(--roots-hero-subcopy-nudge-y-mobile) / var(--roots-type-scale, 1)));
+        transform: translateY(calc(var(--roots-hero-subcopy-nudge-y-mobile) / var(--roots-type-scale, 1)));
         line-height: 1.25;
     }
 }
@@ -122,13 +147,13 @@
     }
 
     #home-header.roots-hero .homeHeader__content .body {
-        margin-top: var(--roots-hero-subcopy-margin-top-mobile);
+        margin-top: calc(var(--roots-hero-subcopy-margin-top-mobile) / var(--roots-type-scale, 1));
     }
 }
 
 @media screen and (max-height: 600px) {
     #home-header.roots-hero .homeHeader__content .body {
-        margin-top: var(--roots-hero-subcopy-margin-top-short);
+        margin-top: calc(var(--roots-hero-subcopy-margin-top-short) / var(--roots-type-scale, 1));
         -webkit-transform: none;
         transform: none;
     }

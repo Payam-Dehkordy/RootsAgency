@@ -11,8 +11,8 @@ function bootstrap_public_page(array $site, string $pageKey): void
     $p = $pages[$pageKey];
     $canonical_path = localized_canonical_path((string) $p['canonical_path']);
     $GLOBALS['page_key'] = $pageKey;
-    $GLOBALS['page_title'] = tr('pages.' . $pageKey . '.title', (string) $p['title']);
-    $GLOBALS['meta_description'] = tr('pages.' . $pageKey . '.meta_description', (string) $p['meta_description']);
+    $GLOBALS['page_title'] = tr('pages.' . $pageKey . '.title');
+    $GLOBALS['meta_description'] = tr('pages.' . $pageKey . '.meta_description');
     $GLOBALS['canonical_url'] = rtrim((string) $site['base_url'], '/') . $canonical_path;
     $GLOBALS['current_nav'] = (string) $p['current_nav'];
     $GLOBALS['include_hreflang'] = !empty($p['include_hreflang']);

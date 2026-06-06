@@ -398,10 +398,10 @@ $localeScaleOk = is_file($root . '/public/features/roots-locale-fonts.css')
     && !str_contains((string) file_get_contents($root . '/public/features/roots-locale-fonts.css'), '--roots-html-vw-desktop')
     && str_contains((string) file_get_contents($root . '/public/features/roots-locale-type-scale.css'), 'html[lang="hy"] #main .body')
     && str_contains((string) file_get_contents($root . '/public/features/roots-locale-type-scale.css'), 'calc(2rem * var(--roots-type-scale))')
-    && str_contains((string) file_get_contents($root . '/public/features/roots-locale-type-scale.css'), 'homeHeader');
+    && !str_contains((string) file_get_contents($root . '/public/features/roots-locale-type-scale.css'), 'homeHeader');
 assert_true(
     $localeScaleOk,
-    'locale type scale applies uniformly to #main including hero (no design exceptions yet)',
+    'locale type scale applies to #main body copy; hero typography lives in roots-hero.css',
     $failures
 );
 
@@ -410,6 +410,8 @@ $heroCss = (string) file_get_contents($root . '/public/features/roots-hero.css')
 $localeFontsCss = (string) file_get_contents($root . '/public/features/roots-locale-fonts.css');
 $heroBody = (string) file_get_contents($root . '/app/Views/pages/home/rhythm-influence-body.php');
 $heroLayoutOk = str_contains($heroCss, '--roots-hero-subcopy-margin-top: 18rem')
+    && str_contains($heroCss, '/ var(--roots-type-scale, 1)')
+    && str_contains($heroCss, 'calc(var(--roots-hero-heading-size) * var(--roots-type-scale, 1))')
     && str_contains($heroCss, '#home-header.roots-hero .homeHeader__content .body')
     && !str_contains($heroCss, 'html[lang="hy"]')
     && !str_contains($localeFontsCss, 'roots-page-end')
@@ -419,7 +421,7 @@ $heroLayoutOk = str_contains($heroCss, '--roots-hero-subcopy-margin-top: 18rem')
     && strpos($headPhp, 'roots-locale-fonts.css') < strpos($headPhp, 'roots-hero.css');
 assert_true(
     $heroLayoutOk,
-    'hero layout-only in roots-hero.css; no locale font exceptions in locale-fonts.css',
+    'hero typography + EN-matched spacing in roots-hero.css only (excluded from locale-type-scale)',
     $failures
 );
 

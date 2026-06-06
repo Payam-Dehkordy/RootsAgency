@@ -45,10 +45,9 @@ if ($raw -match '(?s)<body>(.*)</body>') {
     $body = $body -replace '(?s)<!-- Start of HubSpot Embed Code -->.*?<!-- End of HubSpot Embed Code -->', ''
     $body = $body -replace 'https://rhythm-influence\.files\.svdcdn\.com/staging/Partner-Logo-W\.svg\?[^"]+', '/media/images/brand/roots-agency-logo.svg'
     $body = $body -replace 'alt="Nav logo"', 'alt="Roots Agency logo"'
-    $bodyPath = Join-Path $root 'app\Views\pages\home\rhythm-influence-body.html'
+    $bodyPath = Join-Path $src 'rhythm-influence-body.fragment.html'
     [System.IO.File]::WriteAllText($bodyPath, $body)
-    [System.IO.File]::WriteAllText((Join-Path $src 'rhythm-influence-body.fragment.html'), $body)
-    Write-Host "Wrote body fragment ($($body.Length) chars)"
+    Write-Host "Wrote template body fragment ($($body.Length) chars) — edit app/Views/pages/home/rhythm-influence-body.php for runtime"
 }
 
 if ($DownloadMedia) {

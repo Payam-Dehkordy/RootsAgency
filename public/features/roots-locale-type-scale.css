@@ -120,16 +120,6 @@ html[lang="ru"] #main .footer__bottom {
     font-size: calc(1rem * var(--roots-type-scale));
 }
 
-html[lang="hy"] #main .homeHeader__heading,
-html[lang="ru"] #main .homeHeader__heading {
-    font-size: calc(14rem * var(--roots-type-scale));
-}
-
-html[lang="hy"] #main .homeHeader__decoText,
-html[lang="ru"] #main .homeHeader__decoText {
-    font-size: calc(1.1rem * var(--roots-type-scale));
-}
-
 html[lang="hy"] #main .shortHeader__heading,
 html[lang="ru"] #main .shortHeader__heading {
     font-size: calc(14rem * var(--roots-type-scale));
@@ -354,16 +344,6 @@ html[lang="ru"] #main .footer__mainLink {
 html[lang="hy"] #main .footer__socialLink,
 html[lang="ru"] #main .footer__socialLink {
     font-size: calc(1.5rem * var(--roots-type-scale));
-}
-
-html[lang="hy"] #main .homeHeader__heading,
-html[lang="ru"] #main .homeHeader__heading {
-    font-size: calc(8rem * var(--roots-type-scale));
-}
-
-html[lang="hy"] #main .homeHeader__decoText,
-html[lang="ru"] #main .homeHeader__decoText {
-    font-size: calc(1.2rem * var(--roots-type-scale));
 }
 
 html[lang="hy"] #main .shortHeader__heading,
