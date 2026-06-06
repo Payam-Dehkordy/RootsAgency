@@ -25,4 +25,9 @@ return [
         'timezone' => 4,
     ],
     'footer_credit_html' => 'Web design &amp; development by <a href="https://www.payam-dehkordy.com/" target="_blank" rel="noopener noreferrer">Payam&nbsp;Dehkordy</a>',
+    'social' => [
+        'instagram' => 'https://www.instagram.com/roots_marketing_agency_/',
+        'facebook' => 'https://www.facebook.com/rootsagencyam',
+        'linkedin' => 'https://www.linkedin.com/company/roots-marketing-agency/posts/?feedView=all',
+    ],
 ];

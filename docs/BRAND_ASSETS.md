@@ -105,4 +105,4 @@ Black → navy mapping lives in `public/features/roots-theme.css` (loaded after 
 
 ## Still template (phase 1)
 
-Hero headline, subcopy, hero videos, **media sentence**, **previous work slider**, **services**, **our team**, and **contact** are **Roots Agency**. Footer legal line remains **Rhythm Influence** template content until phase 2.
+Hero headline, subcopy, hero videos, **media sentence**, **previous work slider**, **services**, **our team**, **contact**, and **footer social links** are **Roots Agency**. Footer credit line is Payam Dehkordy signature.

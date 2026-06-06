@@ -27,6 +27,7 @@ foreach ([
     'public/media/images/team/roots-agency-team-janna-taroyan.webp',
     'public/media/images/contact/roots-agency-contact-hero.webp',
     'public/media/images/contact/roots-agency-contact-hero@2x.webp',
+    'public/media/images/footer/roots-agency-footer-instagram.webp',
     'public/ui/time_icon.svg',
     'app/Handlers/contact-form.php',
     'dev/sync-contact-assets.py',
