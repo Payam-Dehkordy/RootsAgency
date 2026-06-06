@@ -50,6 +50,9 @@ if (!is_readable($bodyPath)) {
   <meta name="theme-color" content="<?= h((string) ($site['brand_color_primary'] ?? '#011F39')) ?>">
 
   <link rel="icon" href="<?= h(asset((string) ($site['favicon_relative'] ?? '/media/images/brand/roots-agency-favicon.svg'))) ?>" type="image/svg+xml">
+<?php for ($heroVideo = 1; $heroVideo <= 4; $heroVideo++): ?>
+  <link rel="preload" href="<?= h(asset(sprintf('/media/video/hero/roots-agency-hero-%02d.mp4', $heroVideo))) ?>" as="video" type="video/mp4">
+<?php endfor; ?>
 <?php if ($isLocalPreview): ?>
   <script>
     (() => {

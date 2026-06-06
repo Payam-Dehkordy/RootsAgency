@@ -14,6 +14,16 @@ CSS variables (in `public/features/roots-brand.css` and `roots-theme.css`):
 
 Template accent colors (Rhythm Influence — unchanged in phase 1): `#bb70ad`, `#8ec6b5`, `#d6d6d6` menu overlay, etc.
 
+## Slogan & hero copy
+
+| Key | Text | Use |
+|-----|------|-----|
+| **Slogan** | Your Business Next Level | Hero `h1` |
+| **Detailed** | Our agency prides itself on helping you take your business to the next level. | Hero subcopy, `meta_description` |
+| Logo tagline | Marketing and Creative | Nav logo SVG only |
+
+Canonical doc: `content/COPY.md`. Config keys: `tagline_slogan`, `tagline_detailed` in `app/Config/site-config.php`.
+
 ## Logo
 
 | File | Use |
@@ -21,7 +31,13 @@ Template accent colors (Rhythm Influence — unchanged in phase 1): `#bb70ad`, `
 | `public/media/images/brand/roots-agency-logo.svg` | Full lockup (wordmark + tagline) — nav |
 | `public/media/images/brand/roots-agency-favicon.svg` | O-root mark — transparent, `#F5F5F5` fill |
 
-Source: client-provided `Clients/logo.svg` (light `#F5F5F5` paths on transparent — suited to dark nav chrome).
+### Hero video (local)
+
+| File | Use |
+|------|-----|
+| `public/media/video/hero/roots-agency-hero-01.mp4` … `04.mp4` | Homepage hero column videos |
+
+Source: client Facebook exports (originals kept outside repo until needed for phase 2).
 
 ## Nav sizing
 
@@ -33,4 +49,4 @@ Black → navy mapping lives in `public/features/roots-theme.css` (loaded after 
 
 ## Still template (phase 1)
 
-Homepage body copy, case studies, and footer legal line remain **Rhythm Influence** template content until Roots copy replaces them in phase 2.
+Hero headline, subcopy, and hero videos are **Roots Agency**. Case studies, media sentence, services blocks, and footer legal line remain **Rhythm Influence** template content until phase 2.

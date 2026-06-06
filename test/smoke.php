@@ -11,8 +11,13 @@ foreach ([
     'public/ui/button_arrow.svg',
     'public/media/images/brand/roots-agency-logo.svg',
     'public/media/images/brand/roots-agency-favicon.svg',
+    'public/media/video/hero/roots-agency-hero-01.mp4',
+    'public/media/video/hero/roots-agency-hero-02.mp4',
+    'public/media/video/hero/roots-agency-hero-03.mp4',
+    'public/media/video/hero/roots-agency-hero-04.mp4',
     'public/features/roots-brand.css',
     'public/features/roots-theme.css',
+    'public/features/roots-hero-video.js',
     'app/Views/pages/home/rhythm-influence-body.html',
     'dev/template-source/rhythm-influence-home.raw.html',
 ] as $rel) {

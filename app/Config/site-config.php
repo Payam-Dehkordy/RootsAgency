@@ -13,5 +13,7 @@ return [
     'brand_color_primary_rgb' => '1, 31, 57',
     'template_asset_version' => '7c85f98c63f5e1f89737e800920875f74ad6abf9',
     'page_title' => 'Roots Agency | Marketing & Creative Studio',
-    'meta_description' => 'Roots Agency — Yerevan marketing and creative studio. Concept site built on the Rhythm Influence template for partnership demo.',
+    'tagline_slogan' => 'Your Business Next Level',
+    'tagline_detailed' => 'Our agency prides itself on helping you take your business to the next level.',
+    'meta_description' => 'Our agency prides itself on helping you take your business to the next level. Roots Agency — marketing and creative studio in Yerevan.',
 ];
