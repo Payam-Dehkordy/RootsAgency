@@ -17,6 +17,10 @@ foreach ([
     'public/media/video/hero/roots-agency-hero-02.mp4',
     'public/media/video/hero/roots-agency-hero-03.mp4',
     'public/media/video/hero/roots-agency-hero-04.mp4',
+    'public/media/video/work/roots-agency-work-01.mp4',
+    'public/media/video/work/roots-agency-work-10.mp4',
+    'public/media/images/work/roots-agency-work-01.webp',
+    'public/media/images/work/roots-agency-work-10.webp',
     'public/media/images/home/roots-agency-media-sentence-01.webp',
     'public/media/images/home/roots-agency-media-sentence-01@2x.webp',
     'public/media/images/home/roots-agency-media-sentence-05.webp',
@@ -24,6 +28,7 @@ foreach ([
     'public/features/roots-brand.css',
     'public/features/roots-theme.css',
     'public/features/roots-hero-video.js',
+    'public/features/roots-work-slider.js',
     'app/Views/pages/home/rhythm-influence-body.html',
     'dev/template-source/rhythm-influence-home.raw.html',
 ] as $rel) {

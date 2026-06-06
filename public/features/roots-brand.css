@@ -9,6 +9,31 @@
     font-style: normal;
 }
 
+/* Prevent browser scroll anchoring when cards are inserted into the sticky slider */
+.workSlider {
+    overflow-anchor: none;
+}
+
+/* Previous work — "See more" CTA must receive clicks (template disables pointer events on CTA card) */
+.workCard--cta.workCard--seeMore {
+    pointer-events: auto;
+}
+
+.workCard--cta.workCard--seeMore .workCard__media {
+    pointer-events: auto;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    text-align: inherit;
+}
+
 /* Equal top/bottom space in nav — centered in .nav__bar (8.8rem desktop, 7.5rem mobile) */
 
 .nav__logo {

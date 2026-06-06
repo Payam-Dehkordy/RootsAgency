@@ -59,6 +59,15 @@ Source: client JPG exports → ImageMagick (`124×88` / `248×176`, quality 86).
 
 Logo source: client-provided `Clients/logo.svg` (light `#F5F5F5` paths on transparent — suited to dark nav chrome).
 
+### Previous work slider (local)
+
+| File | Use |
+|------|-----|
+| `public/media/video/work/roots-agency-work-01.mp4` … `10.mp4` | Case study scroll videos |
+| `public/media/images/work/roots-agency-work-01.webp` … `10.webp` | Card posters (320×560 WebP) |
+
+Source: client Facebook exports → `dev/build-work-slider.py` (copy + ffmpeg poster frame).
+
 ## Nav sizing
 
 Vertically centered in the nav bar with **equal top/bottom gap** — `6rem` logo in `8.8rem` bar (desktop), `4rem` in `7.5rem` bar (mobile). Overrides template `margin-top: -0.5rem` which optically shifted the single-line Rhythm logo up.
@@ -69,4 +78,4 @@ Black → navy mapping lives in `public/features/roots-theme.css` (loaded after 
 
 ## Still template (phase 1)
 
-Hero headline, subcopy, hero videos, and **media sentence** are **Roots Agency**. Case studies, services blocks, and footer legal line remain **Rhythm Influence** template content until phase 2.
+Hero headline, subcopy, hero videos, **media sentence**, and **previous work slider** are **Roots Agency**. Services blocks and footer legal line remain **Rhythm Influence** template content until phase 2.
