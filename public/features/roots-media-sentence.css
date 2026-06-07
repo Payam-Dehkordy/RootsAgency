@@ -1,41 +1,7 @@
 /*
- * Company section (#company) — inline images between words, balanced rows.
+ * Company (#company) — window reveal sizing only; layout comes from locale HTML structure.
  */
 
-#company .mediaSentence__sentence p > span.roots-ms-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: baseline;
-    column-gap: 0.12em;
-    row-gap: 0.08em;
-    max-width: 100%;
-}
-
-#company .mediaSentence__sentence p > span.roots-ms-row .window {
-    flex: 0 0 auto;
-}
-
-#company .mediaSentence__sentence p > span.roots-ms-row--img-left {
-    justify-content: flex-start;
-    padding-inline-start: clamp(0.5rem, 4vw, 2rem);
-}
-
-#company .mediaSentence__sentence p > span.roots-ms-row--img-right {
-    justify-content: flex-end;
-    padding-inline-end: clamp(0.5rem, 4vw, 2rem);
-}
-
-@media screen and (orientation: portrait) and (max-width: 800px),
-    screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px) {
-    #company .mediaSentence__sentence p > span.roots-ms-row--img-left,
-    #company .mediaSentence__sentence p > span.roots-ms-row--img-right {
-        justify-content: center;
-        padding-inline: 0;
-    }
-}
-
-/* Desktop pal-reveal: windows are direct children (not span.m) — show when section reveals */
 #company .h-reveal.in .window,
 #company .mediaSentence__sentence.in .window {
     width: 12.4rem;
@@ -47,11 +13,5 @@
     #company .h-reveal.in .window,
     #company .mediaSentence__sentence.in .window {
         width: 4.7rem;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    #company .mediaSentence__sentence p > span.roots-ms-row .window {
-        transition: none;
     }
 }

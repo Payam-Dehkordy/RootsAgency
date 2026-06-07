@@ -494,10 +494,10 @@ assert_true(
 $mediaSentenceCss = (string) file_get_contents($root . '/public/features/roots-media-sentence.css');
 $enLangRaw = (string) file_get_contents($root . '/app/Lang/en.json');
 $mediaSentenceOk = str_contains($headPhp, 'roots-media-sentence.css')
-    && is_file($root . '/app/Support/media-sentence-layout.php')
-    && str_contains($mediaSentenceCss, 'roots-ms-row')
-    && str_contains($enLangRaw, 'PR {{img2}} agency')
-    && !preg_match('/<p>\s*\{\{img/u', $enLangRaw);
+    && !is_file($root . '/app/Support/media-sentence-layout.php')
+    && !str_contains($mediaSentenceCss, 'roots-ms-row')
+    && str_contains($enLangRaw, '<p>& PR</p><p>{{img2}} agency</p>')
+    && !str_contains($enLangRaw, '{{img6}}');
 $msRender = run_php(
     $php,
     'require "app/Support/app-init.php"; ob_start(); roots_render_media_sentence_html("home.media.mobile_html"); echo ob_get_clean();',
@@ -505,10 +505,13 @@ $msRender = run_php(
 );
 $mediaSentenceOk = $mediaSentenceOk
     && $msRender['exit'] === 0
-    && !preg_match('/<p[^>]*>\s*<span class="window"/', $msRender['stdout']);
+    && !str_contains($msRender['stdout'], 'roots-ms-row')
+    && preg_match('/<p[^>]*>\s*<span class="window"/', $msRender['stdout']) === 1
+    && substr_count($msRender['stdout'], 'class="window"') === 5
+    && substr_count($msRender['stdout'], '<p>') >= 9;
 assert_true(
     $mediaSentenceOk,
-    'company media sentence keeps images between words (layout normalizer + roots-media-sentence.css)',
+    'company media sentence: Rhythm-style locale HTML (plain <p> rows, no layout normalizer)',
     $failures
 );
 

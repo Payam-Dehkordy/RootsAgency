@@ -166,6 +166,15 @@
     gap: clamp(0.75rem, 2dvh, 1.25rem);
 }
 
+/* Team section heading — 3 lines (template clientLogos assumed 4); match services rhythm */
+.clientLogos#team .clientLogos__heading {
+    line-height: 0.89;
+}
+
+.clientLogos#team .clientLogos__heading i {
+    line-height: inherit;
+}
+
 /* Our team — photo cards in clientLogos scroll strip (#team) */
 .clientLogos#team .clientLogos__logo.roots-team-card {
     overflow: hidden;
