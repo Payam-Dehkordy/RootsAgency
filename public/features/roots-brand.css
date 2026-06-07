@@ -580,7 +580,31 @@ html[lang="ru"] #main .roots-page-end footer.roots-footer .footer__bottom .roots
     }
 
     .roots-page-end footer.roots-footer .roots-footer-body {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+
+    .roots-page-end footer.roots-footer .roots-footer-instagram {
+        grid-column: 1;
+        grid-row: 1;
+        height: auto;
+        min-height: 0;
+        padding-block-start: var(--roots-footer-col-pad-y);
+        padding-block-end: clamp(0.5rem, 1.25dvh, 0.85rem);
+    }
+
+    .roots-page-end footer.roots-footer .footer__mainLinks {
+        grid-column: 1;
+        grid-row: 2;
+        justify-content: flex-start;
+        padding-block-start: 0;
+        padding-block-end: var(--roots-footer-col-pad-y);
+    }
+
+    .roots-page-end footer.roots-footer .roots-iphone-frame {
+        height: auto;
+        max-height: min(38dvh, 18rem);
+        margin-inline: auto;
     }
 
     .roots-page-end footer.roots-footer .footer__mainLink {

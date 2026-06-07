@@ -1,0 +1,30 @@
+/*
+ * Previous Work (#slider-cards) — mobile: reallocate stick bottom padding into
+ * title→card gap; keep title visible while first card is active (see JS class).
+ * Card layout (media margin, active translateY) stays on template defaults.
+ */
+
+@media screen and (orientation: portrait) and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px) {
+    /* Template: padding 12rem 0 12rem, title margin-bottom 7rem */
+    #slider-cards .workSlider__stick {
+        padding: 12rem 0 3rem;
+    }
+
+    #slider-cards .workSlider__top {
+        position: relative;
+        z-index: 4;
+        margin-bottom: 10rem;
+    }
+
+    #slider-cards.workSlider.roots-show-work-title .workSlider__top {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #slider-cards.workSlider .workSlider__top {
+        transition: none !important;
+    }
+}

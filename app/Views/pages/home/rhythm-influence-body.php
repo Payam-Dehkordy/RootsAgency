@@ -92,7 +92,7 @@ $office = (array) ($site['office'] ?? []);
 </section>                        
 
 
-<section class="workSlider " id="slider-cards" >
+<section class="workSlider " id="slider-cards">
     <div class="workSlider__height workSlider__height--6">
         <div class="workSlider__stick" id="slider-stick">
 
@@ -351,6 +351,7 @@ $office = (array) ($site['office'] ?? []);
   <script type="text/javascript" src="<?= h(asset('/features/roots-scroll-top.js')) ?>"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-breakpoints.js')) ?>"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-nav-scroll.js')) ?>"></script>
+  <script type="text/javascript" src="<?= h(asset('/features/roots-nav-drawer.js')) ?>"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-work-slider.js')) ?>"></script>
 
   <!-- BrowserSync Hook -->

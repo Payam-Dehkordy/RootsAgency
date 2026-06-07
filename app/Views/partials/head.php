@@ -39,10 +39,13 @@ $include_hreflang = $GLOBALS['include_hreflang'] ?? false;
 
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-layout.css')) ?>">
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-brand.css')) ?>">
+  <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-nav.css')) ?>">
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-theme.css')) ?>">
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-locale-type-scale.css')) ?>">
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-locale-fonts.css')) ?>">
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-hero.css')) ?>">
+  <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-media-sentence.css')) ?>">
+  <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-work-slider.css')) ?>">
   <meta name="theme-color" content="<?= h((string) ($site['brand_color_primary'] ?? '#011F39')) ?>">
 
   <link rel="icon" href="<?= h(asset((string) ($site['favicon_relative'] ?? '/media/images/brand/roots-agency-favicon.svg'))) ?>" type="image/svg+xml">

@@ -65,11 +65,13 @@ function roots_render_team_card(array $member, bool $banner = false): void
 
 function roots_render_media_sentence_html(string $key): void
 {
+    require_once __DIR__ . '/media-sentence-layout.php';
+
     $html = tr_html($key);
     for ($i = 1; $i <= 5; $i++) {
         $html = str_replace('{{img' . $i . '}}', roots_media_sentence_picture($i), $html);
     }
-    echo $html;
+    echo roots_normalize_media_sentence_html($html);
 }
 
 function roots_render_work_card(array $card): void

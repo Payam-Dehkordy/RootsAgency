@@ -1,0 +1,181 @@
+/*
+ * Mobile nav — right-side drawer (slides in from inline-end).
+ * Toggle classes unchanged: html.menu-open + #nav.is-open (template scripts.min.js).
+ */
+
+@media screen and (orientation: portrait) and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px) {
+    html.menu-open {
+        overflow: hidden;
+    }
+
+    .nav {
+        z-index: 10050;
+    }
+
+    .nav__bar {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Full-viewport layer: dimmed backdrop + sliding panel */
+    .nav__menu {
+        position: fixed;
+        inset: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: var(--roots-vh);
+        max-height: none;
+        overflow: hidden;
+        opacity: 1;
+        pointer-events: none;
+        z-index: 1;
+        background: transparent;
+        transition: none;
+    }
+
+    .menu-open .nav__menu,
+    #nav.is-open .nav__menu {
+        pointer-events: auto;
+    }
+
+    .nav__menuBg {
+        display: block;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(var(--roots-brand-navy-rgb), 0.52);
+        transform: none;
+        opacity: 0;
+        transition: opacity 0.32s ease;
+    }
+
+    .menu-open .nav__menuBg,
+    #nav.is-open .nav__menuBg {
+        opacity: 1;
+    }
+
+    .nav__menuInner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: auto;
+        width: min(88vw, 22rem);
+        height: 100%;
+        max-height: var(--roots-vh);
+        padding: calc(var(--roots-nav-height-mobile) + 1.25rem) 1.6rem
+            max(1.25rem, env(safe-area-inset-bottom, 0px));
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        touch-action: pan-y;
+        background-color: var(--roots-brand-navy);
+        border-left: 1px solid rgba(245, 245, 245, 0.14);
+        box-shadow: -12px 0 40px rgba(0, 0, 0, 0.28);
+        transform: translateX(100%);
+        transition: transform 0.36s cubic-bezier(0.22, 1, 0.32, 1);
+    }
+
+    .menu-open .nav__menuInner,
+    #nav.is-open .nav__menuInner {
+        transform: translateX(0);
+    }
+
+    .nav__menuLinks {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 1.15rem;
+        width: 100%;
+        padding: 0;
+    }
+
+    .nav__menuLink {
+        display: block;
+        width: 100%;
+        margin: 0;
+        font-size: 1.6rem;
+        line-height: 1.2;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        overflow: visible;
+    }
+
+    .nav__menuLink span {
+        transform: none;
+        transition: none;
+    }
+
+    .menu-open .nav__menuLink span {
+        transform: none;
+        transition: none;
+    }
+
+    .nav__menuSocial {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.85rem;
+        width: 100%;
+        margin-top: auto;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(245, 245, 245, 0.1);
+    }
+
+    .nav__socialLink {
+        display: block;
+        margin: 0;
+        font-size: 1.35rem;
+        line-height: 1.2;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        overflow: visible;
+    }
+
+    .nav__socialLink span {
+        transform: none;
+        transition: none;
+    }
+
+    .menu-open .nav__socialLink span {
+        transform: none;
+        transition: none;
+    }
+
+    .roots-nav-lang--menu {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        margin: 1.25rem 0 0;
+        padding-top: 1.25rem;
+        border-top: 1px solid rgba(245, 245, 245, 0.1);
+        gap: clamp(0.35rem, 2vw, 0.85rem);
+    }
+
+    .menu-open .nav__logo {
+        filter: none;
+        transition: none;
+    }
+
+    .menu-open .nav__toggle {
+        color: inherit;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav__menuBg,
+    .nav__menuInner {
+        transition: none;
+    }
+}

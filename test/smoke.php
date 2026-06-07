@@ -456,10 +456,59 @@ $responsiveOk = str_contains($layoutCss, '--roots-vh: 100dvh')
     && str_contains($breakpointsJs, 'mqMobileLayout')
     && str_contains($breakpointsJs, 'mqTemplateSliderMobile')
     && strpos($headPhp, 'roots-layout.css') < strpos($headPhp, 'roots-brand.css')
+    && str_contains($headPhp, 'roots-nav.css')
     && str_contains($heroBody, '/features/roots-breakpoints.js');
 assert_true(
     $responsiveOk,
     'responsive SSOT: roots-layout.css tokens + Rhythm 800px breakpoints + roots-breakpoints.js',
+    $failures
+);
+
+$navCss = (string) file_get_contents($root . '/public/features/roots-nav.css');
+$navDrawerOk = str_contains($navCss, 'translateX(100%)')
+    && str_contains($navCss, '.nav__menuBg')
+    && str_contains($navCss, 'roots-nav-lang--menu');
+$navDrawerJs = (string) file_get_contents($root . '/public/features/roots-nav-drawer.js');
+$navDrawerOk = $navDrawerOk
+    && str_contains($heroBody, 'roots-nav-drawer.js')
+    && str_contains($navDrawerJs, 'bindSwipeDismiss')
+    && str_contains($navDrawerJs, 'bindScrollDismiss');
+assert_true(
+    $navDrawerOk,
+    'mobile nav uses right-side drawer with Byuregh-style dismiss (roots-nav.css + roots-nav-drawer.js)',
+    $failures
+);
+
+$workSliderCss = (string) file_get_contents($root . '/public/features/roots-work-slider.css');
+$workSliderJs = (string) file_get_contents($root . '/public/features/roots-work-slider.js');
+$workSliderOk = str_contains($headPhp, 'roots-work-slider.css')
+    && str_contains($workSliderCss, 'roots-show-work-title')
+    && str_contains($workSliderCss, 'margin-bottom: 10rem')
+    && str_contains($workSliderJs, 'syncWorkSliderTitle');
+assert_true(
+    $workSliderOk,
+    'previous work: title visible on first card + reallocated stick spacing (roots-work-slider)',
+    $failures
+);
+
+$mediaSentenceCss = (string) file_get_contents($root . '/public/features/roots-media-sentence.css');
+$enLangRaw = (string) file_get_contents($root . '/app/Lang/en.json');
+$mediaSentenceOk = str_contains($headPhp, 'roots-media-sentence.css')
+    && is_file($root . '/app/Support/media-sentence-layout.php')
+    && str_contains($mediaSentenceCss, 'roots-ms-row')
+    && str_contains($enLangRaw, 'PR {{img2}} agency')
+    && !preg_match('/<p>\s*\{\{img/u', $enLangRaw);
+$msRender = run_php(
+    $php,
+    'require "app/Support/app-init.php"; ob_start(); roots_render_media_sentence_html("home.media.mobile_html"); echo ob_get_clean();',
+    $root
+);
+$mediaSentenceOk = $mediaSentenceOk
+    && $msRender['exit'] === 0
+    && !preg_match('/<p[^>]*>\s*<span class="window"/', $msRender['stdout']);
+assert_true(
+    $mediaSentenceOk,
+    'company media sentence keeps images between words (layout normalizer + roots-media-sentence.css)',
     $failures
 );
 

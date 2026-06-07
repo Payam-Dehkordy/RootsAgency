@@ -72,6 +72,51 @@
         }
     }
 
+    function activeCardIndex(section) {
+        var cards = section.querySelectorAll('#slider-rail .sliderCard');
+        for (var i = 0; i < cards.length; i++) {
+            if (cards[i].classList.contains('active')) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    function syncWorkSliderTitle() {
+        var section = document.getElementById('slider-cards');
+        if (!section) {
+            return;
+        }
+
+        var activeIndex = activeCardIndex(section);
+        var showTitle = section.classList.contains('before')
+            || (section.classList.contains('inside') && activeIndex === 0);
+
+        section.classList.toggle('roots-show-work-title', showTitle);
+    }
+
+    function hookSliderTitleSync(attemptsLeft) {
+        var slider = getSliderComponent();
+        if (slider && typeof slider.render === 'function' && !slider._rootsTitlePatched) {
+            slider._rootsTitlePatched = true;
+            var originalRender = slider.render.bind(slider);
+            slider.render = function () {
+                originalRender();
+                syncWorkSliderTitle();
+            };
+            syncWorkSliderTitle();
+            return;
+        }
+
+        if (attemptsLeft <= 0) {
+            return;
+        }
+
+        window.requestAnimationFrame(function () {
+            hookSliderTitleSync(attemptsLeft - 1);
+        });
+    }
+
     function getSliderComponent() {
         if (!window.components || !window.components.getComponent) {
             return null;
@@ -244,11 +289,16 @@
         var rail = document.getElementById('slider-rail');
         var pool = document.getElementById('roots-work-pending');
         var cta = rail && rail.querySelector('.workCard--seeMore');
+
+        if (rail) {
+            syncSliderHeight(rail);
+        }
+
+        hookSliderTitleSync(120);
+
         if (!rail || !pool || !cta) {
             return;
         }
-
-        syncSliderHeight(rail);
 
         var trigger = cta.querySelector('.roots-work-seeMore, button, [type="button"]');
         if (!trigger) {
@@ -267,4 +317,5 @@
     } else {
         boot();
     }
+
 })();
