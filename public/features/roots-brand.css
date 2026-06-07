@@ -611,13 +611,22 @@ html[lang="ru"] #main .roots-page-end footer.roots-footer .footer__bottom .roots
     }
 
     .roots-page-end footer.roots-footer .roots-iphone-frame {
+        width: clamp(10.5rem, 48vw, 16rem);
         height: auto;
-        max-height: min(38dvh, 18rem);
         margin-inline: auto;
     }
 
     .roots-page-end footer.roots-footer .footer__mainLink {
         font-size: clamp(1.2rem, 3dvh, 2rem);
+    }
+
+    .roots-page-end footer.roots-footer .footer__bottom {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .roots-page-end footer.roots-footer .footer__bottom .roots-footer-credit {
+        text-align: center;
     }
 }
 
