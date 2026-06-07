@@ -21,7 +21,7 @@ $office = (array) ($site['office'] ?? []);
   
           
 
-  <video muted loop playsinline preload="auto" class="media vid">
+  <video muted loop playsinline preload="metadata" class="media vid">
     <source src="/media/video/hero/roots-agency-hero-01.mp4" type="video/mp4" />
   </video>
 
@@ -33,7 +33,7 @@ $office = (array) ($site['office'] ?? []);
   
           
 
-  <video muted loop playsinline preload="auto" class="media vid">
+  <video muted loop playsinline preload="metadata" class="media vid">
     <source src="/media/video/hero/roots-agency-hero-02.mp4" type="video/mp4" />
   </video>
 
@@ -45,7 +45,7 @@ $office = (array) ($site['office'] ?? []);
   
           
 
-  <video muted loop playsinline preload="auto" class="media vid">
+  <video muted loop playsinline preload="metadata" class="media vid">
     <source src="/media/video/hero/roots-agency-hero-03.mp4" type="video/mp4" />
   </video>
 
@@ -57,7 +57,7 @@ $office = (array) ($site['office'] ?? []);
   
           
 
-  <video muted loop playsinline preload="auto" class="media vid">
+  <video muted loop playsinline preload="metadata" class="media vid">
     <source src="/media/video/hero/roots-agency-hero-04.mp4" type="video/mp4" />
   </video>
 

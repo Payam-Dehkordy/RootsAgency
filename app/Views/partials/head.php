@@ -14,6 +14,37 @@ $include_hreflang = $GLOBALS['include_hreflang'] ?? false;
   <meta name="google" content="notranslate">
   <meta name="chrome" content="nointentdetection">
 
+  <script>
+    (function () {
+      var nativePlay = HTMLMediaElement.prototype.play;
+      HTMLMediaElement.prototype.play = function rootsSafePlay() {
+        var result;
+        try {
+          result = nativePlay.apply(this, arguments);
+        } catch (err) {
+          if (err && err.name === 'AbortError') {
+            return Promise.resolve();
+          }
+          throw err;
+        }
+        if (result && typeof result.catch === 'function') {
+          return result.catch(function (err) {
+            if (err && err.name === 'AbortError') {
+              return undefined;
+            }
+            throw err;
+          });
+        }
+        return result;
+      };
+      window.addEventListener('unhandledrejection', function (event) {
+        if (event.reason && event.reason.name === 'AbortError') {
+          event.preventDefault();
+        }
+      });
+    })();
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="<?= h(roots_google_fonts_css_url()) ?>" rel="stylesheet">
@@ -31,10 +62,6 @@ $include_hreflang = $GLOBALS['include_hreflang'] ?? false;
 <?php endforeach; ?>
 <?php endif; ?>
 
-  <link rel="preload" href="<?= h(bundle_asset('/dist/scripts.min.js')) ?>" as="script">
-  <link rel="preload" href="<?= h(bundle_asset('/dist/style.min.css')) ?>" as="style">
-  <link rel="preload" href="<?= h(asset('/fonts/WorkhorseScriptTest-Display.woff2')) ?>" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="<?= h(asset('/fonts/aeonik-regular.woff2')) ?>" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" type="text/css" href="<?= h(bundle_asset('/dist/style.min.css')) ?>">
 
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-layout.css')) ?>">

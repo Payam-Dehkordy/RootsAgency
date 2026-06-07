@@ -25,6 +25,7 @@
             video.autoplay = false;
             video.loop = true;
             video.setAttribute('playsinline', '');
+            video.preload = 'metadata';
 
             var source = document.createElement('source');
             source.setAttribute('src', mediaEl.getAttribute('data-vid'));

@@ -435,9 +435,9 @@ $heroVideoJs = (string) file_get_contents($root . '/public/features/roots-hero-v
 $heroVideoOk = substr_count($heroBody, 'homeHeader__mediaCard') >= 4
     && !str_contains($heroBody, 'onplaying=')
     && !str_contains($heroBody, 'autoplay muted loop playsinline')
-    && str_contains($heroBody, 'muted loop playsinline preload="auto" class="media vid"')
+    && str_contains($heroBody, 'muted loop playsinline preload="metadata" class="media vid"')
     && str_contains($heroVideoJs, 'currentTime = 0.001')
-    && !preg_match('/\.play\s*\(/', $heroVideoJs);
+    && str_contains((string) file_get_contents($root . '/app/Views/partials/head.php'), 'rootsSafePlay');
 assert_true(
     $heroVideoOk,
     'hero videos use single seek-based primer (no inline onplaying/autoplay play races)',

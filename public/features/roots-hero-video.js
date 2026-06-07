@@ -73,7 +73,7 @@
                 trySeekPrime();
             };
 
-            video.preload = 'auto';
+            video.preload = 'metadata';
             video.muted = true;
 
             video.addEventListener('error', finish, { once: true });
