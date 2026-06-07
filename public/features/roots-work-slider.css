@@ -28,3 +28,13 @@
         transition: none !important;
     }
 }
+
+/* See More reveal — next card is already "active" in the user's view; skip enter animation */
+#slider-cards.roots-work-reveal-instant .workCard,
+#slider-cards.roots-work-reveal-instant .workCard .workCard__content,
+#slider-cards.roots-work-reveal-instant .workCard .workCard__media,
+#slider-cards.roots-work-reveal-instant .workCard .workCard__media::after {
+    -webkit-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+}

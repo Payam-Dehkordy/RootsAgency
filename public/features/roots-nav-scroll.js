@@ -157,8 +157,8 @@
         var base = (slider && slider.offset) || Number(section.getAttribute('data-slider-offset')) || 0;
         var isMobile = slider && slider.browser && slider.browser.state.isMobile;
         if (isMobile == null) {
-            if (window.rootsBreakpoints && typeof window.rootsBreakpoints.isTemplateSliderMobile === 'function') {
-                isMobile = window.rootsBreakpoints.isTemplateSliderMobile();
+            if (window.rootsBreakpoints && typeof window.rootsBreakpoints.isMobileLayout === 'function') {
+                isMobile = window.rootsBreakpoints.isMobileLayout();
             } else {
                 isMobile = window.matchMedia('(max-width: 600px)').matches;
             }

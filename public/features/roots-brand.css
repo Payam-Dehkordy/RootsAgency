@@ -62,6 +62,27 @@
     color: var(--roots-brand-navy) !important;
 }
 
+/* See More — active card shows white fill on all screens (touch has no :hover) */
+.workCard--cta.workCard--seeMore.active {
+    opacity: 1;
+}
+
+.workCard--cta.workCard--seeMore.active .workCard__media::after {
+    -webkit-transform: translateX(0) scale(1);
+    -ms-transform: translateX(0) scale(1);
+    transform: translateX(0) scale(1);
+}
+
+.workCard--cta.workCard--seeMore.active .workCard__media.buttonHover .arrowButton__arrow img:nth-child(1) {
+    -webkit-transform: translate3d(-50%, -50%, 0) translateX(0);
+    transform: translate3d(-50%, -50%, 0) translateX(0);
+}
+
+.workCard--cta.workCard--seeMore.active .workCard__media.buttonHover .arrowButton__arrow img:nth-child(2) {
+    -webkit-transform: translate3d(-50%, -50%, 0) translateX(2.6rem);
+    transform: translate3d(-50%, -50%, 0) translateX(2.6rem);
+}
+
 /* In-page nav targets — offset for fixed nav bar */
 #company,
 #slider-cards,

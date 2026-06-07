@@ -1,7 +1,17 @@
 (function () {
     'use strict';
 
-    var BATCH = 2;
+    var BATCH = 1;
+
+    function isSliderMobileLayout(slider) {
+        if (slider && slider.browser && slider.browser.state.isMobile != null) {
+            return slider.browser.state.isMobile;
+        }
+        if (window.rootsBreakpoints && typeof window.rootsBreakpoints.isMobileLayout === 'function') {
+            return window.rootsBreakpoints.isMobileLayout();
+        }
+        return window.matchMedia('(max-width: 600px)').matches;
+    }
 
     function initWorkVideos(scope) {
         scope.querySelectorAll('[data-vid]').forEach(function (mediaEl) {
@@ -126,15 +136,7 @@
 
     function progressOffset(section, slider) {
         var base = (slider && slider.offset) || Number(section.getAttribute('data-slider-offset')) || 0;
-        var isMobile = slider && slider.browser && slider.browser.state.isMobile;
-        if (isMobile == null) {
-            if (window.rootsBreakpoints && typeof window.rootsBreakpoints.isTemplateSliderMobile === 'function') {
-                isMobile = window.rootsBreakpoints.isTemplateSliderMobile();
-            } else {
-                isMobile = window.matchMedia('(max-width: 600px)').matches;
-            }
-        }
-        return base * (isMobile ? 0.5 : 1);
+        return base * (isSliderMobileLayout(slider) ? 0.5 : 1);
     }
 
     function sectionMetrics(section, stick) {
@@ -189,16 +191,22 @@
         return Math.max(0, cards.length - 1);
     }
 
-    function targetIndexAfterReveal(activeBefore, seeMoreBefore, newCount, ctaRemoved) {
+    function targetIndexAfterReveal(activeBefore, seeMoreBefore) {
         if (activeBefore < seeMoreBefore) {
             return activeBefore;
         }
 
-        if (ctaRemoved) {
-            return seeMoreBefore;
-        }
+        /* Land on the first newly revealed work card (not the See More card). */
+        return seeMoreBefore;
+    }
 
-        return newCount - 1;
+    function applyScrollAfterReveal(section, stick, before, targetIndex, newCount, offset, instantReveal) {
+        requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+                var after = sectionMetrics(section, stick);
+                preserveScrollState(before, after, targetIndex, newCount, offset, instantReveal);
+            });
+        });
     }
 
     function scrollForCardIndex(docTop, range, cardIndex, cardCount, offset) {
@@ -217,7 +225,7 @@
         window.scrollTo(0, y);
     }
 
-    function preserveScrollState(before, after, targetIndex, newCount, offset) {
+    function preserveScrollState(before, after, targetIndex, newCount, offset, instantReveal) {
         var targetScroll = scrollForCardIndex(
             before.docTop,
             after.range,
@@ -230,8 +238,21 @@
             return;
         }
 
+        var section = document.getElementById('slider-cards');
+        if (instantReveal && section) {
+            section.classList.add('roots-work-reveal-instant');
+        }
+
         scrollToY(targetScroll);
         forceSliderRender();
+
+        if (instantReveal && section) {
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    section.classList.remove('roots-work-reveal-instant');
+                });
+            });
+        }
     }
 
     function revealMore(rail, pool, cta) {
@@ -248,11 +269,10 @@
 
         var slider = getSliderComponent();
         var offset = progressOffset(section, slider);
-        var oldCount = sliderCardCount(rail);
         var seeMoreBefore = seeMoreIndex(rail);
         var activeBefore = activeIndexBeforeReveal(rail, slider, section, stick, offset);
         var before = sectionMetrics(section, stick);
-        var shouldPreserve = isInStickyTrack(section, stick);
+        var advanceFromSeeMore = activeBefore >= seeMoreBefore;
 
         var batch = pending.splice(0, BATCH);
         batch.forEach(function (card) {
@@ -269,20 +289,23 @@
         syncSliderHeight(rail);
         syncSliderCards(rail);
 
-        if (!shouldPreserve) {
+        if (advanceFromSeeMore) {
+            section.classList.add('roots-work-reveal-instant');
+            var revealedCards = rail.querySelectorAll('.sliderCard');
+            var i;
+            for (i = 0; i < revealedCards.length; i++) {
+                revealedCards[i].classList.toggle('active', i === seeMoreBefore);
+            }
+        }
+
+        if (!advanceFromSeeMore && !isInStickyTrack(section, stick)) {
             return;
         }
 
         var newCount = sliderCardCount(rail);
-        var targetIndex = targetIndexAfterReveal(
-            activeBefore,
-            seeMoreBefore,
-            newCount,
-            ctaRemoved
-        );
-        var after = sectionMetrics(section, stick);
+        var targetIndex = targetIndexAfterReveal(activeBefore, seeMoreBefore);
 
-        preserveScrollState(before, after, targetIndex, newCount, offset);
+        applyScrollAfterReveal(section, stick, before, targetIndex, newCount, offset, advanceFromSeeMore);
     }
 
     function boot() {
