@@ -39,6 +39,7 @@ Canonical doc: `content/COPY.md`. Copy strings live in `app/Lang/*.json` (locale
 |------|-----|
 | `public/media/images/brand/roots-agency-logo.svg` | Full lockup (wordmark + tagline) — nav |
 | `public/media/images/brand/roots-agency-favicon.svg` | O-root mark — transparent, `#F5F5F5` fill |
+| `public/media/images/brand/roots-agency-og.jpg` | **1200×630** navy plate + centered lockup — OG / Twitter / JSON-LD via `public-seo-assets.php` |
 
 ### Hero video (local)
 
@@ -94,6 +95,22 @@ Source: [rootsagency.am](https://rootsagency.am/) team slider → `dev/build-tea
 | `public/ui/time_icon.svg` | Yerevan studio local time badge |
 
 Source: client photo `484569245_617237684628380_6964635661658969114_n.jpg` → WebP 380×280 / 760×560 (template contact window size). Template reference: [Rhythm Influence contact page](https://www.rhythminfluence.com/contact). Form posts to `/` (`app/Handlers/contact-form.php`).
+
+## Open Graph image
+
+- **1200 × 630** JPEG: `public/media/images/brand/roots-agency-og.jpg`
+- Brand background **`#011F39`**, centered lockup (`roots-agency-logo.svg` composite)
+- Wired in `app/Config/public-seo-assets.php` → `site-config.php` (`og_default_image`, `og_default_image_alt`)
+
+Regenerate when the mark changes (ImageMagick example):
+
+```powershell
+& 'C:\Program Files\ImageMagick-7.1.2-Q16-HDRI\magick.exe' `
+  -size 1200x630 'xc:#011F39' `
+  '.\public\media\images\brand\roots-agency-logo.svg' `
+  -resize 880x -gravity center -composite `
+  '.\public\media\images\brand\roots-agency-og.jpg'
+```
 
 ## Nav sizing
 

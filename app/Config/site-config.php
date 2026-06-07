@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 $base = 'https://roots-agency.payam-dehkordy.com';
 
+$publicSeoAssets = require __DIR__ . '/public-seo-assets.php';
+
 return [
     'brand' => 'Roots Agency',
     'base_url' => $base,
     'robots_allow_crawl' => false,
-    'og_default_image' => $base . '/media/images/contact/roots-agency-contact-hero.webp',
+    /** 1200×630 JPEG logo card for Open Graph / Twitter / JSON-LD previews. */
+    'og_default_image' => $base . (string) $publicSeoAssets['og_image_relative'],
     'og_default_image_alt' => 'Roots Agency',
     'logo_relative' => '/media/images/brand/roots-agency-logo.svg',
     'favicon_relative' => '/media/images/brand/roots-agency-favicon.svg',

@@ -1,6 +1,10 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * Single revision signal for sitemap {@see https://www.sitemaps.org/protocol.html lastmod}.
+ * Uses max filemtime of authoritative content/config/i18n/SEO PHP sources and SEO raster assets.
+ */
 if (!function_exists('roots_site_revision_gmtime')) {
     function roots_site_revision_gmtime(): int
     {
@@ -9,6 +13,7 @@ if (!function_exists('roots_site_revision_gmtime')) {
             $root . '/app/Config/site-config.php',
             $root . '/app/Config/site-pages.php',
             $root . '/app/Config/locales.php',
+            $root . '/app/Config/public-seo-assets.php',
             $root . '/app/Support/seo-social-meta.php',
             $root . '/app/Support/seo-jsonld.php',
         ];
@@ -30,6 +35,22 @@ if (!function_exists('roots_site_revision_gmtime')) {
                     $times[] = $t;
                 }
             }
+        }
+
+        static $assetMtimes = null;
+        if ($assetMtimes === null) {
+            $seo = require $root . '/app/Config/public-seo-assets.php';
+            $assetMtimes = [];
+            foreach (['og_image_relative'] as $key) {
+                $p = $root . '/public' . (string) ($seo[$key] ?? '');
+                $t = is_file($p) ? @filemtime($p) : false;
+                if ($t !== false) {
+                    $assetMtimes[] = $t;
+                }
+            }
+        }
+        foreach ($assetMtimes as $mt) {
+            $times[] = $mt;
         }
 
         return $times === [] ? time() : max($times);

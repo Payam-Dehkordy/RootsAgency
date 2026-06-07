@@ -23,7 +23,7 @@ php dev/scripts/audit/check-production-naming.php
 
 **Views:** `app/Views/pages/home/home-body.php` (homepage markup), `app/Views/partials/roots-*.php`.
 
-**Config keys:** `bundle_asset_version`, `logo_relative`, `favicon_relative` — no `template_*` or vendor site names.
+**Config keys:** `bundle_asset_version`, `logo_relative`, `favicon_relative`, `og_default_image` (via `public-seo-assets.php`) — no `template_*` or vendor site names.
 
 ---
 
@@ -62,6 +62,7 @@ New Roots-owned classes, IDs, and `data-*` hooks use the **`roots-`** prefix.
 ## 5. Media and UI assets
 
 - **Brand / content:** `/media/images/…`, `/media/video/…` with **`roots-agency-*`** filenames
+- **OG card:** `/media/images/brand/roots-agency-og.jpg` (1200×630) — see `app/Config/public-seo-assets.php`
 - **No** partner CDN hashes or vendor slug paths under `public/media/`
 - Prefer moving generic UI SVGs from `/ui/` to `/media/ui/roots-agency-*` when touched
 
