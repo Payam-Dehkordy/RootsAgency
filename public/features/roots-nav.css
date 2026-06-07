@@ -1,6 +1,6 @@
 /*
  * Mobile nav — right-side drawer (slides in from inline-end).
- * Toggle classes unchanged: html.menu-open + #nav.is-open (template scripts.min.js).
+ * Toggle classes unchanged: html.menu-open + #nav.is-open (vendored scripts.min.js).
  */
 
 @media screen and (orientation: portrait) and (max-width: 800px),

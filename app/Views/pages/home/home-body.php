@@ -345,7 +345,7 @@ $office = (array) ($site['office'] ?? []);
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-site-chrome.js')) ?>"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-hero-video.js')) ?>"></script>
-  <script type="text/javascript" src="<?= h(template_asset('/dist/scripts.min.js')) ?>"></script>
+  <script type="text/javascript" src="<?= h(bundle_asset('/dist/scripts.min.js')) ?>"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-contact-header.js')) ?>"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-contact-form.js')) ?>"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-scroll-top.js')) ?>"></script>

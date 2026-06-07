@@ -16,7 +16,7 @@ Open **http://127.0.0.1:8013/** and compare with the live template in a split vi
 
 | Layer | Approach |
 |-------|----------|
-| **Markup** | Captured `<body>` from template (`app/Views/pages/home/rhythm-influence-body.html`) |
+| **Markup** | Homepage body view (`app/Views/pages/home/home-body.php`) |
 | **Styles** | Vendored `public/dist/style.min.css` (same bundle as template) |
 | **Motion** | Vendored `public/dist/scripts.min.js` + Lenis smooth scroll |
 | **Media** | Template CDN URLs in v1; optional local mirror via sync script |
@@ -27,6 +27,7 @@ Phase 2 will decompose sections into PHP partials and `public/features/` CSS (La
 ## Docs
 
 - [PROJECT_KICKOFF.md](docs/PROJECT_KICKOFF.md)
+- [NAMING_CONVENTIONS.md](docs/NAMING_CONVENTIONS.md)
 - [TEMPLATE_REFERENCE_WORKFLOW.md](docs/TEMPLATE_REFERENCE_WORKFLOW.md)
 - [dev/template-source/README.md](dev/template-source/README.md)
 

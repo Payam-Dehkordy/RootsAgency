@@ -15,11 +15,11 @@ if (roots_is_local_preview()) {
     header('Pragma: no-cache');
 }
 
-$bodyPath = dirname(__DIR__) . '/app/Views/pages/home/rhythm-influence-body.php';
+$bodyPath = dirname(__DIR__) . '/app/Views/pages/home/home-body.php';
 
 if (!is_readable($bodyPath)) {
     http_response_code(500);
-    echo 'Template body missing. Run dev capture workflow first.';
+    echo 'Homepage body missing.';
     exit;
 }
 

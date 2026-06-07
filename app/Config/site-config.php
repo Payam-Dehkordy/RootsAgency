@@ -6,16 +6,14 @@ $base = 'https://roots-agency.payam-dehkordy.com';
 return [
     'brand' => 'Roots Agency',
     'project_slug' => 'roots-agency',
-    'client_pitch' => 'Roots Agency (Yerevan) — concept build on Rhythm Influence template',
     'base_url' => $base,
     'robots_allow_crawl' => false,
     'og_default_image' => $base . '/media/images/contact/roots-agency-contact-hero.webp',
     'og_default_image_alt' => 'Roots Agency',
-    'template_reference' => 'https://www.rhythminfluence.com/',
     'logo_relative' => '/media/images/brand/roots-agency-logo.svg',
     'favicon_relative' => '/media/images/brand/roots-agency-favicon.svg',
     'brand_color_primary' => '#011F39',
-    'template_asset_version' => '7c85f98c63f5e1f89737e800920875f74ad6abf9',
+    'bundle_asset_version' => '7c85f98c63f5e1f89737e800920875f74ad6abf9',
     'contact_to_email' => 'info@rootsagency.am',
     'office' => [
         'maps_url' => 'https://yandex.com/maps/-/CPd7YLyO',

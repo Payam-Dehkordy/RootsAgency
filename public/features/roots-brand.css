@@ -9,7 +9,7 @@
     --roots-text-lang-link-menu: max(13px, 15px);
 }
 
-/* Template display caps — Workhorse via <i> inside .h0 (not browser italic) */
+/* Bundle display caps — Workhorse via <i> inside .h0 (not browser italic) */
 .h0 i {
     font-style: normal;
 }
@@ -29,7 +29,7 @@
     overflow-anchor: none;
 }
 
-/* Previous work — "See more" CTA must receive clicks (template disables pointer events on CTA card) */
+/* Previous work — "See more" CTA must receive clicks (bundle disables pointer events on CTA card) */
 .workCard--cta.workCard--seeMore {
     pointer-events: auto;
 }
@@ -142,7 +142,7 @@
     }
 }
 
-/* Language switcher — replaces Get in Touch CTA (Byuregh-style compact links) */
+/* Language switcher — replaces Get in Touch CTA (compact locale links) */
 .nav__cta {
     display: flex;
     align-items: center;
@@ -187,7 +187,7 @@
     gap: clamp(0.75rem, 2dvh, 1.25rem);
 }
 
-/* Team section heading — 3 lines (template clientLogos assumed 4); match services rhythm */
+/* Team section heading — 3 lines (bundle clientLogos assumed 4); match services line rhythm */
 .clientLogos#team .clientLogos__heading {
     line-height: 0.89;
 }

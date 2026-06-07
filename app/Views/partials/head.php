@@ -31,11 +31,11 @@ $include_hreflang = $GLOBALS['include_hreflang'] ?? false;
 <?php endforeach; ?>
 <?php endif; ?>
 
-  <link rel="preload" href="<?= h(template_asset('/dist/scripts.min.js')) ?>" as="script">
-  <link rel="preload" href="<?= h(template_asset('/dist/style.min.css')) ?>" as="style">
+  <link rel="preload" href="<?= h(bundle_asset('/dist/scripts.min.js')) ?>" as="script">
+  <link rel="preload" href="<?= h(bundle_asset('/dist/style.min.css')) ?>" as="style">
   <link rel="preload" href="<?= h(asset('/fonts/WorkhorseScriptTest-Display.woff2')) ?>" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="<?= h(asset('/fonts/aeonik-regular.woff2')) ?>" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" type="text/css" href="<?= h(template_asset('/dist/style.min.css')) ?>">
+  <link rel="stylesheet" type="text/css" href="<?= h(bundle_asset('/dist/style.min.css')) ?>">
 
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-layout.css')) ?>">
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-brand.css')) ?>">

@@ -20,7 +20,7 @@ Open **http://127.0.0.1:8013/** and compare side-by-side with [rhythminfluence.c
 | `public/dist/style.min.css` | Vendored template stylesheet (exact bundle) |
 | `public/dist/scripts.min.js` | Vendored template motion/interaction bundle |
 | `public/ui/` | Local UI SVGs (`button_arrow.svg`, `footer_bg_light.svg`) |
-| `app/Views/pages/home/rhythm-influence-body.html` | Captured `<body>` markup (class-for-class) |
+| `app/Views/pages/home/home-body.php` | Homepage markup (PHP view; bundle BEM classes preserved) |
 | `dev/template-source/*.raw.html` | Reference snapshots (not deployed) |
 
 ## Media (phase 2)
@@ -37,5 +37,5 @@ After download, run `dev/scripts/build/rewrite-template-media-paths.php` (when a
 
 1. Re-run this script.
 2. Diff `dev/template-source/rhythm-influence-home.raw.html` vs previous capture.
-3. Re-extract body fragment into `app/Views/pages/home/rhythm-influence-body.html`.
-4. Bump `template_asset_version` in `app/Config/site-config.php` if dist hashes change.
+3. Re-extract body fragment into `app/Views/pages/home/home-body.php`.
+4. Bump `bundle_asset_version` in `app/Config/site-config.php` if dist hashes change.

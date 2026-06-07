@@ -1,11 +1,11 @@
 /*
  * Hero (#home-header) — typography + layout as one unit (excluded from roots-locale-type-scale.css).
- * Viewport + breakpoints: roots-layout.css (Rhythm Influence 800px mobile, not Webflow 991/767/479).
+ * Viewport + breakpoints: roots-layout.css (800px mobile layout).
  *
  * Typography scales with --roots-type-scale. Layout tokens that depend on font metrics scale
- * with the same factor so headline→subcopy spacing matches EN (NeoGym/BSC parity).
+ * with the same factor so headline→subcopy spacing matches EN across locales.
  * Subcopy gap: calc(token / var(--roots-type-scale)) on desktop + mobile margin;
- * Mobile: vertical line-2 transform (template parity); .split hidden; hero fills one viewport.
+ * Mobile: vertical line-2 transform (bundle parity); .split hidden; hero fills one viewport.
  */
 
 #home-header.roots-hero {
@@ -19,7 +19,7 @@
     --roots-hero-subcopy-margin-top-mobile-short: 2.5rem;
     --roots-hero-cards-w-mobile: min(16rem, 42vw);
     --roots-hero-cards-h-mobile: min(24rem, 63vw);
-    /* Gap between headline rows after .in — tracks card height (template ~20rem on 24rem cards) */
+    /* Gap between headline rows after .in — tracks card height (bundle ~20rem on 24rem cards) */
     --roots-hero-line2-gap-mobile: calc(var(--roots-hero-cards-h-mobile) * 0.82);
     --roots-hero-line2-gap-mobile-short: calc(var(--roots-hero-cards-h-mobile) * 0.68);
     --roots-hero-line2-stack-mobile: 0.85rem;
@@ -40,7 +40,7 @@
     /*
      * Symmetric overlap: card sits across the row gap; equal bite into line 1 + line 2.
      * cardTop = line1Bottom - (cardH - gap) / 2
-     * Floor at 26% — template used 30%; calc alone ran too high on narrow viewports.
+     * Floor at 26% — bundle default was 30%; calc alone ran too high on narrow viewports.
      */
     --roots-hero-cards-top-mobile: max(
         26%,
@@ -59,7 +59,7 @@
     --roots-hero-content-top: 32%;
     --roots-hero-subcopy-width: min(46.4rem, 100%);
     --roots-hero-subcopy-width-mobile: min(24.2rem, 92vw);
-    /* Mobile headline cap — 8rem template max, fluid vw floor so long lines stay in viewport */
+    /* Mobile headline cap — 8rem bundle max, fluid vw floor so long lines stay in viewport */
     --roots-hero-heading-size-mobile-max: 8rem;
     --roots-hero-heading-size-mobile-vw: 15vw;
 }
@@ -178,7 +178,7 @@
         font-size: calc(1.2rem * var(--roots-type-scale, 1));
     }
 
-    /* Rhythm mobile: hide horizontal split spacers; gap opens via vertical transform on line 2 */
+    /* Mobile: hide horizontal split spacers; gap opens via vertical transform on line 2 */
     #home-header.roots-hero .homeHeader__heading .split {
         display: none;
     }

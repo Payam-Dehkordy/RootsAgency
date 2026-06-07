@@ -1,9 +1,9 @@
 /*
- * Template color overrides — Rhythm uses #000 / #202020; map to --roots-brand-navy (roots-layout.css).
+ * Vendored bundle color overrides — map #000 / #202020 to --roots-brand-navy (roots-layout.css).
  * Do not duplicate hex here; one token source only.
  */
 
-/* Replace Rhythm Influence pink (#bb70ad) with Roots light accent */
+/* Map bundle accent pink (#bb70ad) to Roots light accent */
 .h0 strong,
 .longform a,
 .nav__link.active,

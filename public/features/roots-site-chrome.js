@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-  /* Rhythm template cookie-consent expects #cookie-box; Roots has no tracking cookies — noop stub. */
+  /* Vendored cookie-consent expects #cookie-box; Roots has no tracking cookies — noop stub. */
   const cookieStubIds = new Set(['cookie-box', 'cookie-accept']);
   const cookieStub = {
     classList: { add() {}, remove() {} },

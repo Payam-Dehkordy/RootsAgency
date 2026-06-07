@@ -13,7 +13,7 @@ We **do not guess** layout or motion. Capture first, then mirror or decompose.
 | Raw homepage HTML | `dev/template-source/rhythm-influence-home.raw.html` |
 | Vendored CSS bundle | `public/dist/style.min.css` |
 | Vendored JS bundle | `public/dist/scripts.min.js` |
-| Body fragment | `app/Views/pages/home/rhythm-influence-body.html` |
+| Body fragment | `app/Views/pages/home/home-body.php` |
 | Re-run script | `dev/scripts/sync/sync-rhythm-influence-assets.ps1` |
 
 Template uses **Archivo** (Google Fonts), **Lenis** smooth scroll, and a custom Craft/Servd build — not Webflow.
@@ -38,7 +38,7 @@ Side-by-side in Chrome:
 3. Toggle mobile menu.
 4. Compare hover states on nav flip links and arrow buttons.
 
-Any drift → diff `rhythm-influence-body.html` against fresh raw capture; re-vend dist if template bumped asset hash.
+Any drift → diff `home-body.php` against fresh raw capture; re-vend dist if template bumped asset hash.
 
 ---
 

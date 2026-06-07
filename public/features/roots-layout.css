@@ -1,14 +1,12 @@
 /*
- * Layout + viewport SSOT (NeoGym / LadyZone / Byuregh base.css pattern).
- *
- * Breakpoints follow Rhythm Influence (Craft), not Webflow 991 / 767 / 479.
+ * Layout + viewport SSOT (shared client-site pattern).
  *
  * Mobile layout — use this @media in custom CSS:
  *   screen and (orientation: portrait) and (max-width: 800px),
  *   screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px)
  *
  * Desktop (portrait): min-width: 800px
- * Template scripts.min.js slider isMobile: innerWidth <= 600 (rem root only) — roots-breakpoints.js
+ * Vendored slider isMobile: innerWidth <= 600 — roots-breakpoints.js
  */
 
 :root {

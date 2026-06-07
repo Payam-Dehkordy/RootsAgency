@@ -21,7 +21,7 @@
 
     /**
      * Prime the first visible frame without play() — avoids AbortError races with
-     * template homeHeader play/pause and duplicate inline onplaying handlers.
+     * Avoid duplicate play/pause with bundle homeHeader handlers and inline onplaying handlers.
      */
     function primeVideo(video) {
         return new Promise(function (resolve) {

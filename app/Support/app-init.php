@@ -29,10 +29,10 @@ if (!function_exists('roots_is_local_preview')) {
     }
 }
 
-if (!function_exists('template_asset')) {
-    function template_asset(string $path): string
+if (!function_exists('bundle_asset')) {
+    function bundle_asset(string $path): string
     {
-        $version = (string) (($GLOBALS['site']['template_asset_version'] ?? '') ?: '');
+        $version = (string) (($GLOBALS['site']['bundle_asset_version'] ?? '') ?: '');
 
         return asset($version !== '' ? $path . '?v=' . $version : $path);
     }

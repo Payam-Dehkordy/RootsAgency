@@ -47,7 +47,7 @@ foreach ([
     'app/Lang/en.json',
     'app/Lang/hy.json',
     'app/Lang/ru.json',
-    'app/Views/pages/home/rhythm-influence-body.php',
+    'app/Views/pages/home/home-body.php',
     'public/features/roots-locale-fonts.css',
     'public/features/roots-locale-type-scale.css',
     'dev/scripts/generate-locale-type-scale-css.py',
@@ -411,7 +411,7 @@ assert_true(
 $headPhp = (string) file_get_contents($root . '/app/Views/partials/head.php');
 $heroCss = (string) file_get_contents($root . '/public/features/roots-hero.css');
 $localeFontsCss = (string) file_get_contents($root . '/public/features/roots-locale-fonts.css');
-$heroBody = (string) file_get_contents($root . '/app/Views/pages/home/rhythm-influence-body.php');
+$heroBody = (string) file_get_contents($root . '/app/Views/pages/home/home-body.php');
 $heroLayoutOk = str_contains($heroCss, '--roots-hero-subcopy-margin-top: 18rem')
     && str_contains($heroCss, '/ var(--roots-type-scale, 1)')
     && str_contains($heroCss, 'calc(var(--roots-hero-heading-size) * var(--roots-type-scale, 1))')
@@ -454,13 +454,13 @@ $responsiveOk = str_contains($layoutCss, '--roots-vh: 100dvh')
     && str_contains($themeCss, 'background-color: var(--roots-brand-navy)')
     && !str_contains($brandCss, 'max-width: 799px')
     && str_contains($breakpointsJs, 'mqMobileLayout')
-    && str_contains($breakpointsJs, 'mqTemplateSliderMobile')
+    && str_contains($breakpointsJs, 'mqSliderMobile')
     && strpos($headPhp, 'roots-layout.css') < strpos($headPhp, 'roots-brand.css')
     && str_contains($headPhp, 'roots-nav.css')
     && str_contains($heroBody, '/features/roots-breakpoints.js');
 assert_true(
     $responsiveOk,
-    'responsive SSOT: roots-layout.css tokens + Rhythm 800px breakpoints + roots-breakpoints.js',
+    'responsive SSOT: roots-layout.css tokens + 800px breakpoints + roots-breakpoints.js',
     $failures
 );
 
@@ -475,7 +475,7 @@ $navDrawerOk = $navDrawerOk
     && str_contains($navDrawerJs, 'bindScrollDismiss');
 assert_true(
     $navDrawerOk,
-    'mobile nav uses right-side drawer with Byuregh-style dismiss (roots-nav.css + roots-nav-drawer.js)',
+    'mobile nav uses right-side drawer with dismiss overlay (roots-nav.css + roots-nav-drawer.js)',
     $failures
 );
 
@@ -511,7 +511,7 @@ $mediaSentenceOk = $mediaSentenceOk
     && substr_count($msRender['stdout'], '<p>') >= 9;
 assert_true(
     $mediaSentenceOk,
-    'company media sentence: Rhythm-style locale HTML (plain <p> rows, no layout normalizer)',
+    'company media sentence: locale HTML rows (plain <p> rows, no layout normalizer)',
     $failures
 );
 
@@ -523,7 +523,7 @@ $cookieRemovedOk = !str_contains($heroBody, 'cookie-box')
     && str_contains($siteChromeJs, 'cookie-box');
 assert_true(
     $cookieRemovedOk,
-    'template cookie bar removed; roots-site-chrome.js stubs cookie-consent for vendored JS',
+    'vendored cookie bar removed; roots-site-chrome.js stubs cookie-consent for bundle JS',
     $failures
 );
 
@@ -574,6 +574,17 @@ foreach (['hy', 'ru'] as $localeCode) {
         $failures
     );
 }
+
+$namingAuditScript = $root . '/dev/scripts/audit/check-production-naming.php';
+$namingAuditOut = [];
+$namingAuditExit = 0;
+exec(escapeshellarg($php) . ' ' . escapeshellarg($namingAuditScript) . ' 2>&1', $namingAuditOut, $namingAuditExit);
+$namingAuditStdout = implode("\n", $namingAuditOut);
+assert_true(
+    $namingAuditExit === 0 && str_contains($namingAuditStdout, 'Production naming check passed'),
+    'production naming: no template or sibling-project leaks outside dev/docs',
+    $failures
+);
 
 if ($failures !== []) {
     fwrite(STDERR, count($failures) . " failure(s)\n");
