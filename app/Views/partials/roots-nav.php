@@ -33,7 +33,7 @@ $socialLinks = [
     <div class="nav__bar">
         <a href="<?= $home ?>" class="nav__logo" aria-label="<?= $logoAria ?>">
           <img
-          src="<?= h(asset('/media/images/brand/roots-agency-logo.svg')) ?>"
+          src="<?= h(asset((string) ($site['logo_relative'] ?? '/media/images/brand/roots-agency-logo.svg'))) ?>"
           class="media img "
           alt="<?= $brandAlt ?>"
           />

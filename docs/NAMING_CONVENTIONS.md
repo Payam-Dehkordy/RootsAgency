@@ -23,7 +23,7 @@ php dev/scripts/audit/check-production-naming.php
 
 **Views:** `app/Views/pages/home/home-body.php` (homepage markup), `app/Views/partials/roots-*.php`.
 
-**Config keys:** `project_slug`, `bundle_asset_version` — no `template_*` or vendor site names.
+**Config keys:** `bundle_asset_version`, `logo_relative`, `favicon_relative` — no `template_*` or vendor site names.
 
 ---
 

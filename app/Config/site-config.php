@@ -5,7 +5,6 @@ $base = 'https://roots-agency.payam-dehkordy.com';
 
 return [
     'brand' => 'Roots Agency',
-    'project_slug' => 'roots-agency',
     'base_url' => $base,
     'robots_allow_crawl' => false,
     'og_default_image' => $base . '/media/images/contact/roots-agency-contact-hero.webp',

@@ -47,7 +47,7 @@ if ($raw -match '(?s)<body>(.*)</body>') {
     $body = $body -replace 'alt="Nav logo"', 'alt="Roots Agency logo"'
     $bodyPath = Join-Path $src 'rhythm-influence-body.fragment.html'
     [System.IO.File]::WriteAllText($bodyPath, $body)
-    Write-Host "Wrote template body fragment ($($body.Length) chars) — edit app/Views/pages/home/rhythm-influence-body.php for runtime"
+    Write-Host "Wrote template body fragment ($($body.Length) chars) — merge into app/Views/pages/home/home-body.php for runtime"
 }
 
 if ($DownloadMedia) {

@@ -160,9 +160,7 @@ def main() -> None:
         cards.append(card_html(i, item, video_url, poster_url))
 
     block = slider_block(cards)
-    out = ROOT / "dev/work-slider-cards.fragment.html"
-    out.write_text(block + "\n", encoding="utf-8")
-    print(f"Wrote {out} ({len(WORK_ITEMS)} cards, {INITIAL_VISIBLE} visible)")
+    print(f"Prepared {len(WORK_ITEMS)} work cards ({INITIAL_VISIBLE} visible)")
 
     body_path = ROOT / "app/Views/pages/home/home-body.php"
     # Keep WORK_ITEMS in sync with app/Data/work-cards.php (runtime source of truth).

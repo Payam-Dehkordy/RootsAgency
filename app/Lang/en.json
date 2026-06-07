@@ -58,7 +58,6 @@
     "team.role.graphic_designer": "Graphic Designer",
     "contact.heading_html": "<p>Let&#8217;s  <span class=\"window\"><picture><source type=\"image/webp\" srcset=\"/media/images/contact/roots-agency-contact-hero.webp 1x, /media/images/contact/roots-agency-contact-hero@2x.webp 2x\" /><img src=\"/media/images/contact/roots-agency-contact-hero.webp\" class=\"media img \" alt=\"Get in touch with Roots Agency\" /></picture></span>  <i>c</i>hat</p>",
     "contact.intro": "Have a project in mind or want to learn more about our work? Fill out the form and we will get back to you as soon as possible.",
-    "contact.image_alt": "Get in touch with Roots Agency",
     "contact.form.name": "Name",
     "contact.form.company": "Company",
     "contact.form.email": "Email",

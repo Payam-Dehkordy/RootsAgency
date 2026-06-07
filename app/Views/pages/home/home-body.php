@@ -128,21 +128,6 @@ $office = (array) ($site['office'] ?? []);
 
     <div class="companyData__bg pal scroll">
         <div class="companyData__bgInner">
-                                        
-    
-    
-    
-                                                
-
-    
-      
-
-      
-      
-      
-                        
-      
-      
       <picture>
                                 <source type="image/webp" srcset="/media/images/services/roots-agency-services-team.webp 1x, /media/images/services/roots-agency-services-team@2x.webp 2x" />
                 <img
@@ -152,12 +137,6 @@ $office = (array) ($site['office'] ?? []);
           
         />
       </picture>
-      
-    
-  
-
-        
-      
             <div class="companyData__bgOverlay anima pal-opacity" data-pal="0.5" data-pal-push="10" ></div>
         </div>
     </div>
@@ -334,8 +313,6 @@ $office = (array) ($site['office'] ?? []);
     
 </footer>
 </div>
-      
-      <div id="htmlclass" data-class=""></div>
     </main>
 
   </div>
@@ -353,6 +330,4 @@ $office = (array) ($site['office'] ?? []);
   <script type="text/javascript" src="<?= h(asset('/features/roots-nav-scroll.js')) ?>"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-nav-drawer.js')) ?>"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-work-slider.js')) ?>"></script>
-
-  <!-- BrowserSync Hook -->
 

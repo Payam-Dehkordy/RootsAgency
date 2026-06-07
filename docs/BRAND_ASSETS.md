@@ -31,7 +31,7 @@ Display caps use `<i>` inside `.h0` headings (not semantic emphasis). `roots-bra
 | **Detailed** | Our agency prides itself on helping you take your business to the next level. | Hero subcopy, `meta_description` |
 | Logo tagline | Marketing and Creative | Nav logo SVG only |
 
-Canonical doc: `content/COPY.md`. Config keys: `tagline_slogan`, `tagline_detailed` in `app/Config/site-config.php`.
+Canonical doc: `content/COPY.md`. Copy strings live in `app/Lang/*.json` (locale keys).
 
 ## Logo
 

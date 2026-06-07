@@ -14,7 +14,6 @@ function bootstrap_public_page(array $site, string $pageKey): void
     $GLOBALS['page_title'] = tr('pages.' . $pageKey . '.title');
     $GLOBALS['meta_description'] = tr('pages.' . $pageKey . '.meta_description');
     $GLOBALS['canonical_url'] = rtrim((string) $site['base_url'], '/') . $canonical_path;
-    $GLOBALS['current_nav'] = (string) $p['current_nav'];
     $GLOBALS['include_hreflang'] = !empty($p['include_hreflang']);
     $GLOBALS['extra_head'] = '';
 }
