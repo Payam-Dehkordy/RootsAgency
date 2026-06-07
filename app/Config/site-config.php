@@ -18,7 +18,7 @@ return [
     'template_asset_version' => '7c85f98c63f5e1f89737e800920875f74ad6abf9',
     'contact_to_email' => 'info@rootsagency.am',
     'office' => [
-        'maps_url' => 'https://www.google.com/maps/search/Vazgen+Sargsyan+26%2F3+Yerevan',
+        'maps_url' => 'https://yandex.com/maps/-/CPd7YLyO',
         'timezone' => 4,
     ],
     'footer_credit_html' => 'Web design &amp; development by <a href="https://www.payam-dehkordy.com/" target="_blank" rel="noopener noreferrer">Payam&nbsp;Dehkordy</a>',

@@ -9,7 +9,8 @@ if (!function_exists('roots_json_ld_script_html')) {
     {
         $base = rtrim((string) ($site['base_url'] ?? ''), '/');
         $name = (string) ($site['brand'] ?? 'Roots Agency');
-        $street = tr('office.address');
+        $addressRaw = tr('office.address');
+        $street = trim(explode("\n", str_replace("\r\n", "\n", $addressRaw), 2)[0] ?? '');
         $email = (string) ($site['contact_to_email'] ?? '');
         $url = public_page_url($site, 'home', current_locale());
         $image = trim((string) ($site['og_default_image'] ?? ''));
