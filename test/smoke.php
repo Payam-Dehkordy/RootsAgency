@@ -393,8 +393,8 @@ assert_true(
 
 $localeScaleOk = is_file($root . '/public/features/roots-locale-fonts.css')
     && is_file($root . '/public/features/roots-locale-type-scale.css')
-    && str_contains((string) file_get_contents($root . '/public/features/roots-locale-fonts.css'), '--roots-type-scale: 0.65')
-    && str_contains((string) file_get_contents($root . '/public/features/roots-locale-fonts.css'), '--roots-type-scale: 0.6')
+    && str_contains((string) file_get_contents($root . '/public/features/roots-locale-fonts.css'), '--roots-type-scale: 0.75')
+    && str_contains((string) file_get_contents($root . '/public/features/roots-locale-fonts.css'), '--roots-type-scale: 0.8')
     && !str_contains((string) file_get_contents($root . '/public/features/roots-locale-fonts.css'), '--roots-html-vw-desktop')
     && str_contains((string) file_get_contents($root . '/public/features/roots-locale-type-scale.css'), 'html[lang="hy"] #main .body')
     && str_contains((string) file_get_contents($root . '/public/features/roots-locale-type-scale.css'), 'calc(2rem * var(--roots-type-scale))')

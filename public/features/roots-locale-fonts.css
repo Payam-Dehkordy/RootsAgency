@@ -1,6 +1,6 @@
 /*
  * Locale typography tokens + stacks.
- * Scale vs EN (NeoGym/BSC parity): hy ~35% smaller (0.65), ru ~40% smaller (0.6).
+ * Scale vs EN: hy ~25% smaller (0.75), ru ~20% smaller (0.8).
  * Typography-only: --roots-type-scale on #main via roots-locale-type-scale.css.
  * Hero band: typography + spacing in roots-hero.css (excluded from type-scale generator).
  * Lang switcher: pinned px via --roots-text-lang-link in roots-brand.css.
@@ -18,12 +18,12 @@
 }
 
 html[lang="hy"] {
-    --roots-type-scale: 0.65;
+    --roots-type-scale: 0.75;
     --roots-font-body: var(--roots-font-body-hy);
 }
 
 html[lang="ru"] {
-    --roots-type-scale: 0.6;
+    --roots-type-scale: 0.8;
     --roots-font-body: var(--roots-font-body-ru);
 }
 
