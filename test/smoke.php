@@ -53,6 +53,8 @@ foreach ([
     'dev/scripts/generate-locale-type-scale-css.py',
     'public/features/roots-site-chrome.js',
     'public/features/roots-hero-video.js',
+    'public/features/roots-layout.css',
+    'public/features/roots-breakpoints.js',
     'public/features/roots-hero.css',
 ] as $rel) {
     assert_true(is_file($root . '/' . $rel), 'file exists: ' . $rel, $failures);
@@ -253,6 +255,7 @@ function roots_smoke_home_document_shell_ok(
     return $pageTitle !== ''
         && str_contains($out, $titleNeedle)
         && $h1Count === 1
+        && str_contains($out, '/features/roots-layout.css')
         && str_contains($out, '/features/roots-locale-fonts.css')
         && str_contains($out, '/features/roots-locale-type-scale.css')
         && str_contains($out, '/features/roots-hero.css')
@@ -435,6 +438,40 @@ $heroVideoOk = substr_count($heroBody, 'homeHeader__mediaCard') >= 4
 assert_true(
     $heroVideoOk,
     'hero videos use single seek-based primer (no inline onplaying/autoplay play races)',
+    $failures
+);
+
+$layoutCss = (string) file_get_contents($root . '/public/features/roots-layout.css');
+$themeCss = (string) file_get_contents($root . '/public/features/roots-theme.css');
+$brandCss = (string) file_get_contents($root . '/public/features/roots-brand.css');
+$breakpointsJs = (string) file_get_contents($root . '/public/features/roots-breakpoints.js');
+$responsiveOk = str_contains($layoutCss, '--roots-vh: 100dvh')
+    && str_contains($layoutCss, '--roots-brand-navy: #011F39')
+    && str_contains($layoutCss, '--roots-page-end-height')
+    && str_contains($layoutCss, '800px')
+    && !str_contains($brandCss, '--roots-brand-navy:')
+    && str_contains($themeCss, '#main section')
+    && str_contains($themeCss, 'background-color: var(--roots-brand-navy)')
+    && !str_contains($brandCss, 'max-width: 799px')
+    && str_contains($breakpointsJs, 'mqMobileLayout')
+    && str_contains($breakpointsJs, 'mqTemplateSliderMobile')
+    && strpos($headPhp, 'roots-layout.css') < strpos($headPhp, 'roots-brand.css')
+    && str_contains($heroBody, '/features/roots-breakpoints.js');
+assert_true(
+    $responsiveOk,
+    'responsive SSOT: roots-layout.css tokens + Rhythm 800px breakpoints + roots-breakpoints.js',
+    $failures
+);
+
+$siteChromeJs = (string) file_get_contents($root . '/public/features/roots-site-chrome.js');
+$cookieRemovedOk = !str_contains($heroBody, 'cookie-box')
+    && !str_contains($heroBody, 'cookieBox')
+    && !str_contains($heroBody, 'common.cookie_text')
+    && !str_contains((string) file_get_contents($root . '/app/Lang/en.json'), 'common.cookie_text')
+    && str_contains($siteChromeJs, 'cookie-box');
+assert_true(
+    $cookieRemovedOk,
+    'template cookie bar removed; roots-site-chrome.js stubs cookie-consent for vendored JS',
     $failures
 );
 

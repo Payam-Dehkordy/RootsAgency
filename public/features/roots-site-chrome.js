@@ -1,9 +1,25 @@
 /**
- * Site chrome outside Swup `#main` (nav, cookie bar, html[lang]).
+ * Site chrome outside Swup `#main` (nav, html[lang]).
  * Locale switches must full-reload — Swup only replaces `#main`.
  */
 (function () {
   'use strict';
+
+  /* Rhythm template cookie-consent expects #cookie-box; Roots has no tracking cookies — noop stub. */
+  const cookieStubIds = new Set(['cookie-box', 'cookie-accept']);
+  const cookieStub = {
+    classList: { add() {}, remove() {} },
+    addEventListener() {},
+    removeEventListener() {},
+  };
+  const nativeGetElementById = Document.prototype.getElementById;
+  Document.prototype.getElementById = function getElementById(id) {
+    const el = nativeGetElementById.call(this, id);
+    if (!el && cookieStubIds.has(id)) {
+      return cookieStub;
+    }
+    return el;
+  };
 
   const localeHomeSegments = (document.documentElement.getAttribute('data-roots-locale-home-prefixes') || '')
     .split(',')

@@ -4,13 +4,6 @@
 $office = (array) ($site['office'] ?? []);
 ?>
 
-
-  
-
-  <div class="cookieBox" id="cookie-box">
-    <p><?= h(tr('common.cookie_text')) ?></p>
-        <span id="cookie-accept"><?= h(tr('common.cookie_accept')) ?></span>
-</div>
   <div id="container">
     
 
@@ -356,6 +349,7 @@ $office = (array) ($site['office'] ?? []);
   <script type="text/javascript" src="<?= h(asset('/features/roots-contact-header.js')) ?>"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-contact-form.js')) ?>"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-scroll-top.js')) ?>"></script>
+  <script type="text/javascript" src="<?= h(asset('/features/roots-breakpoints.js')) ?>"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-nav-scroll.js')) ?>"></script>
   <script type="text/javascript" src="<?= h(asset('/features/roots-work-slider.js')) ?>"></script>
 

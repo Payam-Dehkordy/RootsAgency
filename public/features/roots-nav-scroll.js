@@ -143,7 +143,13 @@
     }
 
     function isMobileTeamLayout() {
-        return window.matchMedia('(max-width: 800px)').matches;
+        if (window.rootsBreakpoints && typeof window.rootsBreakpoints.isMobileLayout === 'function') {
+            return window.rootsBreakpoints.isMobileLayout();
+        }
+        return window.matchMedia(
+            '(orientation: portrait) and (max-width: 800px), ' +
+            '(orientation: landscape) and (max-width: 1200px) and (max-height: 600px)'
+        ).matches;
     }
 
     function sliderProgressOffset(section) {
@@ -151,7 +157,11 @@
         var base = (slider && slider.offset) || Number(section.getAttribute('data-slider-offset')) || 0;
         var isMobile = slider && slider.browser && slider.browser.state.isMobile;
         if (isMobile == null) {
-            isMobile = window.matchMedia('(max-width: 600px)').matches;
+            if (window.rootsBreakpoints && typeof window.rootsBreakpoints.isTemplateSliderMobile === 'function') {
+                isMobile = window.rootsBreakpoints.isTemplateSliderMobile();
+            } else {
+                isMobile = window.matchMedia('(max-width: 600px)').matches;
+            }
         }
         return base * (isMobile ? 0.5 : 1);
     }

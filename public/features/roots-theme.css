@@ -1,8 +1,7 @@
-/* Roots Agency — replace template black (#000 / #202020) backgrounds with brand navy */
-
-:root {
-    --roots-brand-accent: #f5f5f5;
-}
+/*
+ * Template color overrides — Rhythm uses #000 / #202020; map to --roots-brand-navy (roots-layout.css).
+ * Do not duplicate hex here; one token source only.
+ */
 
 /* Replace Rhythm Influence pink (#bb70ad) with Roots light accent */
 .h0 strong,
@@ -25,12 +24,17 @@
 }
 
 html,
-body {
+body,
+#container,
+#main,
+.transition-fade {
     background: var(--roots-brand-navy) !important;
     background-color: var(--roots-brand-navy) !important;
 }
 
-.transition-fade {
+#main section,
+section {
+    background: var(--roots-brand-navy) !important;
     background-color: var(--roots-brand-navy) !important;
 }
 
@@ -51,10 +55,6 @@ body {
     background-color: var(--roots-brand-navy) !important;
 }
 
-.cookieBox {
-    background: var(--roots-brand-navy) !important;
-}
-
 .mediaHeader__bgOverlay {
     background: linear-gradient(
         rgba(var(--roots-brand-navy-rgb), 0.66) 50%,
@@ -67,10 +67,4 @@ body {
         rgba(var(--roots-brand-navy-rgb), 0.8) 50%,
         var(--roots-brand-navy) 100%
     ) !important;
-}
-
-@media screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px) {
-    section {
-        background: var(--roots-brand-navy) !important;
-    }
 }

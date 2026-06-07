@@ -37,6 +37,7 @@ $include_hreflang = $GLOBALS['include_hreflang'] ?? false;
   <link rel="preload" href="<?= h(asset('/fonts/aeonik-regular.woff2')) ?>" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" type="text/css" href="<?= h(template_asset('/dist/style.min.css')) ?>">
 
+  <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-layout.css')) ?>">
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-brand.css')) ?>">
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-theme.css')) ?>">
   <link rel="stylesheet" type="text/css" href="<?= h(asset('/features/roots-locale-type-scale.css')) ?>">

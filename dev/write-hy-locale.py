@@ -14,8 +14,6 @@ HY = {
     "common.primary_nav": "Հիմնական",
     "common.brand_alt": "Roots Agency լոգո",
     "common.logo_home_aria": "Roots Agency գլխավոր",
-    "common.cookie_text": "Այս կայքը Cookie-ներ է օգտագործում ձեր փորձը բարելավելու համար։",
-    "common.cookie_accept": "Ընդունել",
     "common.menu": "Մենյու",
     "pages.home.title": "Roots Agency | Մarքeting և սtеgtsagortsakan studia",
     "pages.home.meta_description": "Մer gortsakalut'yuny hpartutyamb e ognum dzer biznesin hascnel hajord makardaki. Roots Agency — marketingayin yev stegtsagortsakan studia Yerevanum.",

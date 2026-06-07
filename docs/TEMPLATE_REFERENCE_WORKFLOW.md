@@ -35,7 +35,7 @@ Side-by-side in Chrome:
 
 1. Open template and local mirror at same viewport width.
 2. Scroll through hero → case studies → services → brands marquee → footer.
-3. Toggle mobile menu; accept cookie banner.
+3. Toggle mobile menu.
 4. Compare hover states on nav flip links and arrow buttons.
 
 Any drift → diff `rhythm-influence-body.html` against fresh raw capture; re-vend dist if template bumped asset hash.
@@ -47,7 +47,7 @@ Any drift → diff `rhythm-influence-body.html` against fresh raw capture; re-ve
 When replacing mirror with modular PHP (LadyZone pattern):
 
 1. `base.css` tokens from computed styles
-2. Nav + cookie bar
+2. Nav
 3. Hero video mosaic + kinetic type
 4. Case studies carousel
 5. Services / talent-first band

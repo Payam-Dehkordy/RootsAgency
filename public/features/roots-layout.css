@@ -1,0 +1,26 @@
+/*
+ * Layout + viewport SSOT (NeoGym / LadyZone / Byuregh base.css pattern).
+ *
+ * Breakpoints follow Rhythm Influence (Craft), not Webflow 991 / 767 / 479.
+ *
+ * Mobile layout — use this @media in custom CSS:
+ *   screen and (orientation: portrait) and (max-width: 800px),
+ *   screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px)
+ *
+ * Desktop (portrait): min-width: 800px
+ * Template scripts.min.js slider isMobile: innerWidth <= 600 (rem root only) — roots-breakpoints.js
+ */
+
+:root {
+    /* Brand shell — SSOT (hex matches app/Config/site-config.php brand_color_primary) */
+    --roots-brand-navy: #011F39;
+    --roots-brand-navy-rgb: 1, 31, 57;
+    --roots-brand-accent: #f5f5f5;
+
+    --roots-vh: 100dvh;
+    --roots-nav-height: 8.8rem;
+    --roots-nav-height-mobile: 7.5rem;
+    --roots-page-end-pad-x: 5rem;
+    --roots-page-end-pad-x-mobile: 1.6rem;
+    --roots-page-end-height: calc(var(--roots-vh) - var(--roots-nav-height));
+}

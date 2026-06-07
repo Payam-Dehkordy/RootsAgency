@@ -1,10 +1,11 @@
 /*
  * Hero (#home-header) — typography + layout as one unit (excluded from roots-locale-type-scale.css).
+ * Viewport + breakpoints: roots-layout.css (Rhythm Influence 800px mobile, not Webflow 991/767/479).
  *
  * Typography scales with --roots-type-scale. Layout tokens that depend on font metrics scale
  * with the same factor so headline→subcopy spacing matches EN (NeoGym/BSC parity).
  * Subcopy gap: calc(token / var(--roots-type-scale)) on desktop + mobile margin;
- * mobile line-2 stack scales with --roots-type-scale (font-coupled transforms).
+ * Mobile: vertical line-2 transform (template parity); .split hidden; hero fills one viewport.
  */
 
 #home-header.roots-hero {
@@ -13,18 +14,54 @@
     --roots-hero-body-size: 2rem;
     --roots-hero-body-line-height: 1.2;
     --roots-hero-subcopy-margin-top: 18rem;
-    --roots-hero-subcopy-margin-top-mobile: 12rem;
-    --roots-hero-subcopy-margin-top-short: 7rem;
-    --roots-hero-subcopy-nudge-y-mobile: -3rem;
-    --roots-hero-line2-margin-top-mobile: 17rem;
-    --roots-hero-line2-nudge-y-mobile: -16rem;
+    /* Mobile — vertical line-2 transform; gap tracks card height so both rows overlap cards equally */
+    --roots-hero-subcopy-margin-top-mobile: 3.7rem;
+    --roots-hero-subcopy-margin-top-mobile-short: 2.5rem;
+    --roots-hero-cards-w-mobile: min(16rem, 42vw);
+    --roots-hero-cards-h-mobile: min(24rem, 63vw);
+    /* Gap between headline rows after .in — tracks card height (template ~20rem on 24rem cards) */
+    --roots-hero-line2-gap-mobile: calc(var(--roots-hero-cards-h-mobile) * 0.82);
+    --roots-hero-line2-gap-mobile-short: calc(var(--roots-hero-cards-h-mobile) * 0.68);
+    --roots-hero-line2-stack-mobile: 0.85rem;
+    --roots-hero-content-top-mobile: 19dvh;
+    /* ~1.9 lines — mobile titles often wrap; underestimating pushes cards too high */
+    --roots-hero-line1-h-mobile: calc(
+        min(var(--roots-hero-heading-size-mobile-max), var(--roots-hero-heading-size-mobile-vw))
+        * var(--roots-type-scale, 1)
+        * var(--roots-hero-heading-line-height)
+        * 1.9
+    );
+    --roots-hero-line2-h-mobile: calc(
+        min(var(--roots-hero-heading-size-mobile-max), var(--roots-hero-heading-size-mobile-vw))
+        * var(--roots-type-scale, 1)
+        * var(--roots-hero-heading-line-height)
+        * 1.35
+    );
+    /*
+     * Symmetric overlap: card sits across the row gap; equal bite into line 1 + line 2.
+     * cardTop = line1Bottom - (cardH - gap) / 2
+     * Floor at 26% — template used 30%; calc alone ran too high on narrow viewports.
+     */
+    --roots-hero-cards-top-mobile: max(
+        26%,
+        calc(
+            var(--roots-hero-content-top-mobile)
+            + var(--roots-hero-line1-h-mobile)
+            - (
+                var(--roots-hero-cards-h-mobile)
+                - (var(--roots-hero-line2-gap-mobile) * var(--roots-type-scale, 1))
+            ) * 0.5
+        )
+    );
+    --roots-hero-content-top-short: 26%;
     --roots-hero-split-line1: 24rem;
     --roots-hero-split-line2: 26rem;
     --roots-hero-content-top: 32%;
-    --roots-hero-content-top-mobile: 21%;
-    --roots-hero-content-top-short: 26%;
     --roots-hero-subcopy-width: min(46.4rem, 100%);
     --roots-hero-subcopy-width-mobile: min(24.2rem, 92vw);
+    /* Mobile headline cap — 8rem template max, fluid vw floor so long lines stay in viewport */
+    --roots-hero-heading-size-mobile-max: 8rem;
+    --roots-hero-heading-size-mobile-vw: 15vw;
 }
 
 #home-header.roots-hero .homeHeader__mediaCard:not(.is-ready) {
@@ -107,37 +144,109 @@
 
 @media screen and (orientation: portrait) and (max-width: 800px),
     screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px) {
+    #home-header.roots-hero {
+        height: auto;
+        min-height: var(--roots-vh, 100dvh);
+        max-height: var(--roots-vh, 100dvh);
+        margin-bottom: clamp(2rem, 5dvh, 3rem);
+        overflow: hidden;
+        overflow-x: clip;
+        box-sizing: border-box;
+    }
+
+    #home-header.roots-hero .homeHeader__content {
+        top: var(--roots-hero-content-top-mobile);
+        padding: 0 clamp(1rem, 4vw, 1.5rem);
+        max-width: 100%;
+    }
+
     #home-header.roots-hero .homeHeader__heading {
-        font-size: calc(8rem * var(--roots-type-scale, 1));
+        font-size: calc(
+            min(var(--roots-hero-heading-size-mobile-max), var(--roots-hero-heading-size-mobile-vw))
+            * var(--roots-type-scale, 1)
+        );
+        max-width: 100%;
+        overflow-wrap: break-word;
+    }
+
+    #home-header.roots-hero .homeHeader__heading p {
+        max-width: 100%;
+        overflow-wrap: break-word;
     }
 
     #home-header.roots-hero .homeHeader__decoText {
         font-size: calc(1.2rem * var(--roots-type-scale, 1));
     }
 
-    #home-header.roots-hero .homeHeader__heading p:nth-child(2) {
-        margin-top: calc(var(--roots-hero-line2-margin-top-mobile) * var(--roots-type-scale, 1));
-        -webkit-transform: translateY(calc(var(--roots-hero-line2-nudge-y-mobile) * var(--roots-type-scale, 1)));
-        transform: translateY(calc(var(--roots-hero-line2-nudge-y-mobile) * var(--roots-type-scale, 1)));
+    /* Rhythm mobile: hide horizontal split spacers; gap opens via vertical transform on line 2 */
+    #home-header.roots-hero .homeHeader__heading .split {
+        display: none;
+    }
+
+    #home-header.roots-hero .homeHeader__heading p:nth-child(1) {
+        position: relative;
+        z-index: 2;
+    }
+
+    #home-header.roots-hero .homeHeader__mediaCard {
+        z-index: 3;
+    }
+
+    #home-header.roots-hero .homeHeader__heading:not(.in) p:nth-child(2) {
+        position: relative;
+        z-index: 4;
+        margin-top: calc(var(--roots-hero-line2-gap-mobile) * var(--roots-type-scale, 1));
+        -webkit-transform: translateY(
+            calc(-1 * (var(--roots-hero-line2-gap-mobile) * var(--roots-type-scale, 1) - var(--roots-hero-line2-stack-mobile)))
+        );
+        transform: translateY(
+            calc(-1 * (var(--roots-hero-line2-gap-mobile) * var(--roots-type-scale, 1) - var(--roots-hero-line2-stack-mobile)))
+        );
+    }
+
+    #home-header.roots-hero .homeHeader__heading.in p:nth-child(2) {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+
+    #home-header.roots-hero .homeHeader__heading.in p {
+        -webkit-transition: -webkit-transform 1s 0.9s cubic-bezier(0.6, 0, 0.2, 1);
+        transition: transform 1s 0.9s cubic-bezier(0.6, 0, 0.2, 1);
+        transition: transform 1s 0.9s cubic-bezier(0.6, 0, 0.2, 1), -webkit-transform 1s 0.9s cubic-bezier(0.6, 0, 0.2, 1);
     }
 
     #home-header.roots-hero .homeHeader__mediaCards {
-        width: 16rem;
-        height: 24rem;
-        left: calc(50% - 10rem);
-    }
-
-    #home-header.roots-hero .homeHeader__content {
-        top: var(--roots-hero-content-top-mobile);
-        padding: 0 2rem;
+        top: var(--roots-hero-cards-top-mobile);
+        width: var(--roots-hero-cards-w-mobile);
+        height: var(--roots-hero-cards-h-mobile);
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
     }
 
     #home-header.roots-hero .homeHeader__content .body {
         width: var(--roots-hero-subcopy-width-mobile);
         margin-top: calc(var(--roots-hero-subcopy-margin-top-mobile) / var(--roots-type-scale, 1));
-        -webkit-transform: translateY(calc(var(--roots-hero-subcopy-nudge-y-mobile) / var(--roots-type-scale, 1)));
-        transform: translateY(calc(var(--roots-hero-subcopy-nudge-y-mobile) / var(--roots-type-scale, 1)));
+        -webkit-transform: none;
+        transform: none;
         line-height: 1.25;
+    }
+}
+
+@media screen and (orientation: portrait) and (max-width: 800px) and (max-height: 740px),
+    screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px) {
+    #home-header.roots-hero .homeHeader__heading:not(.in) p:nth-child(2) {
+        margin-top: calc(var(--roots-hero-line2-gap-mobile-short) * var(--roots-type-scale, 1));
+        -webkit-transform: translateY(
+            calc(-1 * (var(--roots-hero-line2-gap-mobile-short) * var(--roots-type-scale, 1) - var(--roots-hero-line2-stack-mobile)))
+        );
+        transform: translateY(
+            calc(-1 * (var(--roots-hero-line2-gap-mobile-short) * var(--roots-type-scale, 1) - var(--roots-hero-line2-stack-mobile)))
+        );
+    }
+
+    #home-header.roots-hero .homeHeader__content .body {
+        margin-top: calc(var(--roots-hero-subcopy-margin-top-mobile-short) / var(--roots-type-scale, 1));
     }
 }
 
@@ -147,13 +256,13 @@
     }
 
     #home-header.roots-hero .homeHeader__content .body {
-        margin-top: calc(var(--roots-hero-subcopy-margin-top-mobile) / var(--roots-type-scale, 1));
+        margin-top: calc(12rem / var(--roots-type-scale, 1));
     }
 }
 
-@media screen and (max-height: 600px) {
+@media screen and (max-height: 600px) and (min-width: 800px) {
     #home-header.roots-hero .homeHeader__content .body {
-        margin-top: calc(var(--roots-hero-subcopy-margin-top-short) / var(--roots-type-scale, 1));
+        margin-top: calc(7rem / var(--roots-type-scale, 1));
         -webkit-transform: none;
         transform: none;
     }

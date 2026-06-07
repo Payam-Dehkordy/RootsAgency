@@ -1,11 +1,6 @@
 /* Roots Agency brand tokens (see docs/BRAND_ASSETS.md) */
 :root {
-    --roots-brand-navy: #011F39;
-    --roots-brand-navy-rgb: 1, 31, 57;
-    --roots-nav-height: 8.8rem;
-    --roots-page-end-pad-x: 5rem;
     --roots-footer-pad-y: 1rem;
-    --roots-page-end-height: calc(100dvh - var(--roots-nav-height));
     --roots-footer-col-pad-y: clamp(1.75rem, 4.5dvh, 2.75rem);
     /* Credit / signature — readable px floor, not locale-scaled dvh */
     --roots-footer-credit-size: clamp(13px, 0.8125rem + 0.2vw, 16px);
@@ -106,7 +101,8 @@
     object-position: center center;
 }
 
-@media screen and (max-width: 799px) {
+@media screen and (orientation: portrait) and (max-width: 800px),
+    screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px) {
     .nav__bar {
         align-items: center;
     }
@@ -117,7 +113,11 @@
     }
 
     :root {
-        --roots-nav-height: 7.5rem;
+        --roots-nav-height: var(--roots-nav-height-mobile);
+    }
+
+    .nav__cta .roots-nav-lang {
+        display: none;
     }
 }
 
@@ -164,12 +164,6 @@
 .roots-nav-lang--menu {
     margin-top: clamp(1.5rem, 4dvh, 2.5rem);
     gap: clamp(0.75rem, 2dvh, 1.25rem);
-}
-
-@media screen and (max-width: 799px) {
-    .nav__cta .roots-nav-lang {
-        display: none;
-    }
 }
 
 /* Our team — photo cards in clientLogos scroll strip (#team) */
@@ -237,14 +231,6 @@
     overflow: hidden;
     vertical-align: top;
     opacity: 0.85;
-}
-
-@media screen and (orientation: portrait) and (max-width: 800px),
-    screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px) {
-    .clientLogos#team .logoBanner__row {
-        height: auto;
-        min-height: 28rem;
-    }
 }
 
 .logoBanner__logo.roots-team-banner .roots-team-card__photo {
@@ -561,10 +547,15 @@ html[lang="ru"] #main .roots-page-end footer.roots-footer .footer__bottom .roots
 @media screen and (orientation: portrait) and (max-width: 800px),
     screen and (orientation: landscape) and (max-width: 1200px) and (max-height: 600px) {
     :root {
-        --roots-page-end-pad-x: 1.6rem;
+        --roots-page-end-pad-x: var(--roots-page-end-pad-x-mobile);
         --roots-footer-pad-y: 1rem;
         --roots-footer-col-pad-y: clamp(1rem, 2.5dvh, 1.75rem);
         --roots-footer-credit-size: clamp(13px, 3.2vw, 15px);
+    }
+
+    .clientLogos#team .logoBanner__row {
+        height: auto;
+        min-height: 28rem;
     }
 
     .roots-page-end {
