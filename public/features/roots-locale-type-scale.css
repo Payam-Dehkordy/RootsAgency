@@ -115,11 +115,6 @@ html[lang="ru"] #main .footer__socialLink {
     font-size: calc(1.5rem * var(--roots-type-scale));
 }
 
-html[lang="hy"] #main .footer__bottom,
-html[lang="ru"] #main .footer__bottom {
-    font-size: calc(1rem * var(--roots-type-scale));
-}
-
 html[lang="hy"] #main .shortHeader__heading,
 html[lang="ru"] #main .shortHeader__heading {
     font-size: calc(14rem * var(--roots-type-scale));

@@ -16,6 +16,7 @@ SKIP_SUBSTRINGS = (
     "preloader",
     "loader",
     "homeheader",
+    "footer__bottom",
 )
 
 
