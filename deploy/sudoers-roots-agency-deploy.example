@@ -1,0 +1,15 @@
+# /etc/sudoers.d/roots-agency-deploy — passwordless sudo for the CI deploy user.
+# Install: sudo visudo -f /etc/sudoers.d/roots-agency-deploy
+# Cross-project pattern: Droplet/docs/SHARED_DROPLET_GO_LIVE.md Phase 1
+
+deploy ALL=(ALL) NOPASSWD: /usr/bin/mkdir -p /var/www/roots-agency/current
+deploy ALL=(ALL) NOPASSWD: /bin/mkdir -p /var/www/roots-agency/current
+deploy ALL=(ALL) NOPASSWD: /usr/bin/chown -R deploy /var/www/roots-agency/current
+deploy ALL=(ALL) NOPASSWD: /bin/chown -R deploy /var/www/roots-agency/current
+deploy ALL=(ALL) NOPASSWD: /usr/bin/cp /var/www/roots-agency/current/deploy/nginx-roots-agency.conf /etc/nginx/sites-available/roots-agency.conf
+deploy ALL=(ALL) NOPASSWD: /bin/cp /var/www/roots-agency/current/deploy/nginx-roots-agency.conf /etc/nginx/sites-available/roots-agency.conf
+deploy ALL=(ALL) NOPASSWD: /usr/bin/ln -sf /etc/nginx/sites-available/roots-agency.conf /etc/nginx/sites-enabled/roots-agency.conf
+deploy ALL=(ALL) NOPASSWD: /bin/ln -sf /etc/nginx/sites-available/roots-agency.conf /etc/nginx/sites-enabled/roots-agency.conf
+deploy ALL=(ALL) NOPASSWD: /usr/sbin/nginx -t
+deploy ALL=(ALL) NOPASSWD: /usr/bin/systemctl reload nginx
+deploy ALL=(ALL) NOPASSWD: /bin/systemctl reload nginx

@@ -1,0 +1,153 @@
+# Required GitHub Actions secrets (repo → Settings → Secrets and variables → Actions):
+#   SSH_HOST              — droplet hostname or IP
+#   SSH_USER              — deploy
+#   SSH_TARGET_DIR        — /var/www/roots-agency/current
+#   SSH_PRIVATE_KEY_B64   — see docs/GITHUB_ACTIONS_DEPLOY.md
+# Optional:
+#   SSH_PORT              — if unset, defaults to 22
+
+name: Deploy Roots Agency to droplet
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+concurrency:
+  group: roots-agency-production-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure SSH key (secret)
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_PRIVATE_KEY_B64: ${{ secrets.SSH_PRIVATE_KEY_B64 }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          KEYFILE="$HOME/.ssh/id_ed25519"
+          if printf '%s' "$SSH_PRIVATE_KEY_B64" | grep -qE 'BEGIN (OPENSSH|RSA|EC) PRIVATE KEY|BEGIN PRIVATE KEY'; then
+            printf '%s' "$SSH_PRIVATE_KEY_B64" > "$KEYFILE"
+          else
+            printf '%s' "$SSH_PRIVATE_KEY_B64" | tr -d '\r\n\t ' | base64 -d > "$KEYFILE" || {
+              echo "::error::Could not base64-decode SSH_PRIVATE_KEY_B64. Use raw private key or one-line base64 (dev/scripts/ops/gh-actions-ssh-secret.ps1)."
+              exit 1
+            }
+          fi
+          chmod 600 "$KEYFILE"
+          if ! [ -s "$KEYFILE" ]; then
+            echo "::error::Decoded SSH key file is empty. Check SSH_PRIVATE_KEY_B64."
+            exit 1
+          fi
+          sed -i 's/\r$//' "$KEYFILE"
+          python3 -c "p='$KEYFILE'; d=open(p,'rb').read(); open(p,'wb').write(d[3:] if d.startswith(b'\xef\xbb\xbf') else d)"
+          h=$(head -c 2 "$KEYFILE" | od -An -tx1 | tr -d ' \n')
+          if [ "$h" = "fffe" ] || [ "$h" = "feff" ]; then
+            echo "::error::SSH key secret looks UTF-16. Re-encode with gh-actions-ssh-secret.ps1."
+            exit 1
+          fi
+
+          PORT="${SSH_PORT:-22}"
+          ssh-keyscan -p "$PORT" "$SSH_HOST" >> ~/.ssh/known_hosts
+
+      - name: Test SSH login
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          PORT="${SSH_PORT:-22}"
+          ssh -p "$PORT" -o BatchMode=yes -o IdentitiesOnly=yes \
+            -i ~/.ssh/id_ed25519 \
+            "$SSH_USER@$SSH_HOST" "echo ok"
+
+      - name: Rsync runtime paths (DEPLOYMENT_BOUNDARIES)
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_TARGET_DIR: ${{ secrets.SSH_TARGET_DIR }}
+        run: |
+          if [ -z "$SSH_TARGET_DIR" ]; then
+            echo "::error::Missing secret SSH_TARGET_DIR"
+            exit 1
+          fi
+          if [[ "$SSH_TARGET_DIR" != */current ]]; then
+            echo "::error::SSH_TARGET_DIR must end with '/current' (got: $SSH_TARGET_DIR)"
+            exit 1
+          fi
+
+          PORT="${SSH_PORT:-22}"
+          REMOTE="$SSH_USER@$SSH_HOST:$SSH_TARGET_DIR"
+          RSYNC_RSH="ssh -p $PORT -o IdentitiesOnly=yes -i $HOME/.ssh/id_ed25519"
+
+          ssh -p "$PORT" -o IdentitiesOnly=yes -i "$HOME/.ssh/id_ed25519" \
+            "$SSH_USER@$SSH_HOST" \
+            env SSH_TARGET_DIR="$SSH_TARGET_DIR" REMOTE_USER="$SSH_USER" bash -s <<'ENSURE_DEPLOY_ROOT'
+          set -euo pipefail
+          _sudo() { sudo -n "$@" 2>/dev/null || { echo "::error::Passwordless sudo missing. Run Droplet/docs/SHARED_DROPLET_GO_LIVE.md Phase 1 as root (SLUG=roots-agency)."; exit 1; }; }
+          _sudo mkdir -p "$SSH_TARGET_DIR"
+          _sudo chown -R "$REMOTE_USER" "$SSH_TARGET_DIR"
+          mkdir -p "$SSH_TARGET_DIR/app" "$SSH_TARGET_DIR/config" "$SSH_TARGET_DIR/public" \
+            "$SSH_TARGET_DIR/deploy" \
+            "$SSH_TARGET_DIR/storage/sessions" "$SSH_TARGET_DIR/storage/ratelimits"
+          ENSURE_DEPLOY_ROOT
+
+          rsync -az --delete -e "$RSYNC_RSH" ./app/ "$REMOTE/app/"
+          rsync -az --delete -e "$RSYNC_RSH" ./public/ "$REMOTE/public/"
+          rsync -az -e "$RSYNC_RSH" ./config/ "$REMOTE/config/"
+          rsync -az --delete -e "$RSYNC_RSH" ./deploy/ "$REMOTE/deploy/"
+
+      - name: Install / reload nginx vhost (no-op on first deploy)
+        shell: bash
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_TARGET_DIR: ${{ secrets.SSH_TARGET_DIR }}
+        run: |
+          PORT="${SSH_PORT:-22}"
+          SLUG=roots-agency
+          FQDN=roots-agency.payam-dehkordy.com
+
+          ssh -p "$PORT" -o IdentitiesOnly=yes -i "$HOME/.ssh/id_ed25519" \
+            "$SSH_USER@$SSH_HOST" \
+            env SLUG="$SLUG" FQDN="$FQDN" SSH_TARGET_DIR="$SSH_TARGET_DIR" \
+            bash -s <<'REMOTE'
+          set -euo pipefail
+          _sudo() { sudo -n "$@" 2>/dev/null || { echo "::error::sudo failed: $*"; exit 1; }; }
+
+          SRC="$SSH_TARGET_DIR/deploy/nginx-$SLUG.conf"
+          DST="/etc/nginx/sites-available/$SLUG.conf"
+          LINK="/etc/nginx/sites-enabled/$SLUG.conf"
+
+          if ! [ -s "/etc/letsencrypt/live/$FQDN/fullchain.pem" ]; then
+            echo "::notice::No TLS cert for $FQDN yet — skipping vhost reload."
+            echo "::notice::Run site-up on the droplet after this deploy is green."
+            exit 0
+          fi
+
+          NEED_RELOAD=0
+          if ! diff -q "$SRC" "$DST" >/dev/null 2>&1; then
+            _sudo cp "$SRC" "$DST"
+            _sudo ln -sf "$DST" "$LINK"
+            NEED_RELOAD=1
+          fi
+          sudo -n /usr/sbin/nginx -t || { echo "::error::nginx -t failed"; exit 1; }
+          if [ $NEED_RELOAD -eq 1 ]; then
+            _sudo systemctl reload nginx
+            echo "::notice::nginx vhost updated and reloaded"
+          else
+            echo "::notice::nginx vhost unchanged"
+          fi
+          REMOTE

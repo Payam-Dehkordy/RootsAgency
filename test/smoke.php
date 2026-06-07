@@ -56,6 +56,9 @@ foreach ([
     'public/features/roots-layout.css',
     'public/features/roots-breakpoints.js',
     'public/features/roots-hero.css',
+    'deploy/nginx-roots-agency.conf',
+    'deploy/nginx-roots-agency-bootstrap-http80.conf',
+    '.github/workflows/deploy.yml',
 ] as $rel) {
     assert_true(is_file($root . '/' . $rel), 'file exists: ' . $rel, $failures);
 }
